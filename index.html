@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Cazana Store: Tu destino premium para hogar y tecnología. Online, On Time.">
+  <title>Cazana Store - Inicio</title>
+  
+  <!-- Tipografías de Cazana Store: Playfair Display para títulos editoriales y Plus Jakarta Sans para UI -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/style.css">
+  
+  <script src="js/data.js" defer></script>
+  <script src="js/utils.js" defer></script>
+  <script src="js/auth.js" defer></script>
+  <script src="js/cart.js" defer></script>
+  <script src="js/payment.js" defer></script>
+  <script src="js/catalog.js" defer></script>
+  <script src="js/reviews.js" defer></script>
+  <script src="js/main.js" defer></script>
+</head>
+<body data-page="inicio">
+  <a class="skip-link" href="#contenido">Saltar al contenido principal</a>
+
+  <!-- Top Announcement Bar -->
+  <div class="cazana-topbar">
+    <p>🚚 Envío gratis en compras mayores a <strong>S/ 150</strong> — Entrega garantizada 24–48h</p>
+  </div>
+
+  <!-- Header Principal Cazana Store -->
+  <header class="sitio-header">
+    <div class="header-barra">
+      <!-- Logo de Cazana Store (redirecciona a index.html) -->
+      <a href="index.html" class="logo" aria-label="Cazana Store, ir al inicio">
+        <span class="logo-marca">CAZANA</span>
+        <span class="logo-submarca">STORE <em>— Online, On Time</em></span>
+      </a>
+
+      <!-- Buscador Central en Píldora -->
+      <div class="header-busqueda">
+        <label for="busqueda-header" class="solo-lector">Buscar productos, marcas, categorías</label>
+        <input type="search" id="busqueda-header" placeholder="Buscar productos, marcas, categorías…" autocomplete="off">
+        <button type="button" aria-label="Buscar" class="btn-lupa">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+      </div>
+
+      <!-- Acciones Superiores: Favoritos, Ingresar, Carrito -->
+      <div class="header-acciones">
+        <a href="favoritos.html" class="accion-item" aria-label="Favoritos">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <span>Favoritos</span>
+        </a>
+
+        <a href="login.html" class="accion-item" data-auth="guest" aria-label="Ingresar a mi cuenta">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span>Ingresar</span>
+        </a>
+
+        <span id="saludo" class="saludo" data-auth="user" hidden></span>
+        <button type="button" class="accion-item btn-link" data-auth="user" data-accion="logout" hidden>Salir</button>
+
+        <button type="button" class="accion-item btn-cart" data-abre="panel-carrito" aria-haspopup="dialog" aria-expanded="false" aria-controls="panel-carrito" aria-label="Abrir carrito de compras">
+          <div class="cart-icon-wrap">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            <span id="carrito-contador" class="contador">0</span>
+          </div>
+          <span>Carrito</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Navegación Secundario / Categorías y Área Admin -->
+    <nav class="nav-categorias" aria-label="Categorías principales">
+      <div class="nav-container">
+        <div class="cat-links">
+          <a href="hogar.html">Hogar</a>
+          <a href="tecnologia.html">Tecnología</a>
+          <a href="ofertas.html">Ofertas</a>
+          <a href="nuevos.html">Nuevos</a>
+          <a href="nosotros.html">Nosotros</a>
+          <a href="contacto.html">Contacto</a>
+        </div>
+        <a href="admin.html" class="btn-admin-pill">Área Admin</a>
+      </div>
+    </nav>
+  </header>
+
+  <div id="overlay" class="overlay"></div>
+
+  <!-- Panel Lateral Carrito -->
+  <aside id="panel-carrito" class="panel" aria-labelledby="t-carrito" aria-hidden="true">
+    <div class="panel-cabecera">
+      <h2 id="t-carrito">Tu Carrito</h2>
+      <button type="button" class="cerrar-panel" data-cerrar-panel aria-label="Cerrar carrito">&times;</button>
+    </div>
+    <ul id="carrito-lista" class="panel-scroll"></ul>
+    <p class="carrito-total"><span>Total</span><span id="carrito-total">S/ 0.00</span></p>
+    <div class="carrito-acciones">
+      <button type="button" id="carrito-pagar" class="btn btn-primario">Pagar ahora</button>
+      <button type="button" id="carrito-vaciar" class="btn btn-sec">Vaciar carrito</button>
+    </div>
+  </aside>
+
+  <div id="toasts" class="toasts" role="status" aria-live="polite"></div>
+
+  <!-- Modal Pago Simulado -->
+  <dialog id="pago" class="modal modal-pago" aria-labelledby="pago-titulo">
+    <div class="modal-caja pago-caja">
+      <button type="button" class="cerrar-panel modal-cerrar" data-cerrar-pago aria-label="Cerrar pago">&times;</button>
+      <section id="pago-form-vista">
+        <h2 id="pago-titulo">Finalizar compra</h2>
+        <p class="intro">Total a pagar: <strong id="pago-total">S/ 0.00</strong>.</p>
+        <form id="form-pago" novalidate>
+          <fieldset class="metodos"><legend>Método de pago</legend>
+            <label class="chip"><input type="radio" name="metodo" value="visa" checked><span>Visa</span></label>
+            <label class="chip"><input type="radio" name="metodo" value="mastercard"><span>Mastercard</span></label>
+            <label class="chip"><input type="radio" name="metodo" value="yape"><span>Yape</span></label>
+            <label class="chip"><input type="radio" name="metodo" value="plin"><span>Plin</span></label>
+          </fieldset>
+          <div id="pago-tarjeta">
+            <div class="campo">
+              <label for="titular">Titular de la tarjeta</label>
+              <input type="text" id="titular" name="titular" required>
+            </div>
+            <div class="campo">
+              <label for="tarjeta">Número de tarjeta</label>
+              <input type="text" id="tarjeta" name="tarjeta" maxlength="19" placeholder="0000 0000 0000 0000" required>
+            </div>
+            <div class="fila-2">
+              <div class="campo"><label for="vence">Vencimiento</label><input type="text" id="vence" name="vence" placeholder="MM/AA" required></div>
+              <div class="campo"><label for="cvv">CVV</label><input type="password" id="cvv" name="cvv" maxlength="4" required></div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primario" id="pago-boton">Confirmar Pago</button>
+        </form>
+      </section>
+      <section id="pago-ok-vista" tabindex="-1" hidden>
+        <h2>¡Pago aprobado!</h2>
+        <p id="pago-ok-texto"></p>
+        <button type="button" class="btn btn-primario" data-cerrar-pago>Seguir comprando</button>
+      </section>
+    </div>
+  </dialog>
+
+  <!-- CONTENIDO PRINCIPAL (HOME - SCROLL CONTINUO FOTO A FOTO) -->
+  <main id="contenido" tabindex="-1">
+
+    <!-- SECCIÓN 1: HERO (Imagen 1) -->
+    <section class="cazana-hero" aria-labelledby="hero-titulo">
+      <div class="hero-overlay-gradient"></div>
+      <div class="hero-content">
+        <span class="hero-badge">✧ Online, On Time — Entrega garantizada</span>
+        <h1 id="hero-titulo">Tu hogar,<br><em>más inteligente</em></h1>
+        <p class="hero-desc">Electrodomésticos y tecnología premium con entrega en 24–48 horas.</p>
+        <div class="hero-buttons">
+          <a href="hogar.html" class="btn btn-emerald">Comprar Ahora</a>
+          <a href="#nuestras-categorias" class="btn btn-gold-outline">Ver Catálogo</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 2: VENTAJAS & NUESSTRAS CATEGORÍAS (Imagen 2) -->
+    <section class="seccion-bloque" id="nuestras-categorias">
+      <div class="cazana-ventajas-grid">
+        <div class="v-item">
+          <div class="v-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C49746" stroke-width="1.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          </div>
+          <h4>Entrega 24–48h</h4>
+          <p>Online, On Time — siempre</p>
+        </div>
+        <div class="v-item">
+          <div class="v-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C49746" stroke-width="1.5"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+          </div>
+          <h4>Atención Cercana</h4>
+          <p>Soporte real, no bots</p>
+        </div>
+        <div class="v-item">
+          <div class="v-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C49746" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          </div>
+          <h4>Información Clara</h4>
+          <p>Sin letra chica ni sorpresas</p>
+        </div>
+        <div class="v-item">
+          <div class="v-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C49746" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h4>Compra Segura</h4>
+          <p>Pagos encriptados SSL</p>
+        </div>
+      </div>
+
+      <div class="seccion-header-editorial">
+        <h2>Nuestras Categorías</h2>
+        <p>Lo mejor para tu hogar y tu vida digital</p>
+      </div>
+
+      <div class="categorias-editorial-grid">
+        <a href="hogar.html" class="cat-card-editorial card-hogar">
+          <div class="cat-card-bg" style="background-image: url('https://images.unsplash.com/photo-1556911220-e15b29be8c8f?q=80&w=1000&auto=format&fit=crop');"></div>
+          <div class="cat-card-content">
+            <span class="cat-eyebrow">ARTÍCULOS PARA EL</span>
+            <h3>Hogar</h3>
+            <span class="cat-link-text">Explorar &rsaquo;</span>
+          </div>
+        </a>
+
+        <a href="tecnologia.html" class="cat-card-editorial card-tecnologia">
+          <div class="cat-card-bg" style="background-image: url('https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=1000&auto=format&fit=crop');"></div>
+          <div class="cat-card-content">
+            <span class="cat-eyebrow">LO ÚLTIMO EN</span>
+            <h3>Tecnología</h3>
+            <span class="cat-link-text">Explorar &rsaquo;</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 3: MÁS VENDIDOS (Imagen 3) -->
+    <section class="seccion-bloque bg-soft">
+      <div class="seccion-header-editorial flex-header">
+        <div>
+          <span class="sub-gold">MÁS POPULARES</span>
+          <h2>Más Vendidos</h2>
+        </div>
+        <a href="productos.html" class="link-ver-todos">Ver todos &rsaquo;</a>
+      </div>
+
+      <div class="grid-productos-cazana">
+        <!-- Producto 1 -->
+        <article class="p-card-cazana">
+          <span class="p-badge">-25%</span>
+          <button type="button" class="btn-favorito-heart" aria-label="Añadir a favoritos">♡</button>
+          <a href="producto-detalle.html" class="p-img-wrap">
+            <img src="https://images.unsplash.com/photo-1517668808822-9eaa03afd2af?q=80&w=600&auto=format&fit=crop" alt="Cafetera Espresso Premium 1200W" loading="lazy">
+          </a>
+          <div class="p-details">
+            <span class="p-cat">Cocina</span>
+            <h3 class="p-title"><a href="producto-detalle.html">Cafetera Espresso Premium 1200W</a></h3>
+            <div class="p-rating">★★★★★ <span>(142)</span></div>
+            <div class="p-price-lockup">
+              <strong class="price-current">S/ 89.99</strong>
+              <span class="price-old">S/ 119.99</span>
+            </div>
+            <button type="button" class="btn-add-cazana" data-agregar data-id="caf-exp-01" data-nombre="Cafetera Espresso Premium 1200W" data-precio="89.99">Agregar al carrito</button>
+          </div>
+        </article>
+
+        <!-- Producto 2 -->
+        <article class="p-card-cazana">
+          <button type="button" class="btn-favorito-heart" aria-label="Añadir a favoritos">♡</button>
+          <a href="producto-detalle.html" class="p-img-wrap">
+            <img src="https://images.unsplash.com/photo-1616627547584-bf28cee262db?q=80&w=600&auto=format&fit=crop" alt="Set de Sábanas Egipcias 1000 Hilos" loading="lazy">
+          </a>
+          <div class="p-details">
+            <span class="p-cat">Dormitorio</span>
+            <h3 class="p-title"><a href="producto-detalle.html">Set de Sábanas Egipcias 1000 Hilos</a></h3>
+            <div class="p-rating">★★★★★ <span>(89)</span></div>
+            <div class="p-price-lockup">
+              <strong class="price-current">S/ 129.99</strong>
+            </div>
+            <button type="button" class="btn-add-cazana" data-agregar data-id="sab-eg-02" data-nombre="Set de Sábanas Egipcias 1000 Hilos" data-precio="129.99">Agregar al carrito</button>
+          </div>
+        </article>
+
+        <!-- Producto 3 -->
+        <article class="p-card-cazana">
+          <span class="p-badge">-21%</span>
+          <button type="button" class="btn-favorito-heart" aria-label="Añadir a favoritos">♡</button>
+          <a href="producto-detalle.html" class="p-img-wrap">
+            <img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600&auto=format&fit=crop" alt="Juego de Ollas Inox 12 Piezas" loading="lazy">
+          </a>
+          <div class="p-details">
+            <span class="p-cat">Cocina</span>
+            <h3 class="p-title"><a href="producto-detalle.html">Juego de Ollas Inox 12 Piezas</a></h3>
+            <div class="p-rating">★★★★★ <span>(156)</span></div>
+            <div class="p-price-lockup">
+              <strong class="price-current">S/ 149.99</strong>
+              <span class="price-old">S/ 189.99</span>
+            </div>
+            <button type="button" class="btn-add-cazana" data-agregar data-id="oll-inox-03" data-nombre="Juego de Ollas Inox 12 Piezas" data-precio="149.99">Agregar al carrito</button>
+          </div>
+        </article>
+
+        <!-- Producto 4 -->
+        <article class="p-card-cazana">
+          <span class="p-badge">-20%</span>
+          <button type="button" class="btn-favorito-heart" aria-label="Añadir a favoritos">♡</button>
+          <a href="producto-detalle.html" class="p-img-wrap">
+            <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=600&auto=format&fit=crop" alt="Auriculares Noise Cancelling Pro X" loading="lazy">
+          </a>
+          <div class="p-details">
+            <span class="p-cat">Audio</span>
+            <h3 class="p-title"><a href="producto-detalle.html">Auriculares Noise Cancelling Pro X</a></h3>
+            <div class="p-rating">★★★★★ <span>(318)</span></div>
+            <div class="p-price-lockup">
+              <strong class="price-current">S/ 199.99</strong>
+              <span class="price-old">S/ 249.99</span>
+            </div>
+            <button type="button" class="btn-add-cazana" data-agregar data-id="aur-nc-04" data-nombre="Auriculares Noise Cancelling Pro X" data-precio="199.99">Agregar al carrito</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 4: BANNER PROMO & NUEVOS INGRESOS (Imagen 4) -->
+    <section class="banner-oferta-negro">
+      <div class="banner-oferta-content">
+        <span class="sub-gold">OFERTA ESPECIAL</span>
+        <h2>Hasta 25% off en electrodomésticos</h2>
+        <p>Válido hasta el 30 de septiembre.</p>
+      </div>
+      <a href="ofertas.html" class="btn btn-gold-fill">Ver Ofertas</a>
+    </section>
+
+    <section class="seccion-bloque">
+      <div class="seccion-header-editorial flex-header">
+        <div>
+          <span class="sub-gold">RECIÉN LLEGADOS</span>
+          <h2>Nuevos Ingresos</h2>
+        </div>
+        <a href="nuevos.html" class="link-ver-todos">Ver todos &rsaquo;</a>
+      </div>
+
+      <div class="grid-productos-cazana">
+        <article class="p-card-cazana">
+          <span class="p-badge p-badge-black">NUEVO</span>
+          <button type="button" class="btn-favorito-heart">♡</button>
+          <a href="producto-detalle.html" class="p-img-wrap">
+            <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=600&auto=format&fit=crop" alt="Herramienta Multifunción Precision Work" loading="lazy">
+          </a>
+        </article>
+
+        <article class="p-card-cazana">
+          <span class="p-badge p-badge-black">NUEVO</span>
+          <button type="button" class="btn-favorito-heart">♡</button>
+          <a href="producto-detalle.html" class="p-img-wrap">
+            <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=600&auto=format&fit=crop" alt="Sofá Minimalista Esmeralda Velvet" loading="lazy">
+          </a>
+        </article>
+
+        <article class="p-card-cazana">
+          <span class="p-badge p-badge-black">NUEVO</span>
+          <button type="button" class="btn-favorito-heart">♡</button>
+          <a href="producto-detalle.html" class="p-img-wrap">
+            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=600&auto=format&fit=crop" alt="Smartwatch Serie 7 Ultra AMOLED" loading="lazy">
+          </a>
+        </article>
+
+        <article class="p-card-cazana">
+          <span class="p-badge p-badge-black">NUEVO</span>
+          <button type="button" class="btn-favorito-heart">♡</button>
+          <a href="producto-detalle.html" class="p-img-wrap">
+            <img src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?q=80&w=600&auto=format&fit=crop" alt="Tablet Pro Display Pen 11 pulgadas" loading="lazy">
+          </a>
+        </article>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 5: RESEÑAS VERIFICADAS (Imagen 5) -->
+    <section class="seccion-bloque bg-soft">
+      <div class="seccion-header-editorial center-header">
+        <span class="sub-gold">CLIENTES FELICES</span>
+        <h2>Reseñas Verificadas</h2>
+      </div>
+
+      <div class="resenas-editorial-grid">
+        <figure class="resena-card">
+          <div class="r-stars">★★★★★</div>
+          <blockquote>"Increíble experiencia. El smartwatch llegó en 24 horas, perfectamente embalado y…"</blockquote>
+          <figcaption>
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=120&auto=format&fit=crop" alt="María García">
+            <div>
+              <strong>María García</strong>
+              <span>Lima, Perú</span>
+            </div>
+          </figcaption>
+        </figure>
+
+        <figure class="resena-card">
+          <div class="r-stars">★★★★★</div>
+          <blockquote>"La cafetera espresso es simplemente perfecta. Llegó antes de lo prometido y el café…"</blockquote>
+          <figcaption>
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=120&auto=format&fit=crop" alt="Carlos Rodríguez">
+            <div>
+              <strong>Carlos Rodríguez</strong>
+              <span>Bogotá, Colombia</span>
+            </div>
+          </figcaption>
+        </figure>
+
+        <figure class="resena-card">
+          <div class="r-stars">★★★★★</div>
+          <blockquote>"Las sábanas son una maravilla. Desde la primera noche noté la diferencia en calidad. Cazana…"</blockquote>
+          <figcaption>
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=120&auto=format&fit=crop" alt="Ana Torres">
+            <div>
+              <strong>Ana Torres</strong>
+              <span>Santiago, Chile</span>
+            </div>
+          </figcaption>
+        </figure>
+
+        <figure class="resena-card">
+          <div class="r-stars">★★★★★</div>
+          <blockquote>"Los auriculares NC Pro superaron todas mis expectativas. La cancelación de ruido es increíble…"</blockquote>
+          <figcaption>
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=120&auto=format&fit=crop" alt="Luis Hernández">
+            <div>
+              <strong>Luis Hernández</strong>
+              <span>Buenos Aires, Argentina</span>
+            </div>
+          </figcaption>
+        </figure>
+      </div>
+
+      <div class="ver-mas-btn-wrap">
+        <a href="productos.html" class="btn btn-black-wide">Ver todos los productos</a>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 6: NEWSLETTER & PIE DE GARANTÍAS (Imagen 6) -->
+    <section class="cazana-newsletter">
+      <span class="sub-gold">NEWSLETTER</span>
+      <h2>Ofertas exclusivas en tu correo</h2>
+      <p>Suscríbete y recibe un 10% de descuento en tu primera compra.</p>
+      <form class="newsletter-form" onsubmit="event.preventDefault(); alert('¡Gracias por suscribirte!');">
+        <input type="email" placeholder="tu@correo.com" required>
+        <button type="submit" class="btn btn-gold-fill">Suscribir</button>
+      </form>
+    </section>
+
+    <div class="cazana-guarantees-bar">
+      <div class="g-item">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C49746" stroke-width="1.8"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        <div>
+          <strong>Entrega 24–48h</strong>
+          <span>Online, On Time</span>
+        </div>
+      </div>
+      <div class="g-item">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C49746" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <div>
+          <strong>Pago 100% Seguro</strong>
+          <span>SSL y encriptación</span>
+        </div>
+      </div>
+      <div class="g-item">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C49746" stroke-width="1.8"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        <div>
+          <strong>Devoluciones</strong>
+          <span>30 días sin preguntas</span>
+        </div>
+      </div>
+      <div class="g-item">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C49746" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <div>
+          <strong>Soporte 24/7</strong>
+          <span>WhatsApp y chat</span>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER EDITORIAL -->
+  <footer class="sitio-footer">
+    <div class="footer-grid">
+      <div class="f-col-brand">
+        <h3 class="f-logo">CAZANA</h3>
+        <p class="f-sublogo">STORE</p>
+        <p class="f-desc">Tu destino premium para hogar y tecnología. <span class="gold-txt">Online, On Time.</span></p>
+        <div class="f-socials">
+          <a href="https://instagram.com" target="_blank" aria-label="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://tiktok.com" target="_blank" aria-label="TikTok">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+          </a>
+          <a href="https://facebook.com" target="_blank" aria-label="Facebook">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="f-col">
+        <h4>CATEGORÍAS</h4>
+        <ul>
+          <li><a href="hogar.html">Hogar</a></li>
+          <li><a href="tecnologia.html">Tecnología</a></li>
+          <li><a href="ofertas.html">Ofertas</a></li>
+          <li><a href="nuevos.html">Nuevos Ingresos</a></li>
+        </ul>
+      </div>
+
+      <div class="f-col">
+        <h4>INFORMACIÓN</h4>
+        <ul>
+          <li><a href="nosotros.html">Nosotros</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+          <li><a href="perfil.html">Mi cuenta</a></li>
+          <li><a href="envios.html">Política de envíos</a></li>
+          <li><a href="devoluciones.html">Devoluciones</a></li>
+          <li><a href="terminos.html">Términos y condiciones</a></li>
+          <li><a href="privacidad.html">Privacidad</a></li>
+        </ul>
+      </div>
+
+      <div class="f-col">
+        <h4>CONTACTO</h4>
+        <p class="f-contact-item">📞 +51 999 123 456</p>
+        <p class="f-contact-item">✉️ hola@cazanastore.com</p>
+
+        <h4 class="mt-4">NEWSLETTER</h4>
+        <form class="f-newsletter-mini" onsubmit="event.preventDefault(); alert('Inscrito correctamente');">
+          <input type="email" placeholder="tu@email.com" required>
+          <button type="submit">Suscribir</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 Cazana Store. Todos los derechos reservados.</p>
+      <div class="f-payments">
+        <span>Pagos seguros:</span>
+        <span class="p-chip">Visa</span>
+        <span class="p-chip">Mastercard</span>
+        <span class="p-chip">Yape</span>
+        <span class="p-chip">Plin</span>
+        <span class="p-chip">PayPal</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================================================================= -->
+  <!-- CHAT FLOTANTE EN VIVO CON REDIRECCIÓN A WHATSAPP (Imagen 7) -->
+  <!-- ================================================================= -->
+  
+  <!-- Botón Lanzador del Chat (Inferior Derecha) -->
+  <button type="button" id="cazana-chat-trigger" class="cazana-chat-badge" aria-label="Abrir chat con el vendedor">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+  </button>
+  <span class="cazana-help-tooltip">?</span>
+
+  <!-- Ventana desplegable del Chat -->
+  <aside id="cazana-chat-window" class="cazana-chat-box" aria-hidden="true">
+    <div class="chat-header">
+      <div class="chat-header-user">
+        <div class="avatar-c">C</div>
+        <div>
+          <strong>Cazana Soporte</strong>
+          <span class="status-online">En línea • Respuesta rápida</span>
+        </div>
+      </div>
+      <div class="chat-header-actions">
+        <!-- Botón de WhatsApp a tu número 918337808 -->
+        <a href="https://wa.me/51918337808?text=Hola%20Cazana%20Store,%20quisiera%20consultar%20sobre%20un%20producto." target="_blank" rel="noopener noreferrer" class="chat-wa-link" title="Hablar directamente por WhatsApp">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+        </a>
+        <button type="button" id="cazana-chat-close" class="chat-close-btn">&times;</button>
+      </div>
+    </div>
+
+    <div class="chat-body" id="chat-body-messages">
+      <div class="chat-msg msg-received">
+        <p>¡Bienvenido a Cazana Store! ¿En qué podemos ayudarte? Estamos disponibles Lun–Sáb de 9am a 8pm.</p>
+        <time>00:00</time>
+      </div>
+    </div>
+
+    <form class="chat-footer" id="chat-input-form" onsubmit="event.preventDefault(); enviarMensajeChat();">
+      <input type="text" id="chat-user-msg" placeholder="Escribe tu mensaje..." autocomplete="off">
+      <button type="submit" class="btn-send-chat" aria-label="Enviar mensaje">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+      </button>
+    </form>
+  </aside>
+
+  <!-- Script para la interactividad del Chat -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const trigger = document.getElementById('cazana-chat-trigger');
+      const chatWin = document.getElementById('cazana-chat-window');
+      const closeBtn = document.getElementById('cazana-chat-close');
+
+      trigger.addEventListener('click', () => {
+        chatWin.classList.toggle('active');
+        if (chatWin.classList.contains('active')) {
+          chatWin.setAttribute('aria-hidden', 'false');
+        } else {
+          chatWin.setAttribute('aria-hidden', 'true');
+        }
+      });
+
+      closeBtn.addEventListener('click', () => {
+        chatWin.classList.remove('active');
+        chatWin.setAttribute('aria-hidden', 'true');
+      });
+    });
+
+    function enviarMensajeChat() {
+      const input = document.getElementById('chat-user-msg');
+      const body = document.getElementById('chat-body-messages');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+      // Mensaje del usuario
+      const userMsg = document.createElement('div');
+      userMsg.className = 'chat-msg msg-sent';
+      userMsg.innerHTML = `<p>${text}</p><time>${now}</time>`;
+      body.appendChild(userMsg);
+
+      input.value = '';
+      body.scrollTop = body.scrollHeight;
+
+      // Respuesta automática de prueba
+      setTimeout(() => {
+        const reply = document.createElement('div');
+        reply.className = 'chat-msg msg-received';
+        reply.innerHTML = `<p>Gracias por escribirnos. Un asesor se comunicará contigo de inmediato. Si deseas una respuesta más veloz, haz clic en el ícono de WhatsApp arriba.</p><time>${now}</time>`;
+        body.appendChild(reply);
+        body.scrollTop = body.scrollHeight;
+      }, 1000);
+    }
+  </script>
+</body>
+</html>

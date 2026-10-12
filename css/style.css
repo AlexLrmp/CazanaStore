@@ -1,0 +1,1055 @@
+/* Cazana Store - Editorial Commerce Style System
+   Paleta: Marfil (#FAF7F2), Oro Quemado (#C49746 / #D4AA55), Verde Esmeralda (#1D7A58), Carbón (#1A1A1A) */
+
+:root {
+  --marfil: #FAF7F2;
+  --blanco-puro: #FFFFFF;
+  --soft-bg: #F5F0E8;
+  --charcoal: #1A1A1A;
+  --charcoal-light: #232323;
+  --gold: #C49746;
+  --gold-hover: #D4AA55;
+  --emerald: #1D7A58;
+  --emerald-hover: #155B41;
+  --text-muted: #666666;
+  --border-light: #E8E2D8;
+
+  --f-serif: 'Playfair Display', Georgia, serif;
+  --f-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+
+  --ancho-max: 1240px;
+  --radio-sm: 6px;
+  --radio-md: 12px;
+  --radio-lg: 20px;
+  --sombra-soft: 0 10px 30px rgba(0, 0, 0, 0.05);
+  --sombra-modal: 0 20px 50px rgba(0, 0, 0, 0.2);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--f-sans);
+  background-color: var(--marfil);
+  color: var(--charcoal);
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Utilitarios */
+.solo-lector {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  background: var(--gold);
+  color: #fff;
+  padding: .5rem 1rem;
+  z-index: 1000;
+}
+.skip-link:focus { top: 1rem; }
+
+/* Top Announcement Bar */
+.cazana-topbar {
+  background: var(--charcoal);
+  color: #ffffff;
+  font-size: 0.8rem;
+  text-align: center;
+  padding: 0.5rem 1rem;
+  letter-spacing: 0.02em;
+}
+.cazana-topbar strong {
+  color: var(--gold);
+}
+
+/* Header Principal */
+.sitio-header {
+  background: var(--blanco-puro);
+  border-bottom: 1px solid var(--border-light);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-barra {
+  max-width: var(--ancho-max);
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+.logo-marca {
+  font-family: var(--f-serif);
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--gold);
+}
+.logo-submarca {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+.logo-submarca em {
+  font-style: italic;
+  color: var(--charcoal);
+}
+
+/* Buscador Píldora */
+.header-busqueda {
+  position: relative;
+  flex: 1;
+  max-width: 520px;
+}
+.header-busqueda input {
+  width: 100%;
+  padding: 0.65rem 2.8rem 0.65rem 1.2rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-light);
+  background: var(--marfil);
+  font-family: var(--f-sans);
+  font-size: 0.88rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.header-busqueda input:focus {
+  border-color: var(--gold);
+  background: #fff;
+}
+.btn-lupa {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+/* Acciones Header */
+.header-acciones {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+.accion-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--charcoal);
+  background: none;
+  border: none;
+  cursor: pointer;
+  gap: 2px;
+}
+.accion-item:hover {
+  color: var(--gold);
+}
+.cart-icon-wrap {
+  position: relative;
+}
+.contador {
+  position: absolute;
+  top: -5px;
+  right: -8px;
+  background: var(--gold);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+}
+
+/* Navegación Categorías */
+.nav-categorias {
+  border-top: 1px solid var(--border-light);
+  background: var(--blanco-puro);
+}
+.nav-container {
+  max-width: var(--ancho-max);
+  margin: 0 auto;
+  padding: 0.6rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.cat-links {
+  display: flex;
+  gap: 2rem;
+}
+.cat-links a {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--charcoal);
+  transition: color 0.2s;
+}
+.cat-links a:hover {
+  color: var(--gold);
+}
+.btn-admin-pill {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  border: 1px solid var(--border-light);
+  padding: 0.35rem 1rem;
+  border-radius: 999px;
+  transition: all 0.2s;
+}
+.btn-admin-pill:hover {
+  border-color: var(--charcoal);
+  color: var(--charcoal);
+}
+
+/* Hero Section (Imagen 1) */
+.cazana-hero {
+  position: relative;
+  min-height: 82vh;
+  background: url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=1800&auto=format&fit=crop') center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  padding: 4rem 1.5rem;
+}
+.hero-overlay-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(35, 35, 35, 0.72) 0%, rgba(35, 35, 35, 0.35) 50%, rgba(250, 247, 242, 0.1) 100%);
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: var(--ancho-max);
+  margin: 0 auto;
+  width: 100%;
+  color: #ffffff;
+}
+.hero-badge {
+  display: inline-block;
+  background: rgba(196, 151, 70, 0.35);
+  border: 1px solid var(--gold);
+  backdrop-filter: blur(4px);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  margin-bottom: 1.5rem;
+}
+.hero-content h1 {
+  font-family: var(--f-serif);
+  font-size: clamp(2.5rem, 5vw, 4.2rem);
+  font-weight: 400;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+.hero-content h1 em {
+  font-style: italic;
+  color: var(--gold-hover);
+}
+.hero-desc {
+  font-size: 1.1rem;
+  color: #e0e0e0;
+  max-width: 500px;
+  margin-bottom: 2rem;
+}
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Botones Sistema Cazana */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1.8rem;
+  border-radius: 999px;
+  font-family: var(--f-sans);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.25s ease;
+}
+.btn-emerald {
+  background: var(--emerald);
+  color: #ffffff;
+}
+.btn-emerald:hover {
+  background: var(--emerald-hover);
+}
+.btn-gold-outline {
+  background: transparent;
+  border: 1px solid var(--gold);
+  color: #ffffff;
+}
+.btn-gold-outline:hover {
+  background: var(--gold);
+  color: #ffffff;
+}
+.btn-gold-fill {
+  background: var(--gold);
+  color: #ffffff;
+}
+.btn-gold-fill:hover {
+  background: var(--gold-hover);
+}
+.btn-black-wide {
+  background: var(--charcoal);
+  color: #ffffff;
+  padding: 0.9rem 2.5rem;
+}
+.btn-black-wide:hover {
+  background: #000;
+}
+
+/* Secciones Generales */
+.seccion-bloque {
+  max-width: var(--ancho-max);
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+  width: 100%;
+}
+.bg-soft {
+  background: var(--soft-bg);
+  max-width: 100%;
+}
+.seccion-header-editorial {
+  margin-bottom: 2.5rem;
+}
+.seccion-header-editorial.center-header {
+  text-align: center;
+}
+.seccion-header-editorial.flex-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+.seccion-header-editorial h2 {
+  font-family: var(--f-serif);
+  font-size: 2.2rem;
+  font-weight: 400;
+  color: var(--charcoal);
+}
+.sub-gold {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+  margin-bottom: 0.3rem;
+}
+.link-ver-todos {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+.link-ver-todos:hover {
+  color: var(--charcoal);
+}
+
+/* Grid Ventajas (Imagen 2) */
+.cazana-ventajas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  padding-bottom: 4rem;
+  border-bottom: 1px solid var(--border-light);
+  margin-bottom: 3.5rem;
+  text-align: center;
+}
+.v-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--soft-bg);
+  display: grid;
+  place-items: center;
+  margin: 0 auto 1rem;
+}
+.v-item h4 {
+  font-family: var(--f-serif);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+.v-item p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* Categorías Editoriales (Imagen 2) */
+.categorias-editorial-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.8rem;
+}
+.cat-card-editorial {
+  position: relative;
+  height: 380px;
+  border-radius: var(--radio-lg);
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding: 2rem;
+  color: #ffffff;
+}
+.cat-card-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.6s ease;
+}
+.cat-card-editorial::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 60%);
+  z-index: 1;
+}
+.cat-card-editorial:hover .cat-card-bg {
+  transform: scale(1.05);
+}
+.cat-card-content {
+  position: relative;
+  z-index: 2;
+}
+.cat-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--gold-hover);
+}
+.cat-card-content h3 {
+  font-family: var(--f-serif);
+  font-size: 2.2rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+.cat-link-text {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* TARJETAS DE PRODUCTO CAZANA (Imagen 3 y 4) */
+.grid-productos-cazana {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.8rem;
+}
+.p-card-cazana {
+  background: var(--blanco-puro);
+  border-radius: var(--radio-md);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--sombra-soft);
+  transition: transform 0.3s ease;
+}
+.p-card-cazana:hover {
+  transform: translateY(-5px);
+}
+.p-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 3;
+  background: var(--gold);
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+}
+.p-badge-black {
+  background: var(--charcoal);
+}
+.btn-favorito-heart {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 3;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: none;
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.p-img-wrap {
+  aspect-ratio: 1/1;
+  overflow: hidden;
+  background: #f0f0f0;
+}
+.p-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.p-details {
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.p-cat {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 0.2rem;
+}
+.p-title {
+  font-family: var(--f-serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 0.5rem;
+}
+.p-rating {
+  font-size: 0.75rem;
+  color: var(--gold);
+  margin-bottom: 0.8rem;
+}
+.p-rating span {
+  color: var(--text-muted);
+}
+.p-price-lockup {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin-top: auto;
+  margin-bottom: 1rem;
+}
+.price-current {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--charcoal);
+}
+.price-old {
+  font-size: 0.85rem;
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+.btn-add-cazana {
+  width: 100%;
+  padding: 0.65rem;
+  border-radius: 999px;
+  background: var(--marfil);
+  border: 1px solid var(--border-light);
+  font-family: var(--f-sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--charcoal);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-add-cazana:hover {
+  background: var(--charcoal);
+  color: #ffffff;
+  border-color: var(--charcoal);
+}
+
+/* Banner Negro Promo (Imagen 4) */
+.banner-oferta-negro {
+  background: var(--charcoal);
+  color: #ffffff;
+  max-width: var(--ancho-max);
+  margin: 2rem auto;
+  padding: 3rem 4rem;
+  border-radius: var(--radio-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.banner-oferta-content h2 {
+  font-family: var(--f-serif);
+  font-size: 2.2rem;
+  font-weight: 400;
+  margin: 0.3rem 0;
+}
+.banner-oferta-content p {
+  color: #b0b0b0;
+  font-size: 0.9rem;
+}
+
+/* Reseñas Editorial (Imagen 5) */
+.resenas-editorial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+.resena-card {
+  background: var(--blanco-puro);
+  padding: 1.8rem;
+  border-radius: var(--radio-md);
+  box-shadow: var(--sombra-soft);
+  display: flex;
+  flex-direction: column;
+}
+.r-stars {
+  color: var(--gold);
+  font-size: 0.9rem;
+  margin-bottom: 0.8rem;
+}
+.resena-card blockquote {
+  font-size: 0.9rem;
+  color: var(--charcoal);
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+  flex: 1;
+}
+.resena-card figcaption {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.resena-card figcaption img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.resena-card figcaption strong {
+  display: block;
+  font-size: 0.85rem;
+}
+.resena-card figcaption span {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+.ver-mas-btn-wrap {
+  text-align: center;
+}
+
+/* Newsletter Section (Imagen 6) */
+.cazana-newsletter {
+  background: var(--soft-bg);
+  text-align: center;
+  padding: 4rem 1.5rem;
+}
+.cazana-newsletter h2 {
+  font-family: var(--f-serif);
+  font-size: 2.2rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+.cazana-newsletter p {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-bottom: 1.8rem;
+}
+.newsletter-form {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  max-width: 480px;
+  margin: 0 auto;
+}
+.newsletter-form input {
+  flex: 1;
+  padding: 0.8rem 1.2rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-light);
+  outline: none;
+  font-family: var(--f-sans);
+}
+
+/* Guarantees Strip Footer */
+.cazana-guarantees-bar {
+  background: var(--charcoal-light);
+  color: #ffffff;
+  padding: 2rem 1.5rem;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  border-bottom: 1px solid #333;
+}
+.g-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.g-item strong {
+  display: block;
+  font-size: 0.88rem;
+}
+.g-item span {
+  font-size: 0.75rem;
+  color: #a0a0a0;
+}
+
+/* Footer Editorial (Imagen 6 y 7) */
+.sitio-footer {
+  background: var(--charcoal);
+  color: #e0e0e0;
+  padding: 4rem 1.5rem 1.5rem;
+  font-size: 0.88rem;
+}
+.footer-grid {
+  max-width: var(--ancho-max);
+  margin: 0 auto 3rem;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+  gap: 2.5rem;
+}
+.f-logo {
+  font-family: var(--f-serif);
+  font-size: 1.8rem;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+}
+.f-sublogo {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: #888;
+  margin-bottom: 1rem;
+}
+.f-desc {
+  color: #aaa;
+  margin-bottom: 1.2rem;
+  line-height: 1.6;
+}
+.gold-txt { color: var(--gold); }
+.f-socials {
+  display: flex;
+  gap: 0.8rem;
+}
+.f-socials a {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #2a2a2a;
+  display: grid;
+  place-items: center;
+  color: #fff;
+}
+.f-col h4 {
+  font-family: var(--f-serif);
+  color: #fff;
+  font-size: 1rem;
+  margin-bottom: 1.2rem;
+  letter-spacing: 0.05em;
+}
+.f-col ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.f-col a {
+  color: #aaa;
+  transition: color 0.2s;
+}
+.f-col a:hover {
+  color: var(--gold);
+}
+.f-contact-item {
+  color: #aaa;
+  margin-bottom: 0.5rem;
+}
+.f-newsletter-mini {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: 0.6rem;
+}
+.f-newsletter-mini input {
+  padding: 0.5rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid #444;
+  background: #2a2a2a;
+  color: #fff;
+  font-size: 0.8rem;
+  width: 100%;
+}
+.f-newsletter-mini button {
+  background: var(--gold);
+  border: none;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.footer-bottom {
+  max-width: var(--ancho-max);
+  margin: 0 auto;
+  padding-top: 1.5rem;
+  border-top: 1px solid #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.78rem;
+  color: #888;
+}
+.f-payments {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.p-chip {
+  background: #2a2a2a;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  color: #ccc;
+}
+
+/* ================================================================= */
+/* CHAT FLOTANTE Y WHATSAPP (Imagen 7) */
+/* ================================================================= */
+
+/* Botón flotante verde esmeralda */
+.cazana-chat-badge {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--emerald);
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 6px 20px rgba(29, 122, 88, 0.4);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  z-index: 999;
+  transition: transform 0.25s ease;
+}
+.cazana-chat-badge:hover {
+  transform: scale(1.08);
+}
+.cazana-help-tooltip {
+  position: fixed;
+  bottom: 1.8rem;
+  right: 1.8rem;
+  background: var(--charcoal);
+  color: #fff;
+  font-size: 0.65rem;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+/* Ventana de Chat */
+.cazana-chat-box {
+  position: fixed;
+  bottom: 5.5rem;
+  right: 2rem;
+  width: 360px;
+  max-width: calc(100vw - 3rem);
+  height: 480px;
+  background: #ffffff;
+  border-radius: var(--radio-lg);
+  box-shadow: var(--sombra-modal);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+}
+.cazana-chat-box.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Cabecera Chat */
+.chat-header {
+  background: var(--charcoal);
+  color: #ffffff;
+  padding: 1rem 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.chat-header-user {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.avatar-c {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: #fff;
+  font-family: var(--f-serif);
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+}
+.chat-header-user strong {
+  display: block;
+  font-size: 0.9rem;
+}
+.status-online {
+  font-size: 0.72rem;
+  color: #4cd964;
+}
+.chat-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.chat-wa-link {
+  display: grid;
+  place-items: center;
+  background: rgba(255,255,255,0.1);
+  padding: 6px;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+.chat-wa-link:hover {
+  background: rgba(255,255,255,0.25);
+}
+.chat-close-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+/* Cuerpo Chat */
+.chat-body {
+  flex: 1;
+  padding: 1.2rem;
+  background: #f9f9f9;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.chat-msg {
+  max-width: 80%;
+  padding: 0.8rem 1rem;
+  border-radius: 14px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  position: relative;
+}
+.chat-msg time {
+  display: block;
+  font-size: 0.65rem;
+  color: #888;
+  margin-top: 4px;
+}
+.msg-received {
+  background: #ffffff;
+  color: var(--charcoal);
+  border-bottom-left-radius: 2px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  align-self: flex-start;
+}
+.msg-sent {
+  background: var(--emerald);
+  color: #ffffff;
+  border-bottom-right-radius: 2px;
+  align-self: flex-end;
+}
+.msg-sent time { color: #d0f0e0; }
+
+/* Input Chat */
+.chat-footer {
+  padding: 0.8rem 1rem;
+  background: #fff;
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  gap: 0.5rem;
+}
+.chat-footer input {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-light);
+  font-family: var(--f-sans);
+  font-size: 0.85rem;
+  outline: none;
+}
+.btn-send-chat {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--emerald);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+/* Responsivo */
+@media (max-width: 900px) {
+  .categorias-editorial-grid { grid-template-columns: 1fr; }
+  .banner-oferta-negro { flex-direction: column; text-align: center; gap: 1.5rem; padding: 2rem; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 600px) {
+  .header-barra { flex-wrap: wrap; }
+  .header-busqueda { order: 3; max-width: 100%; }
+  .cat-links { gap: 1rem; overflow-x: auto; padding-bottom: 0.4rem; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .cazana-chat-box { right: 1rem; left: 1rem; width: auto; }
+}
