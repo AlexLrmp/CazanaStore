@@ -40,16 +40,16 @@
     toast(wishlist.includes(id) ? 'Agregado a favoritos.' : 'Eliminado de favoritos.');
   };
 
-  const productById = id => products.find(p => p.id === id);
+  const productIndex = new Map(products.map(p => [p.id, p]));
+  const productById = id => productIndex.get(id);
   const avgRating = p => p.rating || 4.8;
+  let reviewCache = getStore(K.reviews, {});
   const reviewCount = p => {
-    const custom = getStore(K.reviews, {});
-    const customLen = (custom[p.id] || []).length;
+    const customLen = (reviewCache[p.id] || []).length;
     return Number(p.reviewCount || 0) + customLen;
   };
   const getAllReviews = p => {
-    const custom = getStore(K.reviews, {});
-    const persisted = (custom[p.id] || []).map(x => ({ ...x, persisted: true }));
+    const persisted = (reviewCache[p.id] || []).map(x => ({ ...x, persisted: true }));
     return [...(p.reviews || []), ...persisted];
   };
   const stars = n => `<span class="stars">${'★'.repeat(Math.round(n))}</span>`;
@@ -160,7 +160,7 @@
     const sort = $('#shop-sort');
 
     const setRadio = (name, val) => {
-      const target = form.querySelector(`input[name="${name}"][value="${CSS.escape(val)}"]`);
+      const target = Array.from(form.querySelectorAll(`input[name="${name}"]`)).find(input => input.value === val);
       if (target) target.checked = true;
     };
 
@@ -258,17 +258,20 @@
         <div class="product-review-layout">
           <div class="reviews-grid compact">${list.map(r => `
             <article class="review-card small">
-              <div>${stars(r.rating || 5)}</div>
+              <div class="review-card-stars">${stars(r.rating || 5)} <span>Opinión de muestra</span></div>
               <blockquote>“${esc(r.text)}”</blockquote>
               <div class="review-user"><div class="review-avatar">${esc((r.name || 'C').charAt(0))}</div><div><b>${esc(r.name || 'Cliente')}</b><span>${esc(r.city || 'Visitante')}</span></div></div>
             </article>`).join('')}</div>
           <form id="review-form" class="review-form card-surface">
-            <h3>Comparte tu opinión</h3>
+            <div class="review-form-intro"><span class="review-form-icon">✎</span><div><p class="eyebrow">TU EXPERIENCIA</p><h3>Comparte tu opinión</h3><p>Nos ayuda a seguir mejorando.</p></div></div>
             <label class="text-field"><span>Nombre</span><input name="name" required placeholder="Tu nombre"></label>
             <label class="text-field"><span>Ciudad</span><input name="city" required placeholder="Ciudad, país"></label>
-            <label class="text-field"><span>Calificación</span>
-              <select name="rating"><option value="5">5 estrellas</option><option value="4">4 estrellas</option><option value="3">3 estrellas</option></select>
-            </label>
+            <div class="rating-field"><span class="rating-label">Calificación</span>
+              <div class="star-picker" role="radiogroup" aria-label="Calificación de la reseña">
+                ${[1,2,3,4,5].map(n => `<label class="rating-star is-on" aria-label="${n} ${n===1?'estrella':'estrellas'}"><input type="radio" name="rating" value="${n}" ${n===5?'checked':''} aria-label="${n} ${n===1?'estrella':'estrellas'}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m12 2 3.1 6.4 7.1 1-5.1 4.9 1.2 7-6.3-3.3-6.3 3.3 1.2-7-5.1-4.9 7.1-1L12 2Z"/></svg></label>`).join('')}
+              </div>
+              <span class="rating-feedback" aria-live="polite">5 de 5 estrellas</span>
+            </div>
             <label class="text-field"><span>Comentario</span><textarea name="text" required placeholder="Cuéntanos tu experiencia"></textarea></label>
             <button class="btn btn-charcoal" type="submit">Publicar reseña</button>
             <small>Esta opinión de prueba se guarda únicamente en tu navegador.</small>
@@ -362,10 +365,14 @@
     $('#review-form', root)?.addEventListener('submit', e => {
       e.preventDefault();
       const fd = new FormData(e.currentTarget);
-      const reviews = getStore(K.reviews, {});
-      reviews[product.id] = reviews[product.id] || [];
-      reviews[product.id].push({ name: fd.get('name'), city: fd.get('city'), rating: Number(fd.get('rating')), text: fd.get('text') });
-      setStore(K.reviews, reviews);
+      const name = String(fd.get('name') || '').trim().slice(0,70);
+      const city = String(fd.get('city') || '').trim().slice(0,70);
+      const text = String(fd.get('text') || '').trim().slice(0,1200);
+      const rating = Number(fd.get('rating'));
+      if (!name || !city || text.length < 5 || !Number.isInteger(rating) || rating < 1 || rating > 5) return toast('Revisa los datos de tu reseña.');
+      reviewCache[product.id] = reviewCache[product.id] || [];
+      reviewCache[product.id].push({ name, city, rating, text });
+      setStore(K.reviews, reviewCache);
       toast('Tu opinión se guardó en este navegador.');
       showProduct();
       refreshCounts();

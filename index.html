@@ -2,326 +2,333 @@
 <html lang="es">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="theme-color" content="#2B2B2B">
-    <meta name="description" content="Cazana Store: Hogar y tecnología, Online, On Time.">
-    <title>Inicio — Cazana Store</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/v4.css">
-    <script src="js/data.js" defer></script>
-    <script src="js/main.js" defer></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#2B2B2B">
+  <meta name="description" content="Cazana Store: Hogar y tecnología, Online, On Time.">
+  <title>Inicio — Cazana Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/data.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/components/ui.js" defer></script>
 </head>
 
 <body>
-    <div class="topbar">✦ &nbsp; Online, On Time · Entregas según destino y disponibilidad</div>
-    <header class="site-header">
-        <div class="wrap header-main"><a class="brand" href="index.html" aria-label="Cazana Store, inicio"><span
-                    class="brand-name">CAZANA</span><span class="brand-sub">STORE <i>— Online, On Time</i></span></a>
-            <form class="header-search" data-search-form role="search"><label class="sr-only"
-                    for="search-desktop">Buscar productos</label><input id="search-desktop" name="q"
-                    placeholder="Buscar productos, marcas, categorías..." type="search" required><button type="submit"
-                    aria-label="Buscar"><svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="11" cy="11" r="7" />
-                        <path d="m16 16 5 5" />
-                    </svg></button></form>
-            <div class="header-actions"><button class="head-action" type="button" data-wishlist-open
-                    aria-label="Ver favoritos"><svg aria-hidden="true" width="23" height="23" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path
-                            d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z" />
-                    </svg><span class="label">Favoritos</span><span class="head-bubble" id="wishlist-count"
-                        hidden>0</span></button><a class="head-action" href="cuenta.html"><svg aria-hidden="true"
-                        width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="7" r="4" />
-                        <path d="M4 21v-2a8 8 0 0 1 16 0v2" />
-                    </svg><span class="label">Ingresar</span></a><a class="head-action" href="carrito.html"><svg
-                        aria-hidden="true" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M5 7h14l1 14H4L5 7Z" />
-                        <path d="M9 9V6a3 3 0 0 1 6 0v3" />
-                    </svg><span class="label">Carrito</span><span class="head-bubble" id="cart-count"
-                        hidden>0</span></a><button class="menu-button" id="menu-button" aria-label="Mostrar menú"
-                    aria-controls="nav-bar" aria-expanded="false"><svg aria-hidden="true" width="23" height="23"
-                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M4 7h16M4 12h16M4 17h16" />
-                    </svg></button></div>
+  <div class="topbar">✦ &nbsp; Online, On Time · Entregas según destino y disponibilidad</div>
+  <header class="site-header">
+    <div class="wrap header-main"><a class="brand" href="index.html" aria-label="Cazana Store, inicio"><span
+          class="brand-name">CAZANA</span><span class="brand-sub">STORE <i>— Online, On Time</i></span></a>
+      <form class="header-search" data-search-form role="search"><label class="sr-only" for="search-desktop">Buscar
+          productos</label><input id="search-desktop" name="q" placeholder="Buscar productos, marcas, categorías..."
+          type="search" required><button type="submit" aria-label="Buscar"><svg aria-hidden="true" width="19"
+            height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"
+            stroke-linejoin="round">
+            <circle cx="11" cy="11" r="7" />
+            <path d="m16 16 5 5" />
+          </svg></button></form>
+      <div class="header-actions"><button class="head-action" type="button" data-wishlist-open
+          aria-label="Ver favoritos"><svg aria-hidden="true" width="23" height="23" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path
+              d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z" />
+          </svg><span class="label">Favoritos</span><span class="head-bubble" id="wishlist-count"
+            hidden>0</span></button><a class="head-action" href="cuenta.html"><svg aria-hidden="true" width="23"
+            height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"
+            stroke-linejoin="round">
+            <circle cx="12" cy="7" r="4" />
+            <path d="M4 21v-2a8 8 0 0 1 16 0v2" />
+          </svg><span class="label">Ingresar</span></a><a class="head-action" href="carrito.html"><svg
+            aria-hidden="true" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 7h14l1 14H4L5 7Z" />
+            <path d="M9 9V6a3 3 0 0 1 6 0v3" />
+          </svg><span class="label">Carrito</span><span class="head-bubble" id="cart-count" hidden>0</span></a><button
+          class="menu-button" id="menu-button" aria-label="Mostrar menú" aria-controls="nav-bar"
+          aria-expanded="false"><svg aria-hidden="true" width="23" height="23" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 7h16M4 12h16M4 17h16" />
+          </svg></button></div>
+    </div>
+    <div class="wrap mobile-search">
+      <form class="header-search" data-search-form role="search"><label class="sr-only" for="search-mobile">Buscar
+          productos</label><input id="search-mobile" name="q" type="search" placeholder="Buscar productos..."
+          required><button type="submit" aria-label="Buscar"><svg aria-hidden="true" width="19" height="19"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"
+            stroke-linejoin="round">
+            <circle cx="11" cy="11" r="7" />
+            <path d="m16 16 5 5" />
+          </svg></button></form>
+    </div>
+    <nav class="wrap nav-bar" id="nav-bar" aria-label="Navegación principal">
+      <div class="nav-list"><a href="tienda.html?category=hogar">Hogar</a><a
+          href="tienda.html?category=tecnologia">Tecnología</a><a href="tienda.html?offers=1">Ofertas</a><a
+          href="tienda.html?new=1">Nuevos</a><a href="nosotros.html">Nosotros</a><a href="contacto.html">Contacto</a>
+      </div><a class="admin-link" href="personal.html">Área Admin</a>
+    </nav>
+  </header>
+  <main id="contenido">
+    <section class="hero" aria-label="Selección Cazana Store">
+      <div class="hero-slider" id="hero-slider" aria-roledescription="carrusel"
+        aria-label="Ambientes y selección Cazana">
+        <div class="hero-slide is-active" data-hero-slide aria-hidden="false"><img src="assets/hero-referencia.jpg"
+            alt="" fetchpriority="high"></div>
+        <div class="hero-slide" data-hero-slide aria-hidden="true"><img src="assets/cat-hogar.jpg" alt=""
+            loading="lazy"></div>
+        <div class="hero-slide" data-hero-slide aria-hidden="true"><img src="assets/cat-tecnologia.jpg" alt=""
+            loading="lazy"></div>
+      </div>
+      <div class="hero-backdrop"></div>
+      <div class="wrap hero-content">
+        <div class="hero-inner"><span class="hero-pill">✦ Online, On Time — tu tienda de confianza</span>
+          <h1>Tu hogar,<br><span class="gold-gradient">más inteligente</span></h1>
+          <p>Artículos de hogar y tecnología premium, seleccionados para hacer más cómodo tu día a día.</p>
+          <div class="hero-buttons"><a href="tienda.html" class="btn btn-green">Comprar Ahora</a><a href="tienda.html"
+              class="btn btn-gold-outline">Ver Catálogo</a></div>
         </div>
-        <div class="wrap mobile-search">
-            <form class="header-search" data-search-form role="search"><label class="sr-only" for="search-mobile">Buscar
-                    productos</label><input id="search-mobile" name="q" type="search" placeholder="Buscar productos..."
-                    required><button type="submit" aria-label="Buscar"><svg aria-hidden="true" width="19" height="19"
-                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <circle cx="11" cy="11" r="7" />
-                        <path d="m16 16 5 5" />
-                    </svg></button></form>
+      </div>
+      <div class="hero-controls" aria-label="Controles del carrusel">
+        <button class="hero-arrow" type="button" data-hero-prev aria-label="Imagen anterior">‹</button>
+        <div class="hero-dots" role="group" aria-label="Elegir imagen">
+          <button class="hero-dot is-active" type="button" data-hero-dot="0" aria-label="Imagen 1 de 3"
+            aria-current="true"></button>
+          <button class="hero-dot" type="button" data-hero-dot="1" aria-label="Imagen 2 de 3"></button>
+          <button class="hero-dot" type="button" data-hero-dot="2" aria-label="Imagen 3 de 3"></button>
         </div>
-        <nav class="wrap nav-bar" id="nav-bar" aria-label="Navegación principal">
-            <div class="nav-list"><a href="tienda.html?category=hogar">Hogar</a><a
-                    href="tienda.html?category=tecnologia">Tecnología</a><a href="tienda.html?offers=1">Ofertas</a><a
-                    href="tienda.html?new=1">Nuevos</a><a href="nosotros.html">Nosotros</a><a
-                    href="contacto.html">Contacto</a></div><a class="admin-link" href="admin.html">Área Admin</a>
-        </nav>
-    </header>
-    <main id="contenido">
-        <section class="hero">
-            <div class="hero-backdrop"></div>
-            <div class="wrap hero-content">
-                <div class="hero-inner"><span class="hero-pill">✦ Online, On Time — tu tienda de confianza</span>
-                    <h1>Tu hogar,<br><span class="gold-gradient">más inteligente</span></h1>
-                    <p>Artículos de hogar y tecnología premium, seleccionados para hacer más cómodo tu día a día.</p>
-                    <div class="hero-buttons"><a href="tienda.html" class="btn btn-green">Comprar Ahora</a><a
-                            href="tienda.html" class="btn btn-gold-outline">Ver Catálogo</a></div>
-                </div>
-            </div>
-        </section>
-        <section class="values">
-            <div class="wrap value-grid">
-                <div class="value-item">
-                    <div class="value-icon"><svg aria-hidden="true" width="30" height="30" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"
-                            stroke-linejoin="round">
-                            <path d="M2 5h12v11H2zM14 9h5l3 3v4h-8" />
-                            <circle cx="6" cy="18" r="2" />
-                            <circle cx="18" cy="18" r="2" />
-                        </svg></div>
-                    <h3>Entrega clara</h3>
-                    <p>Información de envío sin sorpresas</p>
-                </div>
-                <div class="value-item">
-                    <div class="value-icon"><svg aria-hidden="true" width="30" height="30" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"
-                            stroke-linejoin="round">
-                            <path
-                                d="M4 14v-3a8 8 0 0 1 16 0v3M4 15h3v5H5a2 2 0 0 1-2-2v-1a2 2 0 0 1 1-2Zm13 0h3a2 2 0 0 1 1 2v1a2 2 0 0 1-2 2h-2v-5Z" />
-                        </svg></div>
-                    <h3>Atención Cercana</h3>
-                    <p>Atención pensada para ti</p>
-                </div>
-                <div class="value-item">
-                    <div class="value-icon"><svg aria-hidden="true" width="30" height="30" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"
-                            stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10" />
-                            <path d="M12 11v6M12 7.5v1" />
-                        </svg></div>
-                    <h3>Información Clara</h3>
-                    <p>Todos los detalles para elegir mejor</p>
-                </div>
-                <div class="value-item">
-                    <div class="value-icon"><svg aria-hidden="true" width="30" height="30" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"
-                            stroke-linejoin="round">
-                            <path d="m12 2 8 3v6c0 6-4 9-8 11-4-2-8-5-8-11V5l8-3Z" />
-                        </svg></div>
-                    <h3>Compra Segura</h3>
-                    <p>Protección en cada paso</p>
-                </div>
-            </div>
-        </section>
-        <section class="wrap section">
-            <div class="section-head center">
-                <h2 class="section-title">Nuestras Categorías</h2>
-                <p class="section-subtitle">Lo mejor para tu hogar y tu vida digital</p>
-            </div>
-            <div class="category-grid"><a class="category-card" href="tienda.html?category=hogar"><img
-                        src="assets/cat-hogar.jpg" alt="Fotografía de cocina y hogar">
-                    <div class="category-copy"><small>ARTÍCULOS PARA EL</small>
-                        <h3>Hogar</h3><span>Explorar ›</span>
-                    </div>
-                </a><a class="category-card" href="tienda.html?category=tecnologia"><img src="assets/cat-tecnologia.jpg"
-                        alt="Laptop y tecnología">
-                    <div class="category-copy"><small>LO ÚLTIMO EN</small>
-                        <h3>Tecnología</h3><span>Explorar ›</span>
-                    </div>
-                </a></div>
-        </section>
-        <section class="bg-light section">
-            <div class="wrap">
-                <div class="section-head">
-                    <div>
-                        <p class="eyebrow">Más populares</p>
-                        <h2 class="section-title">Más Vendidos</h2>
-                    </div><a class="section-more" href="tienda.html?sort=popular">Ver todos ›</a>
-                </div>
-                <div class="product-grid" id="bestsellers"></div>
-            </div>
-        </section>
-        <section class="sale-banner">
-            <div class="wrap sale-inner">
-                <div>
-                    <p class="eyebrow">Ofertas seleccionadas</p>
-                    <h2>Encuentra algo especial para ti</h2>
-                    <p>Consulta las promociones disponibles en el catálogo.</p>
-                </div><a class="btn btn-gold" href="tienda.html?offers=1">Ver Ofertas</a>
-            </div>
-        </section>
-        <section class="wrap section">
-            <div class="section-head">
-                <div>
-                    <p class="eyebrow">Recién llegados</p>
-                    <h2 class="section-title">Nuevos Ingresos</h2>
-                </div><a class="section-more" href="tienda.html?new=1">Ver todos ›</a>
-            </div>
-            <div class="product-grid" id="new-arrivals"></div>
-        </section>
-        <section class="bg-light section">
-            <div class="wrap">
-                <div class="section-head center">
-                    <p class="eyebrow">Cazana Store</p>
-                    <h2 class="section-title">Nuestra forma de comprar</h2>
-                    <p class="section-subtitle">Un espacio para compartir experiencias de compra.</p>
-                </div>
-                <div class="reviews-grid">
-                    <article class="review-card">
-                        <div class="stars" aria-hidden="true">✦</div>
-                        <blockquote>“Creemos en una experiencia que combina diseño, claridad y buen servicio.”
-                        </blockquote>
-                        <div class="review-user">
-                            <div class="review-avatar">C</div>
-                            <div><b>Cazana Store</b><span>Lo que nos inspira</span></div>
-                        </div>
-                    </article>
-                    <article class="review-card">
-                        <div class="stars" aria-hidden="true">✦</div>
-                        <blockquote>“La información del producto y sus condiciones debe ayudarte a decidir con
-                            confianza.”</blockquote>
-                        <div class="review-user">
-                            <div class="review-avatar">C</div>
-                            <div><b>Información clara</b><span>Principio de servicio</span></div>
-                        </div>
-                    </article>
-                    <article class="review-card">
-                        <div class="stars" aria-hidden="true">✦</div>
-                        <blockquote>“Una atención personalizada es parte de una buena experiencia.”</blockquote>
-                        <div class="review-user">
-                            <div class="review-avatar">C</div>
-                            <div><b>Trato cercano</b><span>Principio de servicio</span></div>
-                        </div>
-                    </article>
-                    <article class="review-card">
-                        <div class="stars" aria-hidden="true">✦</div>
-                        <blockquote>“Elegir productos bien presentados hace más fácil encontrar lo que necesitas.”
-                        </blockquote>
-                        <div class="review-user">
-                            <div class="review-avatar">C</div>
-                            <div><b>Selección Cazana</b><span>Principio de catálogo</span></div>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </section>
-        <section class="wrap section">
-            <div class="section-head">
-                <div>
-                    <p class="eyebrow">Todo el catálogo</p>
-                    <h2 class="section-title">Explora Productos</h2>
-                </div>
-            </div>
-            <div class="product-grid" id="all-preview"></div>
-            <div class="center-actions"><a class="btn btn-charcoal" href="tienda.html">Ver todos los productos</a></div>
-        </section>
-        <section class="newsletter">
-            <div class="wrap">
-                <p class="eyebrow">Newsletter</p>
-                <h2 class="section-title">Ofertas exclusivas en tu correo</h2>
-                <p class="section-subtitle">Próximamente podrás recibir novedades y promociones.</p>
-                <form data-newsletter><label class="sr-only" for="newsletter-email">Correo electrónico</label><input
-                        id="newsletter-email" type="email" placeholder="tu@correo.com" required><button type="submit"
-                        class="btn btn-gold">Suscribir</button></form>
-                <p class="newsletter-status" id="newsletter-status" aria-live="polite"></p>
-            </div>
-        </section>
-    </main>
-    <footer class="footer" id="footer">
-        <div class="footer-trust">
-            <div class="wrap footer-trust-grid">
-                <div class="footer-trust-item"><svg aria-hidden="true" width="27" height="27" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M2 5h12v11H2zM14 9h5l3 3v4h-8" />
-                        <circle cx="6" cy="18" r="2" />
-                        <circle cx="18" cy="18" r="2" />
-                    </svg><span><b>Entregas informadas</b><small>Consulta cobertura y plazos</small></span></div>
-                <div class="footer-trust-item"><svg aria-hidden="true" width="27" height="27" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="m12 2 8 3v6c0 6-4 9-8 11-4-2-8-5-8-11V5l8-3Z" />
-                    </svg><span><b>Pagos en preparación</b><small>Pasarela aún no habilitada</small></span></div>
-                <div class="footer-trust-item"><svg aria-hidden="true" width="27" height="27" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M8 9 4 13l4 4M4 13h12a4 4 0 0 0 0-8h-2" />
-                    </svg><span><b>Devoluciones</b><small>Políticas por confirmar</small></span></div>
-                <div class="footer-trust-item"><svg aria-hidden="true" width="27" height="27" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M20 11a8 8 0 0 1-8 8 8 8 0 0 1-4-.9L3 20l1.9-4.8A8 8 0 1 1 20 11Z" />
-                        <path d="M8 9h8M8 12h6" />
-                    </svg><span><b>Atención cercana</b><small>Canales por habilitar</small></span></div>
-            </div>
+        <button class="hero-arrow" type="button" data-hero-next aria-label="Imagen siguiente">›</button>
+      </div>
+    </section>
+    <section class="values">
+      <div class="wrap value-grid">
+        <div class="value-item">
+          <div class="value-icon"><svg aria-hidden="true" width="30" height="30" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 5h12v11H2zM14 9h5l3 3v4h-8" />
+              <circle cx="6" cy="18" r="2" />
+              <circle cx="18" cy="18" r="2" />
+            </svg></div>
+          <h3>Entrega clara</h3>
+          <p>Información de envío sin sorpresas</p>
         </div>
-        <div class="wrap footer-content">
-            <div><a href="index.html" class="footer-logo">CAZANA<small>STORE</small></a>
-                <p class="footer-brand-text">Tu destino premium para hogar y tecnología. <em
-                        style="color:var(--gold);font-style:normal">Online, On Time.</em></p>
-                <div class="footer-social"><a href="contacto.html" aria-label="Contactar a Cazana Store">✉</a></div>
-            </div>
-            <div>
-                <h3>CATEGORÍAS</h3><a href="tienda.html?category=hogar">Hogar</a><a
-                    href="tienda.html?category=tecnologia">Tecnología</a><a href="tienda.html?offers=1">Ofertas</a><a
-                    href="tienda.html?new=1">Nuevos ingresos</a>
-            </div>
-            <div>
-                <h3>INFORMACIÓN</h3><a href="nosotros.html">Nosotros</a><a href="contacto.html">Contacto</a><a
-                    href="cuenta.html">Mi cuenta</a><a href="contacto.html">Envíos y devoluciones</a><a
-                    href="contacto.html">Términos y privacidad (en preparación)</a>
-            </div>
-            <div>
-                <h3>CONTACTO</h3>
-                <p>Los canales oficiales se publicarán cuando la empresa los confirme.</p>
-                <h3 style="margin-top:20px">NEWSLETTER</h3>
-                <form class="footer-small-form" data-newsletter><input type="email" placeholder="tu@email.com"
-                        aria-label="Correo electrónico" required><button type="submit">Suscribir</button></form>
-            </div>
+        <div class="value-item">
+          <div class="value-icon"><svg aria-hidden="true" width="30" height="30" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M4 14v-3a8 8 0 0 1 16 0v3M4 15h3v5H5a2 2 0 0 1-2-2v-1a2 2 0 0 1 1-2Zm13 0h3a2 2 0 0 1 1 2v1a2 2 0 0 1-2 2h-2v-5Z" />
+            </svg></div>
+          <h3>Atención Cercana</h3>
+          <p>Atención pensada para ti</p>
         </div>
-        <div class="wrap footer-bottom"><span>© <span id="current-year">2026</span> Cazana Store. Todos los derechos
-                reservados.</span><span>Vista de demostración · Sin cobros</span></div>
-    </footer>
-    <button class="support-fab" id="support-toggle" aria-label="Abrir soporte" aria-controls="support-panel"
-        aria-expanded="false"><svg aria-hidden="true" width="25" height="25" viewBox="0 0 24 24" fill="none"
+        <div class="value-item">
+          <div class="value-icon"><svg aria-hidden="true" width="30" height="30" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 11v6M12 7.5v1" />
+            </svg></div>
+          <h3>Información Clara</h3>
+          <p>Todos los detalles para elegir mejor</p>
+        </div>
+        <div class="value-item">
+          <div class="value-icon"><svg aria-hidden="true" width="30" height="30" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m12 2 8 3v6c0 6-4 9-8 11-4-2-8-5-8-11V5l8-3Z" />
+            </svg></div>
+          <h3>Compra Segura</h3>
+          <p>Protección en cada paso</p>
+        </div>
+      </div>
+    </section>
+    <section class="wrap section">
+      <div class="section-head center">
+        <h2 class="section-title">Nuestras Categorías</h2>
+        <p class="section-subtitle">Lo mejor para tu hogar y tu vida digital</p>
+      </div>
+      <div class="category-grid"><a class="category-card" href="tienda.html?category=hogar"><img
+            src="assets/cat-hogar.jpg" alt="Fotografía de cocina y hogar">
+          <div class="category-copy"><small>ARTÍCULOS PARA EL</small>
+            <h3>Hogar</h3><span>Explorar ›</span>
+          </div>
+        </a><a class="category-card" href="tienda.html?category=tecnologia"><img src="assets/cat-tecnologia.jpg"
+            alt="Laptop y tecnología">
+          <div class="category-copy"><small>LO ÚLTIMO EN</small>
+            <h3>Tecnología</h3><span>Explorar ›</span>
+          </div>
+        </a></div>
+    </section>
+    <section class="bg-light section">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Más populares</p>
+            <h2 class="section-title">Más Vendidos</h2>
+          </div><a class="section-more" href="tienda.html?sort=popular">Ver todos ›</a>
+        </div>
+        <div class="product-grid" id="bestsellers"></div>
+      </div>
+    </section>
+    <section class="sale-banner">
+      <div class="wrap sale-inner">
+        <div>
+          <p class="eyebrow">Ofertas seleccionadas</p>
+          <h2>Encuentra algo especial para ti</h2>
+          <p>Consulta las promociones disponibles en el catálogo.</p>
+        </div><a class="btn btn-gold" href="tienda.html?offers=1">Ver Ofertas</a>
+      </div>
+    </section>
+    <section class="wrap section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Recién llegados</p>
+          <h2 class="section-title">Nuevos Ingresos</h2>
+        </div><a class="section-more" href="tienda.html?new=1">Ver todos ›</a>
+      </div>
+      <div class="product-grid" id="new-arrivals"></div>
+    </section>
+    <section class="bg-light section">
+      <div class="wrap">
+        <div class="section-head center">
+          <p class="eyebrow">Cazana Store</p>
+          <h2 class="section-title">Nuestra forma de comprar</h2>
+          <p class="section-subtitle">Un espacio para compartir experiencias de compra.</p>
+        </div>
+        <div class="reviews-grid">
+          <article class="review-card">
+            <div class="stars" aria-hidden="true">✦</div>
+            <blockquote>“Creemos en una experiencia que combina diseño, claridad y buen servicio.”</blockquote>
+            <div class="review-user">
+              <div class="review-avatar">C</div>
+              <div><b>Cazana Store</b><span>Lo que nos inspira</span></div>
+            </div>
+          </article>
+          <article class="review-card">
+            <div class="stars" aria-hidden="true">✦</div>
+            <blockquote>“La información del producto y sus condiciones debe ayudarte a decidir con confianza.”
+            </blockquote>
+            <div class="review-user">
+              <div class="review-avatar">C</div>
+              <div><b>Información clara</b><span>Principio de servicio</span></div>
+            </div>
+          </article>
+          <article class="review-card">
+            <div class="stars" aria-hidden="true">✦</div>
+            <blockquote>“Una atención personalizada es parte de una buena experiencia.”</blockquote>
+            <div class="review-user">
+              <div class="review-avatar">C</div>
+              <div><b>Trato cercano</b><span>Principio de servicio</span></div>
+            </div>
+          </article>
+          <article class="review-card">
+            <div class="stars" aria-hidden="true">✦</div>
+            <blockquote>“Elegir productos bien presentados hace más fácil encontrar lo que necesitas.”</blockquote>
+            <div class="review-user">
+              <div class="review-avatar">C</div>
+              <div><b>Selección Cazana</b><span>Principio de catálogo</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+    <section class="wrap section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Todo el catálogo</p>
+          <h2 class="section-title">Explora Productos</h2>
+        </div>
+      </div>
+      <div class="product-grid" id="all-preview"></div>
+      <div class="center-actions"><a class="btn btn-charcoal" href="tienda.html">Ver todos los productos</a></div>
+    </section>
+    <section class="newsletter">
+      <div class="wrap">
+        <p class="eyebrow">Newsletter</p>
+        <h2 class="section-title">Ofertas exclusivas en tu correo</h2>
+        <p class="section-subtitle">Próximamente podrás recibir novedades y promociones.</p>
+        <form data-newsletter><label class="sr-only" for="newsletter-email">Correo electrónico</label><input
+            id="newsletter-email" type="email" placeholder="tu@correo.com" required><button type="submit"
+            class="btn btn-gold">Suscribir</button></form>
+        <p class="newsletter-status" id="newsletter-status" aria-live="polite"></p>
+      </div>
+    </section>
+  </main>
+  <footer class="footer" id="footer">
+    <div class="footer-trust">
+      <div class="wrap footer-trust-grid">
+        <div class="footer-trust-item"><svg aria-hidden="true" width="27" height="27" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 5h12v11H2zM14 9h5l3 3v4h-8" />
+            <circle cx="6" cy="18" r="2" />
+            <circle cx="18" cy="18" r="2" />
+          </svg><span><b>Entregas informadas</b><small>Consulta cobertura y plazos</small></span></div>
+        <div class="footer-trust-item"><svg aria-hidden="true" width="27" height="27" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m12 2 8 3v6c0 6-4 9-8 11-4-2-8-5-8-11V5l8-3Z" />
+          </svg><span><b>Pagos en preparación</b><small>Pasarela aún no habilitada</small></span></div>
+        <div class="footer-trust-item"><svg aria-hidden="true" width="27" height="27" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 9 4 13l4 4M4 13h12a4 4 0 0 0 0-8h-2" />
+          </svg><span><b>Devoluciones</b><small>Políticas por confirmar</small></span></div>
+        <div class="footer-trust-item"><svg aria-hidden="true" width="27" height="27" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
             <path d="M20 11a8 8 0 0 1-8 8 8 8 0 0 1-4-.9L3 20l1.9-4.8A8 8 0 1 1 20 11Z" />
             <path d="M8 9h8M8 12h6" />
+          </svg><span><b>Atención cercana</b><small>Canales por habilitar</small></span></div>
+      </div>
+    </div>
+    <div class="wrap footer-content">
+      <div><a href="index.html" class="footer-logo">CAZANA<small>STORE</small></a>
+        <p class="footer-brand-text">Tu destino premium para hogar y tecnología. <em
+            style="color:var(--gold);font-style:normal">Online, On Time.</em></p>
+        <div class="footer-social"><a href="contacto.html" aria-label="Contactar a Cazana Store">✉</a></div>
+      </div>
+      <div>
+        <h3>CATEGORÍAS</h3><a href="tienda.html?category=hogar">Hogar</a><a
+          href="tienda.html?category=tecnologia">Tecnología</a><a href="tienda.html?offers=1">Ofertas</a><a
+          href="tienda.html?new=1">Nuevos ingresos</a>
+      </div>
+      <div>
+        <h3>INFORMACIÓN</h3><a href="nosotros.html">Nosotros</a><a href="contacto.html">Contacto</a><a
+          href="cuenta.html">Mi cuenta</a><a href="contacto.html">Envíos y devoluciones</a><a
+          href="contacto.html">Términos y privacidad (en preparación)</a>
+      </div>
+      <div>
+        <h3>CONTACTO</h3>
+        <p>Los canales oficiales se publicarán cuando la empresa los confirme.</p>
+        <h3 style="margin-top:20px">NEWSLETTER</h3>
+        <form class="footer-small-form" data-newsletter><input type="email" placeholder="tu@email.com"
+            aria-label="Correo electrónico" required><button type="submit">Suscribir</button></form>
+      </div>
+    </div>
+    <div class="wrap footer-bottom"><span>© <span id="current-year">2026</span> Cazana Store. Todos los derechos
+        reservados.</span><span>Vista de demostración · Sin cobros</span></div>
+  </footer>
+  <button class="support-fab" id="support-toggle" aria-label="Abrir soporte" aria-controls="support-panel"
+    aria-expanded="false"><svg aria-hidden="true" width="25" height="25" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 11a8 8 0 0 1-8 8 8 8 0 0 1-4-.9L3 20l1.9-4.8A8 8 0 1 1 20 11Z" />
+      <path d="M8 9h8M8 12h6" />
+    </svg></button>
+  <aside class="support-panel" id="support-panel" aria-label="Cazana Soporte">
+    <div class="support-head">
+      <div>
+        <div class="support-title">Cazana Soporte</div>
+        <div class="support-sub">Canal en preparación</div>
+      </div><button type="button" id="support-close" aria-label="Cerrar"><svg aria-hidden="true" width="16" height="16"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path d="M5 5l14 14M19 5 5 19" />
         </svg></button>
-    <aside class="support-panel" id="support-panel" aria-label="Cazana Soporte">
-        <div class="support-head">
-            <div>
-                <div class="support-title">Cazana Soporte</div>
-                <div class="support-sub">Canal en preparación</div>
-            </div><button type="button" id="support-close" aria-label="Cerrar"><svg aria-hidden="true" width="16"
-                    height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M5 5l14 14M19 5 5 19" />
-                </svg></button>
-        </div>
-        <div class="support-body">
-            <div class="support-msg">¡Bienvenido a Cazana Store! Estamos preparando nuestro canal de soporte. Mientras
-                tanto, puedes consultar la sección de contacto.</div>
-        </div>
-        <div class="support-cta"><a href="contacto.html">Ir a contacto ↗</a></div>
-    </aside>
-    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    </div>
+    <div class="support-body">
+      <div class="support-msg">¡Bienvenido a Cazana Store! Estamos preparando nuestro canal de soporte. Mientras tanto,
+        puedes consultar la sección de contacto.</div>
+    </div>
+    <div class="support-cta"><a href="contacto.html">Ir a contacto ↗</a></div>
+  </aside>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>
 
 </html>
