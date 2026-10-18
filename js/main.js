@@ -291,7 +291,8 @@
     }
 
     const save = product.originalPrice ? product.originalPrice - product.price : 0;
-    const gallery = product.gallery?.length ? product.gallery : [product.image];
+    const requestedGallery = product.gallery?.length ? product.gallery : [product.image];
+    let gallery = [];
     const related = relatedProducts(product);
 
     root.innerHTML = `
@@ -301,11 +302,11 @@
           <div class="product-gallery card-surface">
             <div class="gallery-stage-wrap">
               ${product.isOffer ? `<span class="tag stage-tag">-${Math.round((1 - product.price / product.originalPrice) * 100)}% OFF</span>` : ''}
-              <img id="product-main-image" class="gallery-stage" src="${esc(gallery[0])}" alt="${esc(product.name)}">
+              <img id="product-main-image" class="gallery-stage" src="${window.CazanaMedia.placeholder}" alt="Fotografía pendiente de ${esc(product.name)}">
               <button class="gallery-nav gallery-prev" type="button" data-gallery-nav="-1" aria-label="Imagen anterior">‹</button>
               <button class="gallery-nav gallery-next" type="button" data-gallery-nav="1" aria-label="Imagen siguiente">›</button>
             </div>
-            <div class="gallery-thumbs">${gallery.map((img, i) => `<button type="button" class="gallery-thumb ${i === 0 ? 'is-active' : ''}" data-thumb="${i}" aria-label="Ver imagen ${i + 1}"><img src="${esc(img)}" alt="Miniatura ${i + 1}"></button>`).join('')}</div>
+            <div class="gallery-thumbs"><p class="gallery-photo-note">Buscando fotografías disponibles…</p></div>
           </div>
           <div class="product-summary">
             <p class="eyebrow">${esc(product.subcategory)}</p>
@@ -345,14 +346,39 @@
 
     let current = 0;
     const stage = $('#product-main-image', root);
-    const thumbButtons = $$('.gallery-thumb', root);
+    const thumbsRoot = $('.gallery-thumbs', root);
+    const navButtons = $$('[data-gallery-nav]', root);
     const syncGallery = index => {
+      if (!gallery.length) return;
       current = (index + gallery.length) % gallery.length;
       stage.src = gallery[current];
-      thumbButtons.forEach((btn, i) => btn.classList.toggle('is-active', i === current));
+      $$('.gallery-thumb', thumbsRoot).forEach((btn, i) => btn.classList.toggle('is-active', i === current));
     };
-    thumbButtons.forEach(btn => btn.addEventListener('click', () => syncGallery(Number(btn.dataset.thumb))));
-    $$('[data-gallery-nav]', root).forEach(btn => btn.addEventListener('click', () => syncGallery(current + Number(btn.dataset.galleryNav))));
+    thumbsRoot.addEventListener('click', e => {
+      const button = e.target.closest('[data-thumb]');
+      if (button) syncGallery(Number(button.dataset.thumb));
+    });
+    navButtons.forEach(btn => btn.addEventListener('click', () => syncGallery(current + Number(btn.dataset.galleryNav))));
+    navButtons.forEach(btn => { btn.hidden = true; });
+
+    Promise.all(requestedGallery.map(path => window.CazanaMedia.resolve(path)))
+      .then(results => {
+        if (!root.contains(stage)) return;
+        gallery = [...new Set(results.filter(result => result.found).map(result => result.src))];
+        current = 0;
+        if (!gallery.length) {
+          stage.src = window.CazanaMedia.placeholder;
+          thumbsRoot.innerHTML = '<p class="gallery-photo-note">Las fotografías reales de este producto se añadirán próximamente.</p>';
+        } else {
+          stage.src = gallery[0];
+          stage.alt = product.name;
+          thumbsRoot.innerHTML = gallery.map((src, i) => `
+            <button type="button" class="gallery-thumb ${i === 0 ? 'is-active' : ''}" data-thumb="${i}" aria-label="Ver fotografía ${i + 1}">
+              <img src="${esc(src)}" alt="${esc(product.name)} - vista ${i + 1}" loading="lazy">
+            </button>`).join('');
+        }
+        navButtons.forEach(btn => { btn.hidden = gallery.length < 2; });
+      });
 
     let qty = 1;
     const qtyValue = $('#qty-value', root);

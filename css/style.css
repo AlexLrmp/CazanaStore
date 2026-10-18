@@ -230,7 +230,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 .hero-backdrop {
   position: absolute;
   inset: 0;
-  background-image: linear-gradient(90deg,#151515d9 0%,#161616ab 32%,#1818185c 61%,transparent 100%),url('../assets/hero-referencia.jpg');
+  background-image: linear-gradient(90deg,#151515d9 0%,#161616ab 32%,#1818185c 61%,transparent 100%);
   background-size: cover;
   background-position: center 42%;
 }
@@ -941,7 +941,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
   .nav-list { flex-direction: column; align-items: flex-start; gap: 16px; }
   .admin-link { align-self: flex-start; }
   .hero { min-height: 550px; height: 70vh; }
-  .hero-backdrop { background-position: 64% center; background-image: linear-gradient(90deg,#151515e8 0%,#151515ac 68%,#15151550),url('../assets/hero-referencia.jpg'); }
+  .hero-backdrop { background-position: 64% center; background-image: linear-gradient(90deg,#151515e8 0%,#151515ac 68%,#15151550); }
   .hero-inner { max-width: 520px; }
   .hero h1 { font-size: 49px; }
   .hero p { font-size: 14px; }
@@ -2399,7 +2399,7 @@ body { color: var(--charcoal); background: #fff; -webkit-font-smoothing: antiali
 
 .contact-aside { display: flex; flex-direction: column; gap: 20px; }
 
-.contact-visual { border-radius: 22px; background: linear-gradient(140deg,rgba(0,0,0,.02),rgba(0,0,0,.05)),url('../assets/cat-hogar.jpg') center / cover; min-height: 200px; }
+.contact-visual { border-radius: 22px; background: linear-gradient(140deg,rgba(0,0,0,.02),rgba(0,0,0,.05)),linear-gradient(135deg,#ede8e1,#d5c9ba) center / cover; min-height: 200px; }
 
 .contact-small-card { padding: 25px; }
 
@@ -3590,4 +3590,73 @@ button,input,select,textarea { font-family: var(--sans); }
   .header-actions .head-action:first-child { display: flex !important; }
   .header-actions { gap: 2px; }
   .head-action { min-width: 34px; padding: 4px; }
+}
+
+/* =============================================================
+   CAZANA · FOTOGRAFÍA REAL PENDIENTE / FORMATO ADAPTABLE
+   La fotografía se incorpora como archivo, sin modificar CSS.
+   Especificación: banners 1920×900 (16:7.5 aprox); productos 1200×1200.
+   ============================================================= */
+.hero {
+  height: clamp(510px, 55vw, 690px);
+  min-height: 0;
+  background: #242521;
+}
+.hero-slider,.hero-slide { height: 100%; width: 100%; }
+.hero-slide {
+  background: radial-gradient(ellipse at 80% 40%,#62594c 0%,transparent 55%),
+              linear-gradient(130deg,#1d2120 10%,#3e3d36 100%);
+}
+.hero-slide:nth-child(2) { background:radial-gradient(ellipse at 82% 35%,#74614e 0%,transparent 58%),linear-gradient(125deg,#29221e,#4d3b32); }
+.hero-slide:nth-child(3) { background:radial-gradient(ellipse at 82% 35%,#47575c 0%,transparent 55%),linear-gradient(125deg,#1d262b,#363d3e); }
+.hero-slide img {
+  display: block;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: 66% 50%;
+  transform: none;
+}
+.hero-slide.is-photo-missing img { display: none; }
+.hero-slide.is-photo-missing::after {
+  content: attr(data-photo-label);
+  position: absolute;
+  right: 8%; top: 46%;
+  max-width: 27ch;
+  padding: 18px 22px;
+  border: 1px solid rgba(235,214,172,.42);
+  border-radius: 14px;
+  color: #e9d8ba;
+  font: 500 13px/1.6 'Poppins', sans-serif;
+  text-align: center;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  background: rgba(25,26,25,.18);
+}
+.hero-backdrop { background: linear-gradient(90deg,rgba(10,11,12,.82) 0%,rgba(10,11,12,.50) 40%,rgba(10,11,12,.02) 92%) !important; }
+.product-img-wrap img,
+.category-card > img,
+.gallery-stage,
+.gallery-thumb img,
+.about-photo img { object-fit: cover; }
+.product-img-wrap img { aspect-ratio: 1 / 1; object-position: center; }
+.category-card > img { width: 100%; height: 100%; object-position: center; }
+.gallery-stage { width: 100%; max-height: 630px; object-position: center; }
+.gallery-photo-note {
+  width: 100%; margin: 0;
+  padding: 15px 12px;
+  border: 1px dashed #d8cec1;
+  border-radius: 12px;
+  font: 400 12px/1.6 'Poppins',sans-serif;
+  color: #77716b; text-align: center;
+  background: #fbfaf8;
+}
+.gallery-nav[hidden] { display: none !important; }
+@media (max-width: 900px) {
+  .hero { height: clamp(500px, 75svh, 640px); min-height: 0; }
+  .hero-slide img { object-position: 66% center; }
+}
+@media (max-width: 560px) {
+  .hero { height: clamp(505px, 74svh, 610px); min-height: 0; }
+  .hero-slide.is-photo-missing::after { right: 5%; top: auto; bottom: 82px; font-size: 10px; opacity: .76; padding: 10px 14px; }
+  .hero-slide img { object-position: 72% center; }
 }

@@ -1,0 +1,122 @@
+{
+  "h1": {
+    "slug": "cafetera-espresso",
+    "name": "Cafetera espresso",
+    "image": "assets/productos/cafetera-espresso/principal.webp",
+    "gallery": [
+      "assets/productos/cafetera-espresso/principal.webp",
+      "assets/productos/cafetera-espresso/detalle.webp",
+      "assets/productos/cafetera-espresso/ambiente.webp"
+    ]
+  },
+  "h2": {
+    "slug": "sabanas-egipcias",
+    "name": "Juego de sabanas",
+    "image": "assets/productos/sabanas-egipcias/principal.webp",
+    "gallery": [
+      "assets/productos/sabanas-egipcias/principal.webp",
+      "assets/productos/sabanas-egipcias/detalle.webp",
+      "assets/productos/sabanas-egipcias/ambiente.webp"
+    ]
+  },
+  "h3": {
+    "slug": "licuadora-alta-potencia",
+    "name": "Licuadora de vaso",
+    "image": "assets/productos/licuadora-alta-potencia/principal.webp",
+    "gallery": [
+      "assets/productos/licuadora-alta-potencia/principal.webp",
+      "assets/productos/licuadora-alta-potencia/detalle.webp",
+      "assets/productos/licuadora-alta-potencia/ambiente.webp"
+    ]
+  },
+  "h4": {
+    "slug": "aspiradora-robot",
+    "name": "Aspiradora robot",
+    "image": "assets/productos/aspiradora-robot/principal.webp",
+    "gallery": [
+      "assets/productos/aspiradora-robot/principal.webp",
+      "assets/productos/aspiradora-robot/detalle.webp",
+      "assets/productos/aspiradora-robot/ambiente.webp"
+    ]
+  },
+  "h5": {
+    "slug": "juego-ollas-inox",
+    "name": "Juego de ollas",
+    "image": "assets/productos/juego-ollas-inox/principal.webp",
+    "gallery": [
+      "assets/productos/juego-ollas-inox/principal.webp",
+      "assets/productos/juego-ollas-inox/detalle.webp",
+      "assets/productos/juego-ollas-inox/ambiente.webp"
+    ]
+  },
+  "h6": {
+    "slug": "lampara-piso-led",
+    "name": "Lampara de pie LED",
+    "image": "assets/productos/lampara-piso-led/principal.webp",
+    "gallery": [
+      "assets/productos/lampara-piso-led/principal.webp",
+      "assets/productos/lampara-piso-led/detalle.webp",
+      "assets/productos/lampara-piso-led/ambiente.webp"
+    ]
+  },
+  "t1": {
+    "slug": "audifonos-inalambricos",
+    "name": "Audifonos de diadema",
+    "image": "assets/productos/audifonos-inalambricos/principal.webp",
+    "gallery": [
+      "assets/productos/audifonos-inalambricos/principal.webp",
+      "assets/productos/audifonos-inalambricos/detalle.webp",
+      "assets/productos/audifonos-inalambricos/ambiente.webp"
+    ]
+  },
+  "t2": {
+    "slug": "smartwatch-serie-7",
+    "name": "Reloj inteligente",
+    "image": "assets/productos/smartwatch-serie-7/principal.webp",
+    "gallery": [
+      "assets/productos/smartwatch-serie-7/principal.webp",
+      "assets/productos/smartwatch-serie-7/detalle.webp",
+      "assets/productos/smartwatch-serie-7/ambiente.webp"
+    ]
+  },
+  "t3": {
+    "slug": "parlante-bluetooth",
+    "name": "Parlante Bluetooth",
+    "image": "assets/productos/parlante-bluetooth/principal.webp",
+    "gallery": [
+      "assets/productos/parlante-bluetooth/principal.webp",
+      "assets/productos/parlante-bluetooth/detalle.webp",
+      "assets/productos/parlante-bluetooth/ambiente.webp"
+    ]
+  },
+  "t4": {
+    "slug": "tablet-2k",
+    "name": "Tablet con lapiz",
+    "image": "assets/productos/tablet-2k/principal.webp",
+    "gallery": [
+      "assets/productos/tablet-2k/principal.webp",
+      "assets/productos/tablet-2k/detalle.webp",
+      "assets/productos/tablet-2k/ambiente.webp"
+    ]
+  },
+  "t5": {
+    "slug": "laptop-ultradelgada",
+    "name": "Computadora portatil",
+    "image": "assets/productos/laptop-ultradelgada/principal.webp",
+    "gallery": [
+      "assets/productos/laptop-ultradelgada/principal.webp",
+      "assets/productos/laptop-ultradelgada/detalle.webp",
+      "assets/productos/laptop-ultradelgada/ambiente.webp"
+    ]
+  },
+  "t6": {
+    "slug": "camara-seguridad-wifi",
+    "name": "Camara de seguridad",
+    "image": "assets/productos/camara-seguridad-wifi/principal.webp",
+    "gallery": [
+      "assets/productos/camara-seguridad-wifi/principal.webp",
+      "assets/productos/camara-seguridad-wifi/detalle.webp",
+      "assets/productos/camara-seguridad-wifi/ambiente.webp"
+    ]
+  }
+}
