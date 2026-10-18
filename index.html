@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="css/style.css">
   <script defer src="js/components/media.js"></script><script src="js/data.js" defer></script>
   <script src="js/main.js" defer></script>
+  <script src="js/services/testimonials.js" defer></script>
   <script src="js/components/ui.js" defer></script>
 </head>
 
@@ -188,48 +189,15 @@
       </div>
       <div class="product-grid" id="new-arrivals"></div>
     </section>
-    <section class="bg-light section">
+    <section class="bg-light section testimonials-section" aria-labelledby="testimonials-title">
       <div class="wrap">
         <div class="section-head center">
-          <p class="eyebrow">Cazana Store</p>
-          <h2 class="section-title">Nuestra forma de comprar</h2>
-          <p class="section-subtitle">Un espacio para compartir experiencias de compra.</p>
+          <p class="eyebrow">EXPERIENCIAS DE CLIENTES</p>
+          <h2 class="section-title" id="testimonials-title">Testimonios de nuestros clientes</h2>
+          <p class="section-subtitle">Conoce lo que opinan quienes compran en Cazana Store.</p>
         </div>
-        <div class="reviews-grid">
-          <article class="review-card">
-            <div class="stars" aria-hidden="true">✦</div>
-            <blockquote>“Creemos en una experiencia que combina diseño, claridad y buen servicio.”</blockquote>
-            <div class="review-user">
-              <div class="review-avatar">C</div>
-              <div><b>Cazana Store</b><span>Lo que nos inspira</span></div>
-            </div>
-          </article>
-          <article class="review-card">
-            <div class="stars" aria-hidden="true">✦</div>
-            <blockquote>“La información del producto y sus condiciones debe ayudarte a decidir con confianza.”
-            </blockquote>
-            <div class="review-user">
-              <div class="review-avatar">C</div>
-              <div><b>Información clara</b><span>Principio de servicio</span></div>
-            </div>
-          </article>
-          <article class="review-card">
-            <div class="stars" aria-hidden="true">✦</div>
-            <blockquote>“Una atención personalizada es parte de una buena experiencia.”</blockquote>
-            <div class="review-user">
-              <div class="review-avatar">C</div>
-              <div><b>Trato cercano</b><span>Principio de servicio</span></div>
-            </div>
-          </article>
-          <article class="review-card">
-            <div class="stars" aria-hidden="true">✦</div>
-            <blockquote>“Elegir productos bien presentados hace más fácil encontrar lo que necesitas.”</blockquote>
-            <div class="review-user">
-              <div class="review-avatar">C</div>
-              <div><b>Selección Cazana</b><span>Principio de catálogo</span></div>
-            </div>
-          </article>
-        </div>
+        <div class="reviews-grid testimonials-grid" id="homepage-testimonials" aria-live="polite"></div>
+        <p id="testimonials-demo-note" class="testimonials-demo-note" hidden>Reseñas ilustrativas de demostración. No corresponden a compras verificadas.</p>
       </div>
     </section>
     <section class="wrap section">
