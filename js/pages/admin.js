@@ -47,8 +47,89 @@
       <section class="dash-card"><div class="dash-card-head"><h3>Desglose de gastos</h3><span>Valores ficticios</span></div>${tableWrap(['Concepto','Categoría','Monto'],expenses.map(e=>`<tr><td>${escape(e.name)}</td><td>${escape(e.category)}</td><td>${money(e.amount)}</td></tr>`).join(''))}</section><div class="compact-notice admin-finance-note">El margen mostrado no es utilidad neta. El módulo contable real incorporará impuestos, costo de venta, devoluciones y conciliación.</div>`;}
   function supportPage(){return `${heading('Atención al cliente','Consultas y conversaciones en un solo lugar.')}
     <div class="support-preview-grid"><section class="dash-card"><h3>Bandeja de consultas</h3>${[['Consulta de producto','Nuevo'],['Estado de entrega','Pendiente'],['Cambio o devolución','Cerrado']].map(([a,b])=>`<div class="support-preview-item"><span class="support-preview-avatar">✉</span><div><strong>${a}</strong><small>Conversación de ejemplo</small></div><span class="order-status ${b==='Cerrado'?'delivered':'pending'}">${b}</span></div>`).join('')}</section><section class="dash-card support-preview-empty"><div class="support-large-icon">♡</div><h3>Atención más cercana</h3><p>Las conversaciones se mostrarán aquí cuando habilitemos el canal de soporte.</p><a class="btn btn-outline" href="contacto.html">Ver contacto</a></section></div>`;}
-  const sections={overview,analytics,orders:ordersPage,inventory:inventoryPage,accounting:accountingPage,support:supportPage};
-  function render(tab){const id=sections[tab]?tab:'overview';root.innerHTML=sections[id]();document.querySelectorAll('[data-admin-tab]').forEach(b=>{b.classList.toggle('selected',b.dataset.adminTab===id);b.setAttribute('aria-current',b.dataset.adminTab===id?'page':'false')});root.querySelectorAll('[data-navigate-tab]').forEach(b=>b.addEventListener('click',e=>{e.preventDefault();render(b.dataset.navigateTab)}));}
+
+  function testimonialsPage(){
+    const T=window.CazanaTestimonials;
+    if(!T)return '<p>No se pudo cargar el editor de testimonios.</p>';
+    const list=T.getAll();
+    const rows=list.map((x,n)=>`<article class="admin-testimonial-item">
+      <div><strong>${escape(x.name)}</strong> <small>${escape(x.city)}</small><p>${escape(x.text)}</p>
+      <small>${escape(x.product)} · ${'★'.repeat(x.rating)} · ${x.published?'Publicado':'Oculto'}</small></div>
+      <div class="admin-testimonial-actions">
+        <button type="button" data-review-act="edit" data-id="${escape(x.id)}">Editar</button>
+        <button type="button" data-review-act="toggle" data-id="${escape(x.id)}">${x.published?'Ocultar':'Publicar'}</button>
+        <button type="button" data-review-act="up" data-id="${escape(x.id)}" ${n===0?'disabled':''}>↑</button>
+        <button type="button" data-review-act="down" data-id="${escape(x.id)}" ${n===list.length-1?'disabled':''}>↓</button>
+        <button type="button" data-review-act="delete" data-id="${escape(x.id)}">Eliminar</button>
+      </div>
+    </article>`).join('');
+    return `${heading('Testimonios de clientes','Gestiona los comentarios que aparecen en la portada.')}
+      <div class="compact-notice">Modo de demostración: los cambios se guardan únicamente en este navegador. Para que todos los visitantes vean los testimonios, será necesaria una API y autenticación del administrador. Publica solo opiniones reales autorizadas. Las compras no se verifican en esta versión.</div>
+      ${T.isDemo()?'<div class="compact-notice">La portada muestra cuatro ejemplos ilustrativos hasta que registres el primer testimonio.</div>':''}
+      <div class="admin-testimonial-layout">
+        <section class="dash-card"><h3 id="review-form-title">Añadir testimonio</h3>
+          <form id="admin-testimonial-form">
+            <input type="hidden" name="id">
+            <label>Cliente<input required maxlength="80" name="name" placeholder="Nombre del cliente"></label>
+            <label>Ciudad y país<input maxlength="80" name="city" placeholder="Lima, Perú"></label>
+            <label>Producto<input maxlength="100" name="product" placeholder="Producto comprado"></label>
+            <label>Calificación<select name="rating">${[5,4,3,2,1].map(n=>`<option value="${n}">${n} estrellas</option>`).join('')}</select></label>
+            <label>Foto opcional (URL HTTPS o ruta assets/)<input maxlength="400" name="image" placeholder="https://..."></label>
+            <label>Comentario<textarea required minlength="10" maxlength="600" rows="4" name="text" placeholder="Experiencia del cliente"></textarea></label>
+            <label class="admin-testimonial-checkbox"><input type="checkbox" checked name="published"> Publicar en inicio</label>
+            <div class="admin-testimonial-actions"><button class="btn btn-charcoal" type="submit">Guardar</button><button class="btn btn-outline" type="reset" id="reset-testimonial-form">Cancelar edición</button></div>
+            <p role="status" id="admin-testimonial-status"></p>
+          </form>
+        </section>
+        <section class="dash-card"><h3>Testimonios registrados (${list.length})</h3>
+          <p class="admin-testimonial-help">Se muestran los primeros cuatro publicados, según su orden.</p>
+          ${rows||'<p>Aún no hay testimonios registrados.</p>'}
+        </section>
+      </div>`;
+  }
+  function bindTestimonials(){
+    const T=window.CazanaTestimonials, form=root.querySelector('#admin-testimonial-form');
+    if(!T||!form)return;
+    const status=message=>{const el=root.querySelector('#admin-testimonial-status');if(el)el.textContent=message;};
+    form.addEventListener('reset',()=>{root.querySelector('#review-form-title').textContent='Añadir testimonio';});
+    form.addEventListener('submit',event=>{
+      event.preventDefault();
+      const fd=new FormData(form),entries=T.getAll(),id=String(fd.get('id')||'');
+      const image=String(fd.get('image')||'').trim();
+      if(image&&!T.validImage(image))return status('La foto requiere una URL HTTPS o ruta assets/ válida.');
+      const item={id:id||'test-'+Date.now()+'-'+Math.random().toString(36).slice(2,7),name:String(fd.get('name')||'').trim(),
+        city:String(fd.get('city')||'').trim(),product:String(fd.get('product')||'').trim(),text:String(fd.get('text')||'').trim(),
+        image,rating:Number(fd.get('rating')),published:fd.has('published')};
+      if(!item.name||item.text.length<10)return status('Completa el nombre y el comentario (mínimo 10 caracteres).');
+      const idx=entries.findIndex(x=>x.id===id);
+      if(id&&idx===-1)return status('No se encontró el testimonio para actualizar.');
+      if(idx>=0)entries[idx]=item;else entries.unshift(item);
+      if(!T.saveAll(entries))return status('No se pudo guardar en este navegador.');
+      render('testimonials');
+    });
+    root.querySelectorAll('[data-review-act]').forEach(btn=>btn.addEventListener('click',()=>{
+      const list=T.getAll(),idx=list.findIndex(x=>x.id===btn.dataset.id),action=btn.dataset.reviewAct;
+      if(idx<0)return;
+      if(action==='edit'){
+        const item=list[idx];
+        for(const key of ['id','name','city','product','text','image','rating'])form.elements.namedItem(key).value=item[key]??'';
+        form.elements.namedItem('published').checked=item.published;
+        root.querySelector('#review-form-title').textContent='Editar testimonio';
+        form.scrollIntoView({behavior:'smooth',block:'nearest'});
+        return;
+      }
+      if(action==='delete'){if(!confirm('¿Eliminar este testimonio?'))return;list.splice(idx,1);}
+      else if(action==='toggle')list[idx].published=!list[idx].published;
+      else if(action==='up'&&idx>0)[list[idx-1],list[idx]]=[list[idx],list[idx-1]];
+      else if(action==='down'&&idx<list.length-1)[list[idx+1],list[idx]]=[list[idx],list[idx+1]];
+      else return;
+      if(!T.saveAll(list))return status('No se pudo guardar en este navegador.');
+      render('testimonials');
+    }));
+  }
+
+  const sections={overview,analytics,orders:ordersPage,inventory:inventoryPage,accounting:accountingPage,support:supportPage,testimonials:testimonialsPage};
+  function render(tab){const id=sections[tab]?tab:'overview';root.innerHTML=sections[id]();document.querySelectorAll('[data-admin-tab]').forEach(b=>{b.classList.toggle('selected',b.dataset.adminTab===id);b.setAttribute('aria-current',b.dataset.adminTab===id?'page':'false')});root.querySelectorAll('[data-navigate-tab]').forEach(b=>b.addEventListener('click',e=>{e.preventDefault();render(b.dataset.navigateTab)}));if(id==='testimonials')bindTestimonials();}
   document.querySelectorAll('[data-admin-tab]').forEach(btn=>btn.addEventListener('click',()=>render(btn.dataset.adminTab)));
   const csv = (rows)=> '\uFEFF'+rows.map(row=>row.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(';')).join('\r\n');
   document.getElementById('admin-export')?.addEventListener('click',()=>{
