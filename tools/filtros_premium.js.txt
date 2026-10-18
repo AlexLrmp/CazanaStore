@@ -1,0 +1,111 @@
+  // Cazana Store: controles de filtros consistentes en ordenador y movil.
+  function filterDrawer() {
+    const trigger = $('#filters-toggle');
+    const panel = $('#filter-panel');
+    const close = $('#filters-close');
+    const backdrop = $('#filter-backdrop');
+    const apply = $('#filters-apply');
+    const form = $('#shop-filters');
+    if (!trigger || !panel || !backdrop || !form) return;
+
+    const mobile = window.matchMedia('(max-width: 900px)');
+    const triggerText = [...trigger.childNodes].find(node => node.nodeType === 3 && node.textContent.trim());
+    let desktopExpanded = false; // El boton permanece visible tambien en PC.
+    let drawerOpen = false;
+    let previousFocus = null;
+
+    // Secciones de filtro plegables, sin alterar los valores elegidos.
+    $$('.filter-group', form).forEach((group, index) => {
+      const heading = $('h3', group);
+      if (!heading || $('button', heading)) return;
+      const title = heading.textContent.trim();
+      const content = document.createElement('div');
+      content.className = 'filter-group-body';
+      content.id = `cazana-filter-section-${index + 1}`;
+      while (heading.nextSibling) content.appendChild(heading.nextSibling);
+      group.appendChild(content);
+      const toggle = document.createElement('button');
+      toggle.type = 'button';
+      toggle.className = 'filter-section-toggle';
+      toggle.setAttribute('aria-expanded','true');
+      toggle.setAttribute('aria-controls',content.id);
+      const caption = document.createElement('span');
+      caption.textContent = title;
+      const chevron = document.createElement('span');
+      chevron.className = 'filter-section-chevron';
+      chevron.setAttribute('aria-hidden','true');
+      chevron.textContent = '⌄';
+      toggle.append(caption,chevron);
+      heading.replaceChildren(toggle);
+      toggle.addEventListener('click', () => {
+        const collapsed = group.classList.toggle('is-collapsed');
+        toggle.setAttribute('aria-expanded',String(!collapsed));
+        content.hidden = collapsed;
+      });
+    });
+
+    function paint() {
+      const isMobile = mobile.matches;
+      document.body.classList.toggle('filters-open',isMobile && drawerOpen);
+      document.body.classList.toggle('filters-collapsed',!isMobile && !desktopExpanded);
+      backdrop.hidden = !(isMobile && drawerOpen);
+      const shown = isMobile ? drawerOpen : desktopExpanded;
+      panel.inert = !shown;
+      panel.setAttribute('aria-hidden',String(!shown));
+      trigger.setAttribute('aria-expanded',String(shown));
+      trigger.classList.toggle('is-expanded',shown);
+      if (triggerText) triggerText.textContent = shown ? ' Ocultar filtros ' : ' Filtrar productos ';
+    }
+    const closeMobile = (restore = true) => {
+      const wasOpen = drawerOpen;
+      drawerOpen = false;
+      paint();
+      if (restore && wasOpen && previousFocus?.isConnected) previousFocus.focus();
+    };
+    trigger.addEventListener('click',() => {
+      if(mobile.matches) {
+        if(drawerOpen) { closeMobile(); return; }
+        previousFocus = document.activeElement;
+        drawerOpen = true;
+        paint();
+        close?.focus();
+      } else {
+        desktopExpanded = !desktopExpanded;
+        paint();
+        if (desktopExpanded) close?.focus();
+        else trigger.focus();
+      }
+    });
+    close?.addEventListener('click',() => {
+      if (mobile.matches) closeMobile();
+      else { desktopExpanded = false; paint(); trigger.focus(); }
+    });
+    apply?.addEventListener('click',() => { if (mobile.matches) closeMobile(); });
+    backdrop.addEventListener('click',() => closeMobile());
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && mobile.matches && drawerOpen) {closeMobile();return;}
+      if (e.key !== 'Tab' || !mobile.matches || !drawerOpen) return;
+      const elements = $$('button:not(:disabled), input:not(:disabled), select:not(:disabled), a[href]',panel)
+        .filter(element => !element.hidden && element.getClientRects().length && !element.closest('[hidden]'));
+      if (!elements.length) return;
+      const first = elements[0]; const last = elements[elements.length - 1];
+      if (e.shiftKey && document.activeElement === first) {e.preventDefault(); last.focus();}
+      else if (!e.shiftKey && document.activeElement === last) {e.preventDefault(); first.focus();}
+    });
+    mobile.addEventListener('change', () => {drawerOpen = false;paint();});
+
+    const badge = $('#filter-count');
+    const hint = $('#shop-mobile-count');
+    const updateCount = () => {
+      const category = form.querySelector('input[name="category"]:checked')?.value;
+      const price = form.querySelector('input[name="price"]:checked')?.value;
+      const active = Number(Boolean(category)) + Number(Boolean(price))
+        + Number(Boolean(form.elements.offers?.checked)) + Number(Boolean(form.elements.new?.checked));
+      if (badge) {badge.hidden = !active;badge.textContent = String(active);}
+      if (hint) hint.textContent = $('#shop-count')?.textContent || 'Explora el catálogo';
+    };
+    form.addEventListener('input',updateCount);
+    form.addEventListener('reset',() => window.setTimeout(updateCount,0));
+    paint();
+    updateCount();
+  }
