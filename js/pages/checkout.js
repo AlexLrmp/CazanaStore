@@ -15,7 +15,7 @@ function prices(){const subtotal=cart.reduce((sum,item)=>sum+Math.round(map.get(
  return subtotal;
 }
 function form(){const container=$('.checkout-form-display');if(!container)return;
-const info=$('.checkout-head .compact-notice');if(info)info.textContent='Registra una solicitud de pedido sin realizar pagos. El personal de Cazana confirmará la disponibilidad, cobertura y entrega.';
+const info=$('.checkout-fields > .compact-notice');if(info)info.textContent='Registra una solicitud de pedido sin realizar pagos. El personal de Cazana confirmará la disponibilidad, cobertura y entrega.';
 const area=$('.checkout-fields');if(!area)return;
 container.innerHTML=`<div class="customer-checkout"><div id="checkout-alert" role="status"></div><form id="request-order-form" class="customer-form">
   <div class="customer-form-grid"><label class="customer-field"><span>Nombre y apellido</span><input name="fullName" autocomplete="name" minlength="3" maxlength="120" required value="${escapeHTML(user?.name||'')}"></label><label class="customer-field"><span>Teléfono</span><input name="phone" type="tel" inputmode="tel" minlength="7" maxlength="25" autocomplete="tel" required></label></div>
@@ -35,8 +35,24 @@ const discount=$('#checkout-discount');if(discount&&discount.parentElement?.firs
 const old=Array.from(area.querySelectorAll('button')).find(x=>/Confirmar pedido/i.test(x.textContent));if(old)old.remove();
 }
 function alert(text,isError=false){const n=$('#checkout-alert');if(n){n.textContent=text;n.classList.toggle('error',isError);}}
-async function startup(){prices();if(!cart.length)return;try{const result=await api('/api/auth/me');if(result.user?.role!=='customer')throw Error('Se necesita una cuenta de cliente.');user=result.user;form();}
-catch{const c=$('.checkout-form-display');if(c)c.innerHTML=`<div class="compact-notice">Para solicitar un pedido necesitas <a href="cuenta.html">iniciar sesión o crear tu cuenta de cliente</a>. Tus productos permanecen en el carrito de este navegador.</div>`;}}
+async function startup(){
+  prices();
+  const container=$('.checkout-form-display');
+  if(!container)return;
+  if(!cart.length){
+    container.innerHTML='<div class="compact-notice">Tu carrito está vacío. <a href="tienda.html">Explorar productos</a> para iniciar una solicitud.</div>';
+    return;
+  }
+  try {
+    const result=await api('/api/auth/me');
+    if(result.user?.role!=='customer')throw Error('Se necesita una cuenta de cliente.');
+    user=result.user;
+    form();
+  } catch {
+    container.innerHTML='<div class="customer-checkout-guest compact-notice"><strong>Inicia sesión para continuar.</strong> Para solicitar tu pedido, <a href="cuenta.html">ingresa a tu cuenta o regístrate</a>. Los productos permanecerán en tu carrito.</div>';
+  }
+}
+
 document.addEventListener('submit',async e=>{
 if(e.target.id!=='request-order-form')return;e.preventDefault();if(busy||!cart.length)return;busy=true;const btn=e.target.querySelector('button[type=submit]');btn.disabled=true;
 const f=new FormData(e.target),items=cart.map(x=>({productId:x.id,quantity:x.qty}));

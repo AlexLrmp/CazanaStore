@@ -168,7 +168,19 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
   border: 0;
 }
 
-.head-action svg { stroke: #222; }
+/* CAZANA: iconos del encabezado unificados */
+.site-header .header-actions .head-action {
+  font-size: 10px;
+  line-height: 1.3;
+}
+.site-header .header-actions .head-action svg {
+  display: block;
+  width: 23px;
+  height: 23px;
+  min-width: 23px;
+  flex: 0 0 23px;
+  stroke: #222;
+}
 
 .head-action:hover,.head-action:hover svg { color: var(--gold-dark); stroke: var(--gold-dark); }
 

@@ -82,53 +82,35 @@
             <nav class="crumbs"><a href="index.html">Inicio</a><span>›</span><a
                     href="carrito.html">Carrito</a><span>›</span>Checkout</nav>
             <p class="eyebrow">Último paso</p>
-            <h1>Finaliza tu compra</h1>
-            <p class="page-intro">Así se verá tu proceso de pago: simple, ordenado y transparente.</p>
+            <h1>Solicita tu pedido</h1>
+            <p class="page-intro">Envía tu solicitud a Cazana. No se realiza ningún cobro en línea.</p>
             <div aria-label="Pasos para completar compra" class="checkout-progress">
                 <div class="active">01 <span>Envío</span></div>
-                <div>02 <span>Pago</span></div>
-                <div>03 <span>Confirmación</span></div>
+                <div>02 <span>Confirmación</span></div>
+                <div>03 <span>Seguimiento</span></div>
             </div>
             <div class="checkout-layout">
                 <section class="checkout-fields card-panel">
                     <div class="checkout-head">
-                        <h2>Datos de envío</h2><span class="demo-tag">Vista previa</span>
+                        <h2>Datos de envío</h2><span class="demo-tag">SOLICITUD · SIN COBRO</span>
                     </div>
-                    <p class="compact-notice">Las compras en línea estarán disponibles muy pronto. Este formulario solo
-                        muestra el diseño del proceso.</p>
-                    <div class="checkout-form-display">
-                        <div class="contact-2col"><label class="text-field">Nombre<input disabled=""
-                                    placeholder="Nombre" /></label><label class="text-field">Apellidos<input disabled=""
-                                    placeholder="Apellidos" /></label></div>
-                        <div class="contact-2col"><label class="text-field">Correo electrónico<input disabled=""
-                                    placeholder="correo@email.com" /></label><label class="text-field">Teléfono<input
-                                    disabled="" placeholder="+51 999 999 999" /></label></div><label
-                            class="text-field">Dirección de entrega<input disabled=""
-                                placeholder="Avenida, número y referencias" /></label>
-                        <div class="contact-2col"><label class="text-field">Ciudad<input disabled=""
-                                    placeholder="Ciudad" /></label><label class="text-field">Departamento<input
-                                    disabled="" placeholder="Departamento" /></label></div><label
-                            class="text-field">Método de envío<select disabled="">
-                                <option>Elige un método de envío</option>
-                            </select></label>
+                    <p class="compact-notice">Completa una solicitud de pedido. La entrega y el pago se coordinarán posteriormente con Cazana.</p>
+                    <div class="checkout-form-display" aria-live="polite">
+                        <div id="checkout-real-placeholder" class="compact-notice">Comprobando la sesion de cliente...</div>
                     </div>
                     <div class="payment-preview">
-                        <h3>Métodos de pago</h3>
-                        <div class="payment-methods"><span>◉ Tarjeta</span><span>⌁ Yape / Plin</span><span>↗
-                                Transferencia</span></div>
-                        <p>Las opciones definitivas se confirmarán al habilitar la pasarela de pagos.</p>
+                        <h3>Pago y entrega por coordinar</h3>
+                        <p>Esta etapa registra solicitudes de pedido. Cazana confirmara la disponibilidad y condiciones antes de cualquier pago.</p>
                     </div>
-                    <button class="btn btn-green" disabled="" title="Disponible próximamente" type="button">Confirmar
-                        pedido · próximamente</button>
                 </section>
                 <aside class="checkout-summary card-panel">
                     <h2>Tu pedido</h2>
                     <div id="checkout-items"></div>
                     <div class="summary-price"><span>Subtotal estimado</span><strong id="checkout-subtotal">S/
                             0.00</strong></div>
-                    <div class="summary-price"><span>Descuento demo</span><span id="checkout-discount">S/ 0.00</span>
+                    <div class="summary-price"><span>Descuentos</span><span id="checkout-discount">S/ 0.00</span>
                     </div>
-                    <div class="summary-total"><span>Total orientativo</span><strong id="checkout-total">S/
+                    <div class="summary-total"><span>Total estimado</span><strong id="checkout-total">S/
                             0.00</strong></div><a class="admin-text-link" href="carrito.html">← Volver al carrito</a>
                 </aside>
             </div>
