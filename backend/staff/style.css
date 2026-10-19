@@ -91,3 +91,19 @@
  .cazana-private .real-tag{font-size:9px}
 }
 @media(prefers-reduced-motion:reduce){.cazana-private *{scroll-behavior:auto!important}}
+
+/* Footer de la intranet: consistente con la identidad premium Cazana. */
+.cazana-private .private-footer{background:#292725;color:#ddd5c7;padding:0;border-top:1px solid #403a30}
+.cazana-private .private-footer .private-footer-main{display:grid;grid-template-columns:minmax(190px,1fr) minmax(235px,1.25fr) auto;align-items:center;gap:30px;padding-top:32px;padding-bottom:30px}
+.cazana-private .private-footer .private-footer-brand{display:flex;flex-direction:column;align-items:flex-start;gap:1px;text-decoration:none;white-space:nowrap}
+.cazana-private .private-footer-wordmark{font:700 27px/1.1 var(--serif,Georgia,serif);letter-spacing:-.04em;background:linear-gradient(105deg,#b18a36,#e8c97a,#a8832a);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.cazana-private .private-footer-brand small{display:block;font:700 9px Poppins,Arial,sans-serif;letter-spacing:.24em;color:#fff}
+.cazana-private .private-footer-brand small i{font:italic 400 9px Poppins,Arial,sans-serif;letter-spacing:0;color:#bcb4a5}
+.cazana-private .private-footer-description{display:grid;gap:6px;line-height:1.6}
+.cazana-private .private-footer-description strong{font-size:12px;color:#efe5d4;font-weight:600}
+.cazana-private .private-footer-description span{font-size:10px;color:#b7ad9d}
+.cazana-private .private-footer a.private-footer-return{justify-self:end;display:inline-flex;align-items:center;gap:8px;border:1px solid #655742;border-radius:999px;color:#dfbb73;font-size:11px;font-weight:600;padding:11px 16px;text-decoration:none;transition:background .2s,border-color .2s}
+.cazana-private .private-footer a.private-footer-return:hover{background:#3d362a;border-color:#b18a36}
+.cazana-private .private-footer .private-footer-bottom{border-top:1px solid #484238;padding-top:17px;padding-bottom:17px;display:flex;justify-content:space-between;gap:16px;font-size:10px;color:#a99f91}
+@media(max-width:800px){.cazana-private .private-footer .private-footer-main{grid-template-columns:1fr 1fr}.cazana-private .private-footer .private-footer-description{grid-column:2;grid-row:1}.cazana-private .private-footer a.private-footer-return{grid-column:1/-1;justify-self:start}}
+@media(max-width:520px){.cazana-private .private-footer .private-footer-main{display:flex;flex-direction:column;align-items:flex-start;gap:20px}.cazana-private .private-footer .private-footer-bottom{display:flex;flex-direction:column;align-items:flex-start;gap:7px;text-align:left}}

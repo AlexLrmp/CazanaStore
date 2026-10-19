@@ -4037,3 +4037,29 @@ button,input,select,textarea { font-family: var(--sans); }
 .staff-order-date{display:block;font-size:10px;color:#969087;line-height:1.6;margin-top:5px}
 @media(max-width:640px){.customer-form-grid{grid-template-columns:1fr}.customer-auth{padding:4px}.customer-order{padding:14px}.customer-order-header,.customer-order-bottom{align-items:flex-start}.customer-auth .btn,.customer-form .btn{width:100%;justify-self:stretch}}
 /* FIN CAZANA FASE 2 */
+
+/* CAZANA-CUENTA-VISITANTE:INICIO
+   Inicio de sesión y registro sin mostrar menús de clientes no autenticados.
+   Esta sección modifica el style.css original, sin cargar otro archivo. */
+.account-layout.account-guest-mode{display:grid;grid-template-columns:minmax(0,1fr);justify-items:center;gap:0;max-width:100%}
+.account-layout.account-guest-mode>.account-menu{display:none!important}
+.account-layout.account-guest-mode>.account-section{width:min(100%,660px);min-width:0;padding:clamp(23px,3vw,38px)}
+.account-layout.account-guest-mode .account-preview-note{display:none!important}
+.account-layout.account-guest-mode .account-panel-heading{text-align:center;margin-bottom:22px}
+.account-layout.account-guest-mode .account-panel-heading h2{font:500 clamp(26px,4vw,33px)/1.3 var(--serif,Georgia,serif)}
+.account-layout.account-guest-mode .account-panel-heading p{font-size:12px;color:#8d857b;line-height:1.65;margin-top:8px}
+.account-layout.account-guest-mode .customer-auth{padding:clamp(12px,2vw,24px) 5px 0}
+.account-auth-switch{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));padding:5px;gap:5px;background:#f7f4ee;border:1px solid #ece3d6;border-radius:999px}
+.account-auth-tab{display:flex;align-items:center;justify-content:center;min-height:43px;border:1px solid transparent;border-radius:999px;background:transparent;color:#6f665a;font-size:12px;font-weight:600;cursor:pointer;transition:background-color .18s,color .18s,box-shadow .18s}
+.account-auth-tab:hover{color:#a78237;background:#fff9ee}
+.account-auth-tab.is-current{background:#292725;border-color:#292725;color:#fff;box-shadow:0 4px 14px #29272519}
+.account-auth-tab.is-current:hover{background:#36322b;color:#fff}
+.account-auth-tab:focus-visible{outline:2px solid #c9a34e;outline-offset:3px}
+.account-layout.account-guest-mode .customer-auth-header{margin-bottom:20px}
+.account-layout.account-guest-mode .customer-auth-header h3{margin-bottom:7px}
+.account-layout.account-guest-mode .customer-form{display:grid;gap:3px}
+.account-layout.account-guest-mode .customer-form .btn{width:100%;justify-self:stretch;margin-top:13px}
+.account-layout.account-guest-mode .customer-auth-foot{border-top:1px solid #eee6da;padding-top:18px;margin-top:22px;font-size:11px}
+.account-layout.account-guest-mode .customer-auth-foot a{font-weight:600;color:#a57f36}
+@media(max-width:560px){.account-layout.account-guest-mode>.account-section{padding:22px 17px}.account-layout.account-guest-mode .customer-auth{padding:16px 0 0}.account-auth-tab{font-size:11px;min-height:42px}.account-layout.account-guest-mode .account-panel-heading{margin-bottom:20px}}
+/* CAZANA-CUENTA-VISITANTE:FIN */
