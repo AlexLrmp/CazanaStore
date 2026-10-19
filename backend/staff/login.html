@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#2B2B2B">
+  <title>Ingreso del personal — Cazana Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/staff-assets/style.css">
+  <script defer src="/staff-assets/login.js"></script>
+</head>
+<body class="cazana-private staff-auth">
+  <div class="topbar">✦ &nbsp; Online, On Time · Acceso seguro del personal</div>
+  <header class="private-header">
+    <div class="wrap private-header-inner">
+      <a aria-label="Cazana Store — Inicio" class="brand" href="/">
+        <span class="brand-name">CAZANA</span>
+        <span class="brand-sub">STORE <i>— Online, On Time</i></span>
+      </a>
+      <nav aria-label="Enlaces de acceso" class="private-links">
+        <a href="/">Volver a la tienda ↗</a>
+        <span class="private-label">INTRANET · ACCESO PROTEGIDO</span>
+      </nav>
+    </div>
+  </header>
+  <main id="contenido" class="private-main">
+    <div class="wrap page-main staff-shell">
+      <nav class="crumbs" aria-label="Ubicación"><a href="/">Inicio</a><span>›</span><span>Personal</span></nav>
+      <div class="staff-layout">
+        <section class="staff-intro">
+          <span class="eyebrow">CAZANA STORE · INTRANET</span>
+          <h1>Un espacio para<br><em>nuestro equipo.</em></h1>
+          <p>Administramos productos, inventario y configuración del negocio de forma segura y organizada.</p>
+          <div class="staff-benefit"><span aria-hidden="true">✧</span><div><strong>Roles definidos</strong><small>Cada integrante accede únicamente a las herramientas autorizadas.</small></div></div>
+          <div class="staff-benefit"><span aria-hidden="true">▣</span><div><strong>Información protegida</strong><small>Tu acceso se comprueba en el servidor de Cazana Store.</small></div></div>
+        </section>
+        <section aria-labelledby="staff-login-title" class="staff-login card-panel">
+          <div class="staff-login-emblem" aria-hidden="true">C</div>
+          <p class="eyebrow">ACCESO INTERNO</p>
+          <h2 id="staff-login-title">Ingreso del personal</h2>
+          <p class="staff-login-sub">Ingresa con el código y la contraseña de tu cuenta de empleado.</p>
+          <form id="staff-login-form" class="staff-form" autocomplete="on">
+            <label class="text-field"><span>Código de empleado</span><input name="employeeCode" placeholder="CZ-ADM-0001" required autocomplete="username" maxlength="32"></label>
+            <label class="text-field"><span>Contraseña</span><input name="password" type="password" placeholder="Tu contraseña" required autocomplete="current-password"></label>
+            <button type="submit" id="submit" class="btn btn-green staff-submit">Ingresar a la intranet <span aria-hidden="true">→</span></button>
+            <p id="feedback" class="feedback" role="status" aria-live="polite"></p>
+          </form>
+          <p class="staff-availability"><span aria-hidden="true">ⓘ</span> Acceso reservado para empleados autorizados. Las credenciales se verifican de forma segura.</p>
+          <p class="staff-login-foot">¿Buscas tu cuenta de cliente? <a href="/cuenta.html">Ir a Mi cuenta</a></p>
+        </section>
+      </div>
+    </div>
+  </main>
+  <footer class="private-footer"><div class="wrap"><span>© Cazana Store · Online, On Time</span><span>Intranet privada</span></div></footer>
+</body>
+</html>

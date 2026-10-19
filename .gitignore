@@ -1,0 +1,12 @@
+# Configuración privada y dependencias del backend
+backend/.env
+backend/.env.*
+!backend/.env.example
+backend/node_modules/
+backend/coverage/
+backend/*.log
+backend/.DS_Store
+# Archivos de sistema/editor
+.vscode/.env
+.DS_Store
+Thumbs.db

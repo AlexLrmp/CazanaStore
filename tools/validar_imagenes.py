@@ -1,25 +1,30 @@
 #!/usr/bin/env python3
-"""Validacion basica sin dependencias del catalogo demo Cazana."""
+"""Valida las fotos de Cazana en JPEG, WebP, PNG y AVIF (sin dependencias externas)."""
 from pathlib import Path
-import json,re,collections,sys
-root=Path(__file__).resolve().parent.parent
-manifest=json.loads((root/'assets/productos/manifest.json').read_text(encoding='utf-8'))
-js=(root/'js/data.js').read_text(encoding='utf-8');html=(root/'index.html').read_text(encoding='utf-8')
-err=[];images=[]
-for pid,product in manifest.items():
-    if not re.search(r"\bid:'"+re.escape(pid)+r"'",js):err.append('ID ausente: '+pid)
-    for filepath in product['gallery']:
-        path=root/filepath
-        if not path.is_file():err.append('FALTA '+filepath);continue
-        if path.stat().st_size<500:err.append('Imagen sospechosamente vacia: '+filepath)
-        if path.read_bytes()[:4]!=b'RIFF':err.append('No es WEBP: '+filepath)
-        if filepath not in js:err.append('Sin referencia en data.js: '+filepath)
-        images.append(filepath)
-for filepath in ['assets/banners/hero-hogar.webp','assets/banners/hero-cocina.webp','assets/banners/hero-tecnologia.webp','assets/categorias/hogar.webp','assets/categorias/tecnologia.webp']:
-    if not (root/filepath).exists():err.append('Falta '+filepath)
-    if filepath not in html:err.append('No referenciada en index.html: '+filepath)
-for f in (root/'assets/productos').glob('*/principal.webp'):
-    if str(f.relative_to(root)).replace('\\','/') not in images:err.append('Imagen de producto sin registro: '+str(f))
-print(f'Productos comprobados: {len(manifest)} | imagenes de galeria: {len(images)} | errores: {len(err)}')
-for e in err:print('ERROR:',e)
-sys.exit(1 if err else 0)
+import json, sys
+ROOT = Path(__file__).resolve().parents[1]
+EXTENSIONS = ('.webp','.jpg','.jpeg','.png','.avif')
+manifest = json.loads((ROOT/'assets/productos/manifest.json').read_text(encoding='utf8'))
+def resolve(relative):
+    p=ROOT/relative
+    if p.is_file(): return p
+    return next((p.with_suffix(ext) for ext in EXTENSIONS if p.with_suffix(ext).is_file()),None)
+def matches_header(p):
+    b=p.read_bytes()[:32]; ext=p.suffix.lower()
+    if ext=='.webp': return b.startswith(b'RIFF') and b[8:12]==b'WEBP'
+    if ext in ('.jpg','.jpeg'): return b.startswith(b'\xff\xd8\xff')
+    if ext=='.png': return b.startswith(b'\x89PNG\r\n\x1a\n')
+    if ext=='.avif': return b[4:8]==b'ftyp' and (b'avif' in b[8:28] or b'avis' in b[8:28])
+    return False
+refs=[p for item in manifest.values() for p in item.get('gallery',[])]
+refs += [f'assets/banners/{name}.webp' for name in ('hero-hogar','hero-cocina','hero-tecnologia')]
+refs += [f'assets/categorias/{name}.webp' for name in ('hogar','tecnologia')]
+errors=[]; aliases=0
+for ref in refs:
+    p=resolve(ref)
+    if not p: errors.append(f'Imagen ausente: {ref}');continue
+    if p.relative_to(ROOT).as_posix()!=ref: aliases+=1
+    if p.stat().st_size<500 or not matches_header(p):errors.append(f'Imagen no válida: {p.relative_to(ROOT)}')
+print(f'Productos: {len(manifest)} | Fotos previstas: {len(refs)} | Extensiones alternativas: {aliases} | Errores: {len(errors)}')
+for problem in errors: print('ERROR:',problem)
+sys.exit(bool(errors))

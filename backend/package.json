@@ -1,0 +1,30 @@
+{
+  "name": "cazana-store-backend",
+  "version": "0.2.0",
+  "private": true,
+  "description": "API de Cazana Store: catalogo, clientes, pedidos, inventario y WhatsApp configurable",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "seed": "node scripts/seed-catalog.js",
+    "create-admin": "node scripts/create-admin.js",
+    "test": "node --test test/*.test.js",
+    "check": "node --check src/server.js && node --check src/app.js && node --check src/models.js && node --check src/order-service.js && node --check routes/orders.js && node --check routes/admin-orders.js && node --check staff/catalog.js && node --check staff/orders-phase2.js && node --check ../js/pages/account.js && node --check ../js/pages/checkout.js",
+    "indexes": "node scripts/ensure-indexes.js",
+    "fix-images": "node scripts/fix-image-paths.js",
+    "fix-images:apply": "node scripts/fix-image-paths.js --apply"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.0.0",
+    "mongoose": "^8.10.0",
+    "zod": "^3.24.0"
+  }
+}

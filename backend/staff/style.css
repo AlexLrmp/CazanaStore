@@ -1,0 +1,93 @@
+/* Intranet Cazana. La distribución, encabezado y tarjetas se heredan de /css/style.css.
+   Estilos adicionales únicamente para acciones privadas y formularios CRUD. */
+.cazana-private{background:#faf9f7;color:#292725;font-family:Poppins,Arial,sans-serif}
+.cazana-private *{box-sizing:border-box}
+.cazana-private button,.cazana-private input,.cazana-private textarea{font:inherit}
+.cazana-private button{cursor:pointer}
+.cazana-private button:disabled{opacity:.55;cursor:not-allowed}
+.cazana-private .admin-page{min-height:65vh}
+.cazana-private .admin-shell{padding-bottom:70px}
+.cazana-private .admin-heading h1{font-family:var(--serif),Georgia,serif}
+.cazana-private .real-tag{color:#247653;border:1px solid #d4e9dc;background:#eaf7ef;border-radius:50px;padding:9px 13px;font-size:10px;font-weight:700;letter-spacing:.05em;white-space:nowrap}
+.cazana-private .admin-heading-actions .btn{white-space:nowrap}
+.cazana-private .admin-banner-note{align-items:center}
+.cazana-private .admin-banner-note p{font-size:11px;line-height:1.7;margin:5px 0 0;color:#81786a}
+.cazana-private .staff-top-actions{margin-left:auto;display:flex;align-items:flex-end;flex-direction:column;gap:7px;flex:none;max-width:34%;min-width:140px}
+.cazana-private .staff-top-actions small{font-size:10px;color:#575048;text-align:right}
+.cazana-private .admin-text-link{background:none;border:0;color:#a27d36;padding:0;font-size:11px;font-weight:600;cursor:pointer;text-decoration:none}
+.cazana-private .admin-text-link:hover{text-decoration:underline}
+.cazana-private .admin-menu .admin-nav-btn{cursor:pointer;font-family:Poppins,Arial,sans-serif}
+.cazana-private .admin-menu .admin-nav-btn[hidden]{display:none}
+.cazana-private .admin-workspace{min-width:0}
+.cazana-private .admin-phase-note{margin:12px 0 0}
+.cazana-private .admin-phase-note p{margin:5px 0 0;line-height:1.7}
+.cazana-private .pending-module{padding:36px 30px;min-height:230px}
+.cazana-private .pending-module h3{font-size:22px;margin:7px 0 12px}
+.cazana-private .pending-module p{font-size:12px;color:#736b61;line-height:1.8;margin-bottom:24px}
+.cazana-private .pending-module-icon{display:grid;place-items:center;width:45px;height:45px;border-radius:14px;background:#faf4e9;color:#b58e3e;font-size:28px}
+.cazana-private .admin-toolbar{display:flex;justify-content:space-between;align-items:center;gap:18px}
+.cazana-private .admin-toolbar strong{font-size:12px;display:block;color:#3a332a}
+.cazana-private .admin-toolbar small{font-size:11px;color:#80796e;display:block;margin-top:5px}
+.cazana-private .staff-inventory-head{align-items:end}
+.cazana-private .staff-inventory-head input{min-width:235px;max-width:320px;width:40%;border:1px solid #e7decd;border-radius:13px;padding:12px 13px;outline:none;background:#fff;color:#3a322b;font-size:11px}
+.cazana-private .staff-inventory-head input:focus,.cazana-private .staff-form input:focus,.cazana-private .staff-form textarea:focus{border-color:#b58e3e;box-shadow:0 0 0 3px #b58e3e20}
+.cazana-private .admin-table{min-width:730px}
+.cazana-private .admin-table td{vertical-align:middle}
+.cazana-private .staff-product{display:flex;gap:11px;align-items:center;min-width:165px}
+.cazana-private .staff-product img{width:52px;height:52px;object-fit:contain;border-radius:10px;border:1px solid #eee9df;background:#faf9f6;flex:none}
+.cazana-private .staff-product-fallback{display:grid;place-items:center;width:52px;height:52px;flex:none;border:1px solid #eee9df;border-radius:10px;background:#f9f4ea;color:#ad8c52;font-size:23px}
+.cazana-private .staff-product strong{display:block;font-size:11px;line-height:1.4;color:#292725}
+.cazana-private .staff-product small{display:block;font-size:9px;color:#958a7c;margin-top:3px}
+.cazana-private .staff-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.cazana-private .staff-actions button{background:#fff;color:#40372b;border:1px solid #e8dfd2;border-radius:9px;padding:7px 9px;font-size:10px;white-space:nowrap}
+.cazana-private .staff-actions button:hover{background:#faf3e6;border-color:#c9ac75}
+.cazana-private .staff-actions button.danger{color:#a34747}
+.cazana-private .staff-feedback{padding:12px 16px;border:1px solid #cbe4d4;background:#effaf2;border-radius:11px;color:#266646;font-size:12px;margin:0}
+.cazana-private .staff-feedback.error{border-color:#edd1cd;background:#fff3f1;color:#a33131}
+.cazana-private .staff-form label{font-size:11px;font-weight:600;color:#50493f;display:flex;flex-direction:column;gap:8px;margin:11px 0}
+.cazana-private .staff-form input:not([type=checkbox]),.cazana-private .staff-form textarea{width:100%;min-width:0;border:1px solid #e5dbcf;border-radius:12px;padding:12px 13px;color:#302d28;background:#fff;outline:none;font-size:12px;font-weight:400}
+.cazana-private .staff-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 20px}
+.cazana-private .staff-flags{display:flex;align-items:center;flex-wrap:wrap;gap:15px;margin:16px 0 23px}
+.cazana-private .staff-flags label{display:flex;flex-direction:row;gap:7px;margin:0;align-items:center}
+.cazana-private .staff-flags input{width:auto}
+.cazana-private .staff-hint{font-size:11px;color:#8c8377;line-height:1.7;margin-top:13px}
+.cazana-private .admin-workspace .dash-card .admin-table-wrap{max-width:100%}
+.cazana-private .activity-item{border-bottom:1px solid #f0ece6;padding:12px 0}
+.cazana-private .activity-item:last-child{border-bottom:0}
+.cazana-private .muted-copy{font-size:11px;color:#7b7469;line-height:1.65}
+.cazana-private .private-footer{padding:24px 0;border-top:1px solid #e5dfd5;background:#292725;color:#c8bda9}
+.cazana-private .private-footer .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;font-size:11px}
+.cazana-private .private-footer a{color:#d8bd83}
+.cazana-private .private-footer .footer-logo{font:600 25px var(--serif),Georgia,serif;letter-spacing:.1em}
+.cazana-private .private-footer .footer-logo small{display:block;font:600 9px Poppins,Arial,sans-serif;letter-spacing:.26em}
+/* Pantalla de ingreso: conservamos su apariencia original. */
+.cazana-private .private-header{background:#fff;border-bottom:1px solid #eee9df;box-shadow:0 1px 4px #0000000b}
+.cazana-private .private-header-inner{min-height:91px;display:flex;justify-content:space-between;gap:16px;align-items:center}
+.cazana-private .private-links{display:flex;align-items:center;gap:25px;font-size:12px;color:#6b655d}
+.cazana-private .private-label{color:#a78345;letter-spacing:.12em;font-size:10px;font-weight:700}
+.cazana-private .private-main{background:#fff;min-height:calc(100vh - 210px)}
+.cazana-private .staff-shell{padding-top:46px;padding-bottom:82px}
+.cazana-private .staff-login{padding:35px}
+.cazana-private .staff-login .staff-submit{background:#177a61;color:white;border-radius:999px;display:flex;align-items:center;justify-content:center;gap:12px}
+.cazana-private .staff-login .staff-submit:hover{background:#12654e}
+.cazana-private .staff-availability{font-size:11px}
+.cazana-private .feedback{min-height:20px;color:#19765a;font-size:11px}
+@media(max-width:780px){
+ .cazana-private .admin-banner-note{align-items:flex-start;flex-wrap:wrap}
+ .cazana-private .staff-top-actions{align-items:flex-start;margin-left:0;max-width:none;width:100%}
+ .cazana-private .staff-top-actions small{text-align:left}
+ .cazana-private .staff-login{padding:26px}
+ .cazana-private .staff-layout{grid-template-columns:1fr;gap:20px}
+ .cazana-private .staff-inventory-head{align-items:flex-start;flex-direction:column}
+ .cazana-private .staff-inventory-head input{width:100%;max-width:none}
+}
+@media(max-width:560px){
+ .cazana-private .admin-toolbar{align-items:flex-start;flex-direction:column}
+ .cazana-private .admin-toolbar .btn{width:100%}
+ .cazana-private .staff-form-grid{grid-template-columns:1fr}
+ .cazana-private .pending-module{padding:24px 18px}
+ .cazana-private .private-footer .wrap{flex-direction:column;text-align:center}
+ .cazana-private .admin-heading-actions{max-width:100%}
+ .cazana-private .real-tag{font-size:9px}
+}
+@media(prefers-reduced-motion:reduce){.cazana-private *{scroll-behavior:auto!important}}
