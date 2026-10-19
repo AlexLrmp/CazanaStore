@@ -56,11 +56,11 @@
       <div><strong>${escape(x.name)}</strong> <small>${escape(x.city)}</small><p>${escape(x.text)}</p>
       <small>${escape(x.product)} · ${'★'.repeat(x.rating)} · ${x.published?'Publicado':'Oculto'}</small></div>
       <div class="admin-testimonial-actions">
-        <button type="button" data-review-act="edit" data-id="${escape(x.id)}">Editar</button>
-        <button type="button" data-review-act="toggle" data-id="${escape(x.id)}">${x.published?'Ocultar':'Publicar'}</button>
-        <button type="button" data-review-act="up" data-id="${escape(x.id)}" ${n===0?'disabled':''}>↑</button>
-        <button type="button" data-review-act="down" data-id="${escape(x.id)}" ${n===list.length-1?'disabled':''}>↓</button>
-        <button type="button" data-review-act="delete" data-id="${escape(x.id)}">Eliminar</button>
+        <button class="btn btn-outline" type="button" data-review-act="edit" data-id="${escape(x.id)}">Editar</button>
+        <button class="btn btn-outline" type="button" data-review-act="toggle" data-id="${escape(x.id)}">${x.published?'Ocultar':'Publicar'}</button>
+        <button class="btn btn-outline" type="button" aria-label="Subir testimonio" title="Subir" data-review-act="up" data-id="${escape(x.id)}" ${n===0?'disabled':''}>↑</button>
+        <button class="btn btn-outline" type="button" aria-label="Bajar testimonio" title="Bajar" data-review-act="down" data-id="${escape(x.id)}" ${n===list.length-1?'disabled':''}>↓</button>
+        <button class="btn btn-outline" type="button" data-review-act="delete" data-id="${escape(x.id)}">Eliminar</button>
       </div>
     </article>`).join('');
     return `${heading('Testimonios de clientes','Gestiona los comentarios que aparecen en la portada.')}
@@ -73,11 +73,16 @@
             <label>Cliente<input required maxlength="80" name="name" placeholder="Nombre del cliente"></label>
             <label>Ciudad y país<input maxlength="80" name="city" placeholder="Lima, Perú"></label>
             <label>Producto<input maxlength="100" name="product" placeholder="Producto comprado"></label>
-            <label>Calificación<select name="rating">${[5,4,3,2,1].map(n=>`<option value="${n}">${n} estrellas</option>`).join('')}</select></label>
+            <div class="rating-field"><span class="rating-label">Calificación</span>
+              <div class="star-picker" role="radiogroup" aria-label="Calificación del testimonio">
+                ${[1,2,3,4,5].map(n=>`<label class="rating-star is-on" aria-label="${n} ${n===1?'estrella':'estrellas'}"><input type="radio" name="rating" value="${n}" ${n===5?'checked':''} aria-label="${n} ${n===1?'estrella':'estrellas'}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m12 2 3.1 6.4 7.1 1-5.1 4.9 1.2 7-6.3-3.3-6.3 3.3 1.2-7-5.1-4.9 7.1-1L12 2Z"/></svg></label>`).join('')}
+              </div>
+              <span class="rating-feedback" aria-live="polite">5 de 5 estrellas</span>
+            </div>
             <label>Foto opcional (URL HTTPS o ruta assets/)<input maxlength="400" name="image" placeholder="https://..."></label>
             <label>Comentario<textarea required minlength="10" maxlength="600" rows="4" name="text" placeholder="Experiencia del cliente"></textarea></label>
             <label class="admin-testimonial-checkbox"><input type="checkbox" checked name="published"> Publicar en inicio</label>
-            <div class="admin-testimonial-actions"><button class="btn btn-charcoal" type="submit">Guardar</button><button class="btn btn-outline" type="reset" id="reset-testimonial-form">Cancelar edición</button></div>
+            <div class="admin-testimonial-actions"><button class="btn btn-gold" type="submit">Guardar</button><button class="btn btn-outline" type="reset" id="reset-testimonial-form">Cancelar edición</button></div>
             <p role="status" id="admin-testimonial-status"></p>
           </form>
         </section>
@@ -91,7 +96,16 @@
     const T=window.CazanaTestimonials, form=root.querySelector('#admin-testimonial-form');
     if(!T||!form)return;
     const status=message=>{const el=root.querySelector('#admin-testimonial-status');if(el)el.textContent=message;};
-    form.addEventListener('reset',()=>{root.querySelector('#review-form-title').textContent='Añadir testimonio';});
+    const syncRatingStars=()=>{
+      const selected=Number(form.querySelector('input[name="rating"]:checked')?.value||5);
+      form.querySelectorAll('.rating-star').forEach(label=>
+        label.classList.toggle('is-on',Number(label.querySelector('input')?.value||0)<=selected));
+      form.querySelector('.rating-feedback').textContent=`${selected} de 5 estrellas`;
+    };
+    form.addEventListener('reset',()=>{
+      root.querySelector('#review-form-title').textContent='Añadir testimonio';
+      setTimeout(syncRatingStars,0);
+    });
     form.addEventListener('submit',event=>{
       event.preventDefault();
       const fd=new FormData(form),entries=T.getAll(),id=String(fd.get('id')||'');
@@ -112,7 +126,10 @@
       if(idx<0)return;
       if(action==='edit'){
         const item=list[idx];
-        for(const key of ['id','name','city','product','text','image','rating'])form.elements.namedItem(key).value=item[key]??'';
+        for(const key of ['id','name','city','product','text','image'])form.elements.namedItem(key).value=item[key]??'';
+        const radio=form.querySelector(`input[name="rating"][value="${item.rating}"]`);
+        if(radio)radio.checked=true;
+        syncRatingStars();
         form.elements.namedItem('published').checked=item.published;
         root.querySelector('#review-form-title').textContent='Editar testimonio';
         form.scrollIntoView({behavior:'smooth',block:'nearest'});
