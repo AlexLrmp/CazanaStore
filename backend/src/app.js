@@ -13,6 +13,7 @@ const staffRoutes=require('../routes/staff');
 const publicRoutes=require('../routes/catalog');
 const adminRoutes=require('../routes/admin');
 const customerOrdersRoutes=require('../routes/orders');
+const customerProfileRoutes=require('../routes/customer-profile');
 const adminOrdersRoutes=require('../routes/admin-orders');
 const ROOT=path.resolve(__dirname,'../..');
 const HERE=path.resolve(__dirname,'..');
@@ -37,6 +38,7 @@ app.use('/api/staff',staffRoutes);
 app.use('/api/admin',adminRoutes);
 app.use('/api/admin/orders',adminOrdersRoutes);
 app.use('/api/orders',customerOrdersRoutes);
+app.use('/api/me',customerProfileRoutes);
 app.use('/api',publicRoutes);
 app.use('/api',(req,res)=>res.status(404).json({error:'Ruta API no encontrada.'}));
 

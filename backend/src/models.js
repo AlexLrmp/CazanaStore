@@ -2,8 +2,21 @@
 const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
 
+const customerAddressSchema = new Schema({
+  label: {type:String,required:true,trim:true,maxlength:35},
+  fullName: {type:String,required:true,trim:true,maxlength:120},
+  phone: {type:String,required:true,trim:true,maxlength:25},
+  address: {type:String,required:true,trim:true,maxlength:220},
+  city: {type:String,required:true,trim:true,maxlength:100},
+  region: {type:String,required:true,trim:true,maxlength:100},
+  reference: {type:String,default:'',trim:true,maxlength:220},
+  isDefault: {type:Boolean,default:false}
+}, {versionKey:false});
+
 const userSchema = new Schema({
   name: { type: String, required: true, trim: true, maxlength: 100 },
+  phone: {type:String,default:'',trim:true,maxlength:25},
+  addresses: {type:[customerAddressSchema],default:[]},
   email: { type: String, required: true, unique: true, lowercase: true, trim: true, maxlength: 254 },
   passwordHash: { type: String, required: true, select: false },
   role: { type: String, enum: ['customer','support','inventory','accounting','admin','owner'], default: 'customer' },

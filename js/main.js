@@ -303,8 +303,8 @@
             <div class="gallery-stage-wrap">
               ${product.isOffer ? `<span class="tag stage-tag">-${Math.round((1 - product.price / product.originalPrice) * 100)}% OFF</span>` : ''}
               <img id="product-main-image" class="gallery-stage" src="${window.CazanaMedia.placeholder}" alt="Fotografía pendiente de ${esc(product.name)}">
-              <button class="gallery-nav gallery-prev" type="button" data-gallery-nav="-1" aria-label="Imagen anterior">‹</button>
-              <button class="gallery-nav gallery-next" type="button" data-gallery-nav="1" aria-label="Imagen siguiente">›</button>
+              <button class="gallery-nav gallery-prev" type="button" data-gallery-nav="-1" aria-label="Imagen anterior"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m14 18-6-6 6-6"/></svg></button>
+              <button class="gallery-nav gallery-next" type="button" data-gallery-nav="1" aria-label="Imagen siguiente"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m10 18 6-6-6-6"/></svg></button>
             </div>
             <div class="gallery-thumbs"><p class="gallery-photo-note">Buscando fotografías disponibles…</p></div>
           </div>
@@ -324,9 +324,10 @@
               <button class="btn btn-outline grow" type="button" data-add-qty="${esc(product.id)}">Agregar al Carrito</button>
               <button class="icon-circle ${wishlist.includes(product.id) ? 'selected' : ''}" type="button" data-wish="${esc(product.id)}" aria-label="Favorito">${heartSvg()}</button>
             </div>
-            <div class="trust-box">
-              <p>🚚 <strong>Entrega coordinada</strong> · Consulta plazos según destino</p>
-              <p>🛡️ <strong>Compra protegida</strong> · Pasarela y condiciones en preparación</p>
+            <!-- CAZANA-DISENO-3-1:CONFIANZA -->
+            <div class="trust-box" aria-label="Información de entrega y solicitud">
+              <div class="trust-item"><span class="trust-icon"><svg aria-hidden="true" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17h4V5H2v12h3"/><path d="M14 9h4l4 4v4h-3"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="16.5" cy="17.5" r="2.5"/></svg></span><div><strong>Entrega coordinada</strong><small>Consulta cobertura y plazos según tu destino.</small></div></div>
+              <div class="trust-item"><span class="trust-icon"><svg aria-hidden="true" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg></span><div><strong>Solicitud con información clara</strong><small>Confirmaremos disponibilidad, entrega y pago antes de continuar.</small></div></div>
             </div>
           </div>
         </div>

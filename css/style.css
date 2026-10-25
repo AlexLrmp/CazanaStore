@@ -4075,3 +4075,154 @@ button,input,select,textarea { font-family: var(--sans); }
 .account-layout.account-guest-mode .customer-auth-foot a{font-weight:600;color:#a57f36}
 @media(max-width:560px){.account-layout.account-guest-mode>.account-section{padding:22px 17px}.account-layout.account-guest-mode .customer-auth{padding:16px 0 0}.account-auth-tab{font-size:11px;min-height:42px}.account-layout.account-guest-mode .account-panel-heading{margin-bottom:20px}}
 /* CAZANA-CUENTA-VISITANTE:FIN */
+
+/* CAZANA-FASE3-CUENTA:INICIO */
+/* Perfil y direcciones: misma hoja CSS y sistema visual Cazana. */
+.cz-profile-caption{display:flex;align-items:flex-start;justify-content:space-between;gap:15px;flex-wrap:wrap;margin-bottom:14px}
+.cz-profile-caption h3,.cz-address-editor h3{font:500 clamp(23px,3vw,29px)/1.25 var(--serif,Georgia,serif);margin:0 0 7px}
+.cz-profile-caption p,.cz-address-toolbar p{margin:0;color:#8c8172;font-size:12px;line-height:1.65}
+.cz-profile-tag{background:#faf4e9;border:1px solid #ebdbc1;color:#a17b34;border-radius:999px;padding:8px 12px;font-size:10px;white-space:nowrap}
+.cz-account-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:9px}
+.cz-profile-logout{border-top:1px solid #eee8dd;margin-top:25px;padding-top:23px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.cz-profile-logout span{color:#8b8074;font-size:12px}
+.cz-profile-logout .btn{min-width:150px}
+.customer-field input:disabled{background:#f8f6f2;color:#8a8277;cursor:not-allowed}
+.customer-field small{font-size:10px;font-weight:400;color:#95897a;line-height:1.45}
+.cz-address-toolbar{display:flex;justify-content:space-between;align-items:center;gap:14px;margin:18px 0;flex-wrap:wrap}
+.cz-address-toolbar .btn{font-size:12px;padding:10px 17px}
+.cz-address-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.cz-address-card{border:1px solid #eae3d6;border-radius:17px;background:#fff;padding:18px;min-width:0;box-shadow:0 4px 20px rgba(37,33,27,.025)}
+.cz-address-top{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:12px}
+.cz-address-top>div{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.cz-address-top strong{font-size:14px;color:#302d29}
+.cz-address-marker{color:#b78c37;background:#faf6eb;border-radius:11px;padding:8px 11px;font-size:19px}
+.cz-address-default{background:#e8f4ee;color:#14704d;border-radius:999px;font-size:10px;padding:5px 9px}
+.cz-address-card p{margin:5px 0;color:#746c60;font-size:12px;line-height:1.6;overflow-wrap:anywhere}
+.cz-address-card .cz-address-recipient{color:#34302b;font-weight:600}
+.cz-address-actions{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:17px;border-top:1px solid #f0ebe4;padding-top:15px}
+.cz-address-button{font:inherit;font-size:11px;font-weight:600;line-height:1.4;color:#9d792c;background:#fff;border:1px solid #e8ddc9;border-radius:9px;padding:8px 10px;cursor:pointer}
+.cz-address-button:hover{background:#faf5eb}
+.cz-address-button.is-danger{color:#9b4a40;border-color:#eedbd8}
+.cz-address-empty{text-align:center;border:1px dashed #e8dac4;border-radius:17px;padding:36px 16px;margin:16px 0;background:#fffcf8}
+.cz-address-empty>span{font-size:29px;color:#b78c37}
+.cz-address-empty h3{font:500 23px var(--serif,Georgia,serif);margin:12px 0 8px}
+.cz-address-empty p{color:#827669;font-size:12px;line-height:1.7;margin:0 auto;max-width:330px}
+.cz-address-editor{border:1px solid #eadfce;background:#fbf9f5;border-radius:17px;padding:20px;margin-top:18px}
+.cz-address-editor-head{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.cz-address-editor .customer-form{margin-bottom:0}
+.customer-field select{width:100%;min-height:45px;border:1px solid #e5dfd5;border-radius:12px;background:#fff;color:#302d28;font-size:13px;padding:11px 13px}
+.customer-field select:focus-visible{outline:2px solid #c9a34e;outline-offset:2px}
+.cz-checkout-address{padding:15px;border:1px solid #e9decf;background:#fbf8f1;border-radius:13px;display:grid;gap:8px}
+.cz-checkout-address-link{font-size:11px;color:#9d792c;font-weight:600;justify-self:start}
+@media(max-width:760px){.cz-address-grid{grid-template-columns:1fr}}
+@media(max-width:540px){.cz-address-editor{padding:15px}.cz-profile-caption{gap:10px}.cz-account-actions .btn{width:100%}.cz-address-toolbar .btn{width:100%}.cz-profile-logout .btn{width:100%}}
+/* CAZANA-FASE3-CUENTA:FIN */
+
+/* CAZANA-DISENO-3-1:INICIO */
+/* Pulido de componentes existentes; conserva el sistema de diseño y la lógica. */
+:root {
+  --cz31-outline: #e9e1d5;
+  --cz31-soft: #fbf9f5;
+  --cz31-muted: #81786c;
+  --cz31-shadow: 0 12px 30px rgba(43, 39, 32, .045);
+}
+/* Iconos de acciones principales: escala común entre tienda e intranet. */
+.site-header .header-actions { align-items: center; }
+.site-header .header-actions .head-action { position: relative; min-width: 45px; gap: 4px; padding: 7px 5px; line-height: 1.3; border-radius: 13px; }
+.site-header .header-actions .head-action svg { display: block; width: 23px; height: 23px; flex: 0 0 23px; stroke: currentColor; }
+.site-header .header-actions .head-action .label { font: 400 10px/1.3 var(--sans,Arial,sans-serif); letter-spacing: 0; white-space: nowrap; }
+.site-header .header-actions .head-action:hover, .site-header .header-actions .head-action:focus-visible { color: var(--gold-dark); background: #faf7f1; }
+.site-header .header-actions .head-bubble { display: grid; place-items: center; font: 700 9px/1 var(--sans,Arial,sans-serif); }
+.site-header .header-actions .head-bubble[hidden] { display: none !important; }
+/* Interacciones y botones: límites coherentes, sin cambiar la semántica HTML. */
+.btn { text-align: center; line-height: 1.25; }
+.btn:focus-visible, .cz-address-button:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+.btn:disabled, .cz-address-button:disabled { opacity: .58; cursor: not-allowed; transform: none; }
+.btn-outline { border-color: #49443f; }
+button:focus-visible, a:focus-visible { scroll-margin: 100px; }
+/* Direcciones: tarjetas legibles, acciones e iconos consistentes. */
+.cz-addresses { min-width: 0; }
+.cz-addresses .cz-profile-caption { align-items: flex-start; padding-bottom: 2px; }
+.cz-addresses .cz-profile-tag { font-weight: 600; font-variant-numeric: tabular-nums; }
+.cz-address-toolbar { margin: 14px 0 20px; align-items: center; }
+.cz-address-toolbar p { max-width: 420px; }
+.cz-address-toolbar .btn { box-shadow: none; white-space: normal; min-height: 43px; }
+.cz-address-grid { gap: 16px; align-items: stretch; }
+.cz-address-card { display: flex; flex-direction: column; gap: 0; padding: 21px; border-radius: 18px; border: 1px solid var(--cz31-outline); box-shadow: var(--cz31-shadow); transition: border-color .2s, box-shadow .2s, transform .2s; }
+.cz-address-card:hover { border-color: #d7c8b2; box-shadow: 0 15px 32px rgba(43,39,32,.07); }
+.cz-address-card:has(.cz-address-default) { border-color: #d8e7db; }
+.cz-address-top { align-items: flex-start; margin-bottom: 12px; }
+.cz-address-top>div { gap: 7px 9px; }
+.cz-address-top strong { font-size: 14px; letter-spacing: -.01em; }
+.cz-address-marker { width: 37px; height: 37px; flex: 0 0 37px; display: inline-grid; place-items: center; padding: 0; border-radius: 11px; color: var(--gold-dark); background: #faf5ea; }
+.cz-address-marker svg { display: block; width: 19px; height: 19px; }
+.cz-address-default { padding: 5px 9px; line-height: 1.3; font-weight: 600; }
+.cz-address-card p { margin: 5px 0; font-size: 12px; line-height: 1.65; }
+.cz-address-card .cz-address-recipient { margin-bottom: 7px; }
+.cz-address-actions { display: flex; gap: 8px; margin-top: auto; padding-top: 18px; border-top: 1px solid #f0ebe4; }
+.cz-address-card .cz-address-actions { margin-top: auto; padding-top: 16px; }
+.cz-address-button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; font: 600 11px/1.3 var(--sans,Arial,sans-serif); color: #906c26; min-height: 36px; border: 1px solid #e7dac7; border-radius: 10px; background: white; padding: 9px 11px; transition: background .18s, border-color .18s, color .18s; }
+.cz-address-button svg { width: 15px; height: 15px; flex: 0 0 15px; }
+.cz-address-button:hover { background: #faf4e9; border-color: #d3b984; }
+.cz-address-button.is-danger { color: #a14d43; border-color: #ead7d2; }
+.cz-address-button.is-danger:hover { color: #8f332c; background: #fff4f1; border-color: #dbada5; }
+.cz-address-editor { margin-top: 22px; padding: clamp(16px,2.3vw,25px); border: 1px solid #e8decf; border-radius: 18px; background: #fdfbf7; }
+.cz-address-editor-head { padding-bottom: 13px; margin-bottom: 12px; border-bottom: 1px solid #ede5d9; }
+.cz-address-editor h3 { margin: 0; }
+.cz-address-editor .customer-form { gap: 18px; }
+.customer-field input, .customer-field textarea, .customer-field select, .cz-checkout-address select { box-sizing: border-box; width: 100%; border-radius: 12px; border: 1px solid #e4dbce; background: #fff; font-family: var(--sans,Arial,sans-serif); font-size: 12px; color: #342f29; transition: border-color .2s, box-shadow .2s; }
+.customer-field :is(input,textarea,select):focus-visible, .cz-checkout-address select:focus-visible { outline: none; border-color: #c9a34e; box-shadow: 0 0 0 3px #c9a34e20; }
+.customer-field input:disabled { background: #f7f5f1; }
+.customer-consent { gap: 11px; }
+.cz-address-empty { border-color: #e6d9c5; }
+.cz-address-empty > span { display: inline-grid; place-items: center; width: 52px; height: 52px; border-radius: 15px; background: #f6eedf; }
+.cz-address-empty > span svg { width: 22px; height: 22px; }
+/* Producto: iconografía vectorial y lenguaje de confianza responsable. */
+.product-summary .trust-box { display: grid; gap: 0; background: var(--cz31-soft); border: 1px solid #eee7dd; border-radius: 17px; padding: 6px 18px; }
+.product-summary .trust-item { display: flex; gap: 13px; align-items: flex-start; padding: 13px 0; min-width: 0; }
+.product-summary .trust-item + .trust-item { border-top: 1px solid #eae2d7; }
+.product-summary .trust-icon { width: 35px; height: 35px; flex: 0 0 35px; display: grid; place-items: center; color: var(--gold-dark); background: #f3eadd; border-radius: 10px; }
+.product-summary .trust-icon svg { display: block; width: 20px; height: 20px; }
+.product-summary .trust-item strong { display: block; margin: 1px 0 3px; font-size: 11px; color: #35302b; font-weight: 700; }
+.product-summary .trust-item small { display: block; font-size: 11px; font-weight: 400; line-height: 1.55; color: var(--cz31-muted); }
+.product-summary .cta-row .btn { min-height: 48px; }
+.product-summary .cta-row .icon-circle { flex: 0 0 auto; }
+.product-gallery .gallery-nav svg { display: block; width: 20px; height: 20px; stroke-width: 1.9; }
+.footer-social a svg { display: block; width: 17px; height: 17px; }
+.product-summary .product-save { line-height: 1.4; }
+/* Carrito, checkout y cuenta: mismas superficies y ritmo visual. */
+.cart-list-panel, .cart-summary, .checkout-fields, .checkout-summary, .account-menu, .account-section { box-shadow: var(--cz31-shadow); }
+.customer-order, .cz-checkout-address { border-color: var(--cz31-outline); }
+.checkout-fields .customer-field, .cz-checkout-address { min-width: 0; }
+.cz-checkout-address { padding: 17px; }
+.cz-checkout-address-link { display: inline-flex; align-items: center; padding: 4px 0; }
+.account-section { min-width: 0; }
+.account-tab { min-height: 46px; }
+/* Intranet: respetar la cuadrícula original, sin tocar estructura ni operaciones. */
+.cazana-private .staff-actions button, .cazana-private .admin-nav-btn, .cazana-private .staff-form button { transition: background .18s, border-color .18s, color .18s; }
+.cazana-private .staff-actions button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+@media (max-width: 900px) {
+  .cz-address-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .account-layout { min-width: 0; }
+}
+@media (max-width: 780px) {
+  .cz-address-grid { grid-template-columns: 1fr; }
+  .product-summary .trust-box { padding: 5px 15px; }
+}
+@media (max-width: 560px) {
+  .cz-address-card { padding: 17px; }
+  .cz-address-toolbar { align-items: stretch; }
+  .cz-address-toolbar .btn { width: 100%; }
+  .cz-address-actions { gap: 7px; }
+  .cz-address-button { padding: 9px 10px; }
+  .customer-order, .checkout-summary, .checkout-fields { min-width: 0; }
+  .site-header .header-actions .head-action { min-width: 35px; padding: 5px 3px; }
+  .site-header .header-actions .head-action svg { width: 22px; height: 22px; flex-basis: 22px; }
+}
+@media (max-width: 360px) {
+  .cz-address-actions .cz-address-button { flex: 1 1 auto; }
+  .cz-address-editor { padding: 14px; }
+}
+@media (hover: none) { .cz-address-card:hover { transform: none; box-shadow: var(--cz31-shadow); } }
+@media (prefers-reduced-motion: reduce) { .cz-address-card, .cz-address-button, .customer-field input { transition: none; } }
+/* CAZANA-DISENO-3-1:FIN */

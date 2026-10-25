@@ -9,6 +9,7 @@
   const titles={orders:'Mis pedidos',favorites:'Mis favoritos',profile:'Mi perfil',addresses:'Mis direcciones'};
   const orderStatus={pending:'Por confirmar',confirmed:'Confirmado',preparing:'En preparación',shipped:'Enviado',delivered:'Entregado',cancelled:'Cancelado'};
   const products=Array.isArray(window.CazanaData)?window.CazanaData:[];
+  const extras=window.CazanaAccountExtras;
   let user=null,orders=[],tab='orders',authMode='login',busy=false;
   async function api(url,method='GET',payload){
     let r;try{r=await fetch(url,{method,credentials:'same-origin',headers:{Accept:'application/json','X-Cazana-Request':'1',...(payload===undefined?{}:{'Content-Type':'application/json'})},...(payload===undefined?{}:{body:JSON.stringify(payload)})});}catch{throw Error('No pudimos conectar con el servidor.');}
@@ -43,8 +44,7 @@
    <p>${o.items.map(i=>`${escapeHTML(i.name)} × ${i.quantity}`).join(' · ')}</p>
    <div class="customer-order-bottom"><div><strong>${money(o.totalCents)}</strong><small>Sin pago procesado en línea</small></div><div>${o.status==='pending'?`<button class="btn btn-outline" data-cancel-order="${escapeHTML(o.id)}" type="button">Cancelar solicitud</button>`:''}</div></div>
   </article>`).join('')}</div>`:empty('Todavía no registraste pedidos','Cuando solicites un pedido, podrás seguir aquí su estado. No se realiza un pago en línea.');}
-  function content(){if(!user){return authSelector()+(authMode==='register'?registerView():loginView());}if(tab==='favorites')return favorites();if(tab==='orders')return renderOrders();if(tab==='profile')return `<div class="customer-profile"><h3>Datos de tu cuenta</h3><p><strong>Nombre:</strong> ${escapeHTML(user.name)}</p><p><strong>Correo:</strong> ${escapeHTML(user.email)}</p><p><strong>Promociones:</strong> ${user.marketingConsent?'Suscripción solicitada':'No suscrito'}</p><button id="customer-logout" class="btn btn-outline" type="button">Cerrar sesión</button></div>`;
-   return empty('Direcciones próximamente','Por ahora la dirección se registra con cada pedido, sin guardarla como favorita.');}
+  function content(){if(!user){return authSelector()+(authMode==='register'?registerView():loginView());}if(tab==='favorites')return favorites();if(tab==='orders')return renderOrders();if(tab==='profile')return extras.profileView(user);return extras.addressesView();}
   function render(){
     const layout=root.closest('.account-layout');
     if(layout)layout.classList.toggle('account-guest-mode',!user);
@@ -58,19 +58,24 @@
     root.innerHTML=`<div class="account-panel-heading"><h2>${user?titles[tab]||titles.orders:'Tu espacio Cazana'}</h2><p>${user?'Gestiona tus pedidos y datos personales.':'Un lugar para comprar con tranquilidad y consultar tus pedidos.'}</p></div><div id="account-message" role="status" hidden></div>${content()}`;
   }
   async function loadOrders(){if(!user)return;const r=await api('/api/orders');orders=r.items||[];}
-  async function start(){root.closest('.account-layout')?.classList.add('account-guest-mode');try{const r=await api('/api/auth/me');if(r.user?.role!=='customer')throw Object.assign(Error('Acceso exclusivo para clientes.'),{status:401});user=r.user;await loadOrders();}catch(err){if(err.status&&err.status!==401){render();notice(err.message,true);return;}user=null;}render();}
+  async function start(){root.closest('.account-layout')?.classList.add('account-guest-mode');try{const r=await api('/api/auth/me');if(r.user?.role!=='customer')throw Object.assign(Error('Acceso exclusivo para clientes.'),{status:401});user=r.user;await loadOrders();await extras.load(api,user).catch(()=>{});}catch(err){if(err.status&&err.status!==401){render();notice(err.message,true);return;}user=null;}render();}
   document.addEventListener('click',async e=>{
+    if(user && await extras.click(e.target,api,render,notice))return;
     const tabBtn=e.target.closest('[data-account-tab]');if(tabBtn&&user){tab=tabBtn.dataset.accountTab;history.replaceState(null,'','#'+(tab==='favorites'?'favoritos':tab));render();return;}
     const auth=e.target.closest('[data-switch-auth]');if(auth&&!user){authMode=auth.dataset.switchAuth==='register'?'register':'login';render();return;}
-    if(e.target.closest('#customer-logout')){try{await api('/api/auth/logout','POST');user=null;orders=[];authMode='login';render();}catch(err){notice(err.message,true);}return;}
+    if(e.target.closest('#customer-logout')){try{await api('/api/auth/logout','POST');user=null;orders=[];extras.clear();authMode='login';render();}catch(err){notice(err.message,true);}return;}
     const cancel=e.target.closest('[data-cancel-order]');if(cancel){if(!confirm('¿Cancelar esta solicitud de pedido? Se liberarán las existencias reservadas.'))return;try{await api(`/api/orders/${cancel.dataset.cancelOrder}/cancel`,'POST');await loadOrders();render();notice('Solicitud cancelada.');}catch(err){notice(err.message,true);}return;}
   });
   document.addEventListener('submit',async e=>{
-    const form=e.target;if(!['customer-login','customer-register'].includes(form.id))return;
+    const form=e.target;
+    if(user && ['cz-profile-form','cz-address-form'].includes(form.id)){e.preventDefault();await extras.submit(form,api,render,notice);return;}
+    if(!['customer-login','customer-register'].includes(form.id))return;
     e.preventDefault();if(busy)return;busy=true;const button=form.querySelector('button[type=submit]');if(button)button.disabled=true;
     try{const fd=new FormData(form);const isReg=form.id==='customer-register';const payload=isReg?{name:String(fd.get('name')),email:String(fd.get('email')),password:String(fd.get('password')),marketingConsent:fd.has('marketingConsent')}:{email:String(fd.get('email')),password:String(fd.get('password'))};
-      const r=await api(isReg?'/api/auth/register':'/api/auth/login','POST',payload);user=r.user;await loadOrders();render();notice(isReg?'Cuenta creada correctamente.':'Bienvenido de nuevo.');
+      const r=await api(isReg?'/api/auth/register':'/api/auth/login','POST',payload);user=r.user;await loadOrders();await extras.load(api,user).catch(()=>{});render();notice(isReg?'Cuenta creada correctamente.':'Bienvenido de nuevo.');
     }catch(err){notice(err.message,true);}finally{busy=false;if(button)button.disabled=false;}
   });
-  tab=location.hash==='#favoritos'?'favorites':location.hash==='#perfil'?'profile':'orders';start();
+  tab=location.hash==='#favoritos'?'favorites':location.hash==='#perfil'?'profile':location.hash==='#addresses'?'addresses':'orders';
+  window.addEventListener('hashchange',()=>{if(!user)return;const next=location.hash==='#favoritos'?'favorites':location.hash==='#perfil'?'profile':location.hash==='#addresses'?'addresses':'orders';if(next!==tab){tab=next;render();}});
+  start();
 })();

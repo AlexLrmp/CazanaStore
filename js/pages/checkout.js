@@ -34,6 +34,23 @@ const progress=document.querySelectorAll('.checkout-progress>div');if(progress.l
 const discount=$('#checkout-discount');if(discount&&discount.parentElement?.firstElementChild)discount.parentElement.firstElementChild.textContent='Descuentos (no disponibles)';
 const old=Array.from(area.querySelectorAll('button')).find(x=>/Confirmar pedido/i.test(x.textContent));if(old)old.remove();
 }
+async function prepareAddresses(){
+  const formEl=$('#request-order-form');if(!formEl)return;
+  let profile=null,addresses=[];
+  try{const result=await api('/api/me/profile');profile=result.profile;}catch{}
+  try{const result=await api('/api/me/addresses');addresses=result.items||[];}catch{}
+  if(profile?.phone){const phone=formEl.elements.phone;if(phone&&!phone.value)phone.value=profile.phone;}
+  if(!addresses.length)return;
+  const escapeAttr=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const selector=document.createElement('div');selector.className='cz-checkout-address';
+  selector.innerHTML='<label class="customer-field"><span>Usar una dirección guardada</span><select id="cz-checkout-address" name="savedAddress"><option value="">Completar dirección manualmente</option>'+addresses.map(a=>'<option value="'+escapeAttr(a.id)+'">'+escapeAttr(a.label)+' — '+escapeAttr(a.address)+', '+escapeAttr(a.city)+(a.isDefault?' (principal)':'')+'</option>').join('')+'</select></label><a href="cuenta.html#addresses" class="cz-checkout-address-link">Gestionar mis direcciones ↗</a>';
+  formEl.insertBefore(selector,formEl.firstChild);
+  const select=selector.querySelector('select');
+  function applyAddress(id){const a=addresses.find(x=>x.id===id);if(!a)return;for(const field of ['fullName','phone','address','city','region','reference']){const input=formEl.elements[field];if(input)input.value=a[field]||'';}}
+  select.addEventListener('change',()=>applyAddress(select.value));
+  const preferred=addresses.find(a=>a.isDefault)||addresses[0];
+  select.value=preferred.id;applyAddress(preferred.id);
+}
 function alert(text,isError=false){const n=$('#checkout-alert');if(n){n.textContent=text;n.classList.toggle('error',isError);}}
 async function startup(){
   prices();
@@ -48,6 +65,7 @@ async function startup(){
     if(result.user?.role!=='customer')throw Error('Se necesita una cuenta de cliente.');
     user=result.user;
     form();
+    await prepareAddresses();
   } catch {
     container.innerHTML='<div class="customer-checkout-guest compact-notice"><strong>Inicia sesión para continuar.</strong> Para solicitar tu pedido, <a href="cuenta.html">ingresa a tu cuenta o regístrate</a>. Los productos permanecerán en tu carrito.</div>';
   }
