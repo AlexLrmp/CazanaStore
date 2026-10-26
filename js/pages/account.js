@@ -1,4 +1,5 @@
 /* CAZANA — Clientes y pedidos (fase 2). Las sesiones usan cookies httpOnly. */
+/* CAZANA-FASE-3-2 */
 (() => {
   'use strict';
   const root=document.getElementById('account-panel');if(!root)return;
@@ -22,7 +23,7 @@
   function favorites(){
     let ids=[];try{ids=JSON.parse(localStorage.getItem('cazana_wishlist')||'[]');}catch{}
     const found=products.filter(p=>ids.includes(p.id));
-    return found.length?`<div class="account-favs">${found.map(p=>`<article><img src="${escapeHTML(p.image||'')}" alt="${escapeHTML(p.name)}"><div><span class="eyebrow">${escapeHTML(p.subcategory||'')}</span><h3>${escapeHTML(p.name)}</h3><strong>${money(Math.round(p.price*100))}</strong><a class="admin-text-link" href="producto.html?id=${encodeURIComponent(p.id)}">Ver producto ↗</a></div></article>`).join('')}</div>`:empty('Aún no tienes favoritos','Utiliza el corazón de cada producto para guardarlo en este navegador.');
+    return found.length?`<div class="account-favs">${found.map(p=>`<article><img src="${escapeHTML(p.image||'')}" alt="${escapeHTML(p.name)}"><div><span class="eyebrow">${escapeHTML(p.subcategory||'')}</span><h3>${escapeHTML(p.name)}</h3><strong>${money(Math.round(p.price*100))}</strong><a class="admin-text-link" href="producto.html?id=${encodeURIComponent(p.id)}">Ver producto ↗</a><button type="button" class="btn btn-outline" data-account-remove-wish="${escapeHTML(p.id)}">Quitar de favoritos</button></div></article>`).join('')}</div>`:empty('Aún no tienes favoritos','Utiliza el corazón de cada producto para guardarlo en tu cuenta.');
   }
   const htmlLabel=(name,label,type='text',extra='')=>`<label class="customer-field"><span>${label}</span><input name="${name}" type="${type}" ${extra} required></label>`;
   function authSelector(){
@@ -58,12 +59,19 @@
     root.innerHTML=`<div class="account-panel-heading"><h2>${user?titles[tab]||titles.orders:'Tu espacio Cazana'}</h2><p>${user?'Gestiona tus pedidos y datos personales.':'Un lugar para comprar con tranquilidad y consultar tus pedidos.'}</p></div><div id="account-message" role="status" hidden></div>${content()}`;
   }
   async function loadOrders(){if(!user)return;const r=await api('/api/orders');orders=r.items||[];}
-  async function start(){root.closest('.account-layout')?.classList.add('account-guest-mode');try{const r=await api('/api/auth/me');if(r.user?.role!=='customer')throw Object.assign(Error('Acceso exclusivo para clientes.'),{status:401});user=r.user;await loadOrders();await extras.load(api,user).catch(()=>{});}catch(err){if(err.status&&err.status!==401){render();notice(err.message,true);return;}user=null;}render();}
+  async function start(){root.closest('.account-layout')?.classList.add('account-guest-mode');try{const r=await api('/api/auth/me');if(r.user?.role!=='customer')throw Object.assign(Error('Acceso exclusivo para clientes.'),{status:401});user=r.user;await window.CazanaShopping?.initialize();await loadOrders();await extras.load(api,user).catch(()=>{});}catch(err){if(err.status&&err.status!==401){render();notice(err.message,true);return;}user=null;}render();}
   document.addEventListener('click',async e=>{
+    const removeWish=e.target.closest('[data-account-remove-wish]');
+    if(removeWish&&user){
+      const stored=JSON.parse(localStorage.getItem('cazana_wishlist')||'[]');
+      const next=stored.filter(id=>id!==removeWish.dataset.accountRemoveWish);
+      localStorage.setItem('cazana_wishlist',JSON.stringify(next));
+      await window.CazanaShopping?.setFavorites(next);render();return;
+    }
     if(user && await extras.click(e.target,api,render,notice))return;
     const tabBtn=e.target.closest('[data-account-tab]');if(tabBtn&&user){tab=tabBtn.dataset.accountTab;history.replaceState(null,'','#'+(tab==='favorites'?'favoritos':tab));render();return;}
     const auth=e.target.closest('[data-switch-auth]');if(auth&&!user){authMode=auth.dataset.switchAuth==='register'?'register':'login';render();return;}
-    if(e.target.closest('#customer-logout')){try{await api('/api/auth/logout','POST');user=null;orders=[];extras.clear();authMode='login';render();}catch(err){notice(err.message,true);}return;}
+    if(e.target.closest('#customer-logout')){try{await api('/api/auth/logout','POST');user=null;orders=[];extras.clear();window.CazanaShopping?.logout();authMode='login';render();}catch(err){notice(err.message,true);}return;}
     const cancel=e.target.closest('[data-cancel-order]');if(cancel){if(!confirm('¿Cancelar esta solicitud de pedido? Se liberarán las existencias reservadas.'))return;try{await api(`/api/orders/${cancel.dataset.cancelOrder}/cancel`,'POST');await loadOrders();render();notice('Solicitud cancelada.');}catch(err){notice(err.message,true);}return;}
   });
   document.addEventListener('submit',async e=>{
@@ -72,10 +80,11 @@
     if(!['customer-login','customer-register'].includes(form.id))return;
     e.preventDefault();if(busy)return;busy=true;const button=form.querySelector('button[type=submit]');if(button)button.disabled=true;
     try{const fd=new FormData(form);const isReg=form.id==='customer-register';const payload=isReg?{name:String(fd.get('name')),email:String(fd.get('email')),password:String(fd.get('password')),marketingConsent:fd.has('marketingConsent')}:{email:String(fd.get('email')),password:String(fd.get('password'))};
-      const r=await api(isReg?'/api/auth/register':'/api/auth/login','POST',payload);user=r.user;await loadOrders();await extras.load(api,user).catch(()=>{});render();notice(isReg?'Cuenta creada correctamente.':'Bienvenido de nuevo.');
+      const r=await api(isReg?'/api/auth/register':'/api/auth/login','POST',payload);user=r.user;await window.CazanaShopping?.initialize(true);await loadOrders();await extras.load(api,user).catch(()=>{});render();notice(isReg?'Cuenta creada correctamente.':'Bienvenido de nuevo.');
     }catch(err){notice(err.message,true);}finally{busy=false;if(button)button.disabled=false;}
   });
   tab=location.hash==='#favoritos'?'favorites':location.hash==='#perfil'?'profile':location.hash==='#addresses'?'addresses':'orders';
   window.addEventListener('hashchange',()=>{if(!user)return;const next=location.hash==='#favoritos'?'favorites':location.hash==='#perfil'?'profile':location.hash==='#addresses'?'addresses':'orders';if(next!==tab){tab=next;render();}});
+  document.addEventListener('cazana:shopping-change',()=>{if(user&&tab==='favorites')render();});
   start();
 })();

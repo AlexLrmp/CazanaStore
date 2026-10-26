@@ -1,4 +1,5 @@
 /* CAZANA — Solicitudes de pedidos sin pagos integrados. */
+/* CAZANA-FASE-3-2 */
 (() => {
 'use strict';
 const root=document.getElementById('checkout-items');if(!root)return;
@@ -78,9 +79,13 @@ const currentKey=JSON.stringify(items);
 let requestId='';try{const saved=JSON.parse(sessionStorage.getItem('cazana-order-request')||'null');if(saved?.key===currentKey)requestId=saved.id;}catch{}
 if(!requestId){requestId=crypto.randomUUID();try{sessionStorage.setItem('cazana-order-request',JSON.stringify({key:currentKey,id:requestId}));}catch{}}
 const payload={requestId,items,shipping:{fullName:String(f.get('fullName')),phone:String(f.get('phone')),address:String(f.get('address')),city:String(f.get('city')),region:String(f.get('region')),reference:String(f.get('reference'))},notes:String(f.get('notes'))};
-try{const response=await api('/api/orders','POST',payload);cart=[];localStorage.setItem('cazana_cart','[]');sessionStorage.removeItem('cazana-order-request');
+try{const response=await api('/api/orders','POST',payload);cart=[];localStorage.setItem('cazana_cart','[]');await window.CazanaShopping?.clearCart();sessionStorage.removeItem('cazana-order-request');
  const c=$('.checkout-form-display');c.innerHTML=`<div class="customer-order-success"><div class="customer-order-success-mark">✓</div><h3>Solicitud registrada</h3><p>Pedido <strong>${escapeHTML(response.order.id.slice(-8).toUpperCase())}</strong> guardado en MongoDB.</p><p>Importe del pedido: <strong>${money(response.order.totalCents)}</strong>. No se ha realizado ningún cobro.</p><p>Un empleado deberá confirmar la entrega y el método de pago.</p><a class="btn btn-green" href="cuenta.html">Ver mis pedidos</a></div>`;prices();
 }catch(err){alert(err.message,true);btn.disabled=false;}finally{busy=false;}
 });
-startup();
+Promise.resolve(window.CazanaShopping?.initialize()).then(()=>{
+  try{cart=JSON.parse(localStorage.getItem('cazana_cart')||'[]');}catch{cart=[];}
+  cart=cart.filter(x=>map.has(x.id)&&Number.isInteger(x.qty)&&x.qty>0&&x.qty<=20);
+  startup();
+});
 })();

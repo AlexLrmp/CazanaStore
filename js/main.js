@@ -1,3 +1,4 @@
+/* CAZANA-FASE-3-2 */
 (() => {
   'use strict';
 
@@ -11,6 +12,7 @@
   const setStore = (k, val) => { try { localStorage.setItem(k, JSON.stringify(val)); } catch { /* Vista local sin almacenamiento persistente */ } };
   let cart = getStore(K.cart, []);
   let wishlist = getStore(K.wishlist, []);
+  let renderCartPage = () => {};
 
   const heartSvg = () => `
     <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -26,13 +28,14 @@
     toast._t = setTimeout(() => el.classList.remove('show'), 2200);
   };
 
-  const saveCart = () => { setStore(K.cart, cart); refreshCounts(); };
-  const saveWishlist = () => { setStore(K.wishlist, wishlist); refreshCounts(); updateWishButtons(); };
+  const saveCart = () => { setStore(K.cart, cart); refreshCounts(); return window.CazanaShopping?.setCart(cart); };
+  const saveWishlist = () => { setStore(K.wishlist, wishlist); refreshCounts(); updateWishButtons(); return window.CazanaShopping?.setFavorites(wishlist); };
   const addToCart = (id, qty = 1) => {
     const line = cart.find(x => x.id === id);
-    if (line) line.qty += qty; else cart.push({ id, qty });
-    saveCart();
+    if (line) line.qty = Math.min(20,line.qty+qty); else cart.push({ id, qty:Math.min(20,qty) });
+    const pending=saveCart();
     toast('Producto añadido a tu carrito.');
+    return pending;
   };
   const toggleWishlist = id => {
     wishlist = wishlist.includes(id) ? wishlist.filter(x => x !== id) : [...wishlist, id];
@@ -387,7 +390,7 @@
       qty = Math.max(1, Math.min(20, qty + Number(btn.dataset.qty)));
       qtyValue.textContent = String(qty);
     }));
-    $('[data-buy-now]', root)?.addEventListener('click', () => { addToCart(product.id, qty); location.href = 'carrito.html'; });
+    $('[data-buy-now]', root)?.addEventListener('click', async () => { await addToCart(product.id, qty); location.href = 'carrito.html'; });
     $('[data-add-qty]', root)?.addEventListener('click', () => addToCart(product.id, qty));
     $('#review-form', root)?.addEventListener('submit', e => {
       e.preventDefault();
@@ -414,13 +417,13 @@
     const totalPreview = $('#total-preview');
     const discountValue = $('#discount-value');
     const couponForm = $('#coupon-form');
-    let couponActive = getStore('cazana_demo_coupon', '') === 'DEMO10';
+    let couponActive = false; // Los cupones aún no son válidos en el backend.
     couponForm?.addEventListener('submit', e => { e.preventDefault();
       const code = (couponForm.elements.coupon.value || '').trim().toUpperCase();
-      couponActive = code === 'DEMO10';
+      couponActive = false;
       setStore('cazana_demo_coupon', couponActive ? 'DEMO10' : '');
       const status = $('#coupon-status');
-      if (status) status.textContent = couponActive ? 'Cupón de prueba aplicado.' : 'Código no disponible.';
+      if (status) status.textContent = 'Los descuentos se habilitarán cuando estén disponibles en Cazana.';
       render();
     });
     function render() {
@@ -451,6 +454,7 @@
         render();
       }));
     }
+    renderCartPage=render;
     render();
   }
 
@@ -467,7 +471,14 @@
     if (wishBtn) { e.preventDefault(); toggleWishlist(wishBtn.dataset.wish); }
   });
 
-  document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('cazana:shopping-change', event => {
+    cart=event.detail.cart;wishlist=event.detail.favorites;
+    refreshCounts();updateWishButtons();renderCartPage();
+  });
+  document.addEventListener('cazana:sync-error',event=>toast(event.detail.message));
+  document.addEventListener('DOMContentLoaded', async () => {
+    await window.CazanaShopping?.initialize();
+    cart=getStore(K.cart,[]);wishlist=getStore(K.wishlist,[]);
     refreshCounts();
     updateWishButtons();
     if ($('#current-year')) $('#current-year').textContent = new Date().getFullYear();

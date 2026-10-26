@@ -13,6 +13,18 @@ const customerAddressSchema = new Schema({
   isDefault: {type:Boolean,default:false}
 }, {versionKey:false});
 
+// CAZANA-FASE-3-2: sincronización del carrito y favoritos, aislada del perfil del usuario.
+const customerCartLineSchema = new Schema({
+  productId: {type:Schema.Types.ObjectId,ref:'Product',required:true},
+  quantity: {type:Number,required:true,min:1,max:20}
+},{_id:false,versionKey:false});
+const customerShoppingSchema = new Schema({
+  customerId: {type:Schema.Types.ObjectId,ref:'User',required:true,unique:true,index:true},
+  cart: {type:[customerCartLineSchema],default:[],validate:v=>v.length<=20},
+  favorites: {type:[{type:Schema.Types.ObjectId,ref:'Product'}],default:[],validate:v=>v.length<=100},
+  revision: {type:Number,default:0,min:0}
+},{timestamps:true,versionKey:false});
+
 const userSchema = new Schema({
   name: { type: String, required: true, trim: true, maxlength: 100 },
   phone: {type:String,default:'',trim:true,maxlength:25},
@@ -115,6 +127,7 @@ orderSchema.index({status:1,createdAt:-1});
 
 module.exports = {
   User: model('User', userSchema),
+  CustomerShopping: model('CustomerShopping', customerShoppingSchema),
   Session: model('Session', sessionSchema),
   Product: model('Product', productSchema),
   SiteSettings: model('SiteSettings', settingsSchema),
