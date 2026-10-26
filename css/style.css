@@ -4226,3 +4226,12 @@ button:focus-visible, a:focus-visible { scroll-margin: 100px; }
 @media (hover: none) { .cz-address-card:hover { transform: none; box-shadow: var(--cz31-shadow); } }
 @media (prefers-reduced-motion: reduce) { .cz-address-card, .cz-address-button, .customer-field input { transition: none; } }
 /* CAZANA-DISENO-3-1:FIN */
+
+
+/* CAZANA-FASE-3-3 · recuperación de contraseñas */
+.cazana-recovery-control{display:flex;justify-content:center;margin-top:18px}
+.cazana-recovery-link{font:inherit;font-size:13px;color:var(--gold-dark,#956c22);border:0;background:transparent;cursor:pointer;text-decoration:underline;text-underline-offset:4px;padding:10px 12px;border-radius:8px}
+.cazana-recovery-link:hover{background:var(--cream,#f8f5ee);color:var(--charcoal,#292929)}
+.cazana-recovery-link:focus-visible{outline:2px solid var(--gold,#c8a34b);outline-offset:2px}
+.customer-reset-hint{color:#766e60;font-size:12px;line-height:1.8;margin:17px 0 6px}
+@media(max-width:600px){.cazana-recovery-link{min-height:44px}.customer-reset-hint{font-size:12px}}

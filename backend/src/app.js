@@ -9,6 +9,7 @@ const {Product}=require('./models');
 const {serializeProduct}=require('./format');
 const {optionalUser,requireSameOrigin}=require('./security');
 const authRoutes=require('../routes/auth').router;
+const passwordRecoveryRoutes=require('../routes/password-recovery'); // CAZANA-FASE-3-3
 const staffRoutes=require('../routes/staff');
 const publicRoutes=require('../routes/catalog');
 const adminRoutes=require('../routes/admin');
@@ -35,6 +36,7 @@ app.use('/api',rateLimit({windowMs:15*60*1000,limit:300,standardHeaders:'draft-7
 app.use('/api',requireSameOrigin,optionalUser);
 app.get('/api/health',(req,res)=>res.json({status:mongoose.connection.readyState===1?'ok':'database_unavailable',database:mongoose.connection.readyState===1?'connected':'disconnected'}));
 app.use('/api/auth',authRoutes);
+app.use('/api/auth',passwordRecoveryRoutes);
 app.use('/api/staff',staffRoutes);
 app.use('/api/admin',adminRoutes);
 app.use('/api/admin/orders',adminOrdersRoutes);

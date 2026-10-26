@@ -39,6 +39,15 @@ const userSchema = new Schema({
 }, { timestamps: true, versionKey: false });
 userSchema.index({ employeeCode: 1 }, { unique: true, partialFilterExpression: { employeeCode: { $type: 'string' } } });
 
+// CAZANA-FASE-3-3: tokens de recuperación de un solo uso; nunca almacenar el token en claro.
+const passwordResetSchema = new Schema({
+  userId:{type:Schema.Types.ObjectId,ref:'User',required:true,index:true},
+  tokenHash:{type:String,required:true,unique:true,index:true},
+  expiresAt:{type:Date,required:true},
+  usedAt:{type:Date,default:null}
+},{timestamps:true,versionKey:false});
+passwordResetSchema.index({expiresAt:1},{expireAfterSeconds:0});
+
 const sessionSchema = new Schema({
   tokenHash: { type: String, unique: true, required: true, index: true },
   userId: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
@@ -129,6 +138,7 @@ module.exports = {
   User: model('User', userSchema),
   CustomerShopping: model('CustomerShopping', customerShoppingSchema),
   Session: model('Session', sessionSchema),
+  PasswordReset: model('PasswordReset', passwordResetSchema),
   Product: model('Product', productSchema),
   SiteSettings: model('SiteSettings', settingsSchema),
   StockMovement: model('StockMovement', stockMovementSchema),
