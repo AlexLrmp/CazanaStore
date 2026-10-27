@@ -1,0 +1,91 @@
+/* CAZANA-FASE-3-5 · Vista de atencion, consistente con el diseño premium. */
+.cazana-support .private-main{background:#faf9f7}
+.cazana-support .sp-main{padding-top:36px;padding-bottom:78px;min-height:72vh}
+.cazana-support .sp-head{display:flex;align-items:end;justify-content:space-between;gap:22px;margin:24px 0 30px}
+.cazana-support .sp-head h1{font-family:var(--serif,Georgia,serif);font-size:clamp(32px,4vw,48px);font-weight:400;letter-spacing:-.035em;color:#292725;margin:8px 0 8px}
+.cazana-support .sp-head p:not(.eyebrow){color:#80776d;font-size:12px;line-height:1.65;margin:0;max-width:650px}
+.cazana-support .sp-role-badge{flex:none;display:inline-flex;align-items:center;padding:10px 14px;border:1px solid #d9ebdf;background:#e9f5ec;color:#207553;border-radius:50px;font-size:10px;font-weight:700;letter-spacing:.04em}
+.cazana-support .sp-info{display:flex;align-items:center;gap:14px;padding:20px 22px;border:1px solid #e8dece;border-radius:16px;background:#fff;margin-bottom:22px}
+.cazana-support .sp-info>span{color:#bf953e;font-size:21px}
+.cazana-support .sp-info p{font-size:11px;color:#786f66;line-height:1.7;margin:0;max-width:600px}
+.cazana-support .sp-info strong{color:#403a31}
+.cazana-support .sp-person{margin-left:auto;display:flex;align-items:flex-end;flex-direction:column;gap:7px;flex:none}
+.cazana-support .sp-person small{font-size:10px;color:#665b4b}
+.cazana-support .sp-person button{border:0;background:none;color:#a17e3b;font-size:11px;font-weight:600;padding:3px 0}
+.cazana-support .sp-layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:22px;align-items:start}
+.cazana-support .sp-sidebar{background:#292725;color:white;border-radius:18px;padding:24px 13px;min-height:490px;display:flex;flex-direction:column;gap:10px}
+.cazana-support .sp-sidebar>small{padding:1px 12px 12px;color:#dfceac;font-weight:700;font-size:9px;letter-spacing:.13em}
+.cazana-support .sp-tab{border:1px solid transparent;background:transparent;border-radius:12px;text-align:left;color:#f3eee6;padding:14px;display:flex;gap:12px;align-items:center;font-weight:500;font-size:12px;min-height:48px}
+.cazana-support .sp-tab span{color:#d3aa4f;font-size:18px}
+.cazana-support .sp-tab:hover{background:#3d372c}
+.cazana-support .sp-tab.is-current{background:#453b2b;color:#efc76a;border-left:3px solid #d3aa4f;font-weight:700}
+.cazana-support .sp-sidebar-foot{margin-top:auto;color:#cec2ab;font-size:10px;line-height:1.7;padding:20px 11px 0;display:flex;gap:9px;align-items:center}
+.cazana-support .sp-green-dot{width:8px;height:8px;border-radius:50%;background:#23876b;flex:none}
+.cazana-support .sp-workspace{min-height:490px;border:1px solid #eae0d3;background:#fff;border-radius:20px;padding:30px}
+.cazana-support .sp-workspace h2{font:400 31px/1.2 var(--serif,Georgia,serif);margin:0 0 7px;color:#2b2926}
+.cazana-support .sp-workspace p{font-size:12px;color:#82786c;line-height:1.7;margin:0}
+.cazana-support .sp-workspace .sp-section-eyebrow{font-size:10px;font-weight:700;letter-spacing:.12em;color:#b48c35;margin-bottom:11px}
+.cazana-support .sp-empty{margin-top:26px;min-height:260px;border:1px dashed #e8ddcc;background:#fbf8f3;border-radius:17px;padding:34px;display:flex;justify-content:center;align-items:center;flex-direction:column;text-align:center;gap:11px}
+.cazana-support .sp-empty svg{width:30px;height:30px;color:#b99247}
+.cazana-support .sp-empty h3{font:400 23px var(--serif,Georgia,serif);color:#33302d;margin:0}
+.cazana-support .sp-empty p{max-width:445px}
+.cazana-support .sp-secure-label{margin-top:20px;font-size:10px;color:#7c6f5a;display:flex;align-items:center;gap:9px}
+.cazana-support .sp-secure-label span{width:7px;height:7px;background:#2a8f71;border-radius:50%}
+@media(max-width:810px){.cazana-support .sp-layout{grid-template-columns:1fr}.cazana-support .sp-sidebar{min-height:0;gap:6px}.cazana-support .sp-sidebar-foot{margin-top:12px}.cazana-support .sp-head{align-items:flex-start;flex-direction:column}.cazana-support .sp-info{flex-wrap:wrap}.cazana-support .sp-person{margin-left:34px;align-items:flex-start}}
+@media(max-width:540px){.cazana-support .sp-main{padding-top:20px}.cazana-support .sp-layout{gap:15px}.cazana-support .sp-info{padding:15px}.cazana-support .sp-workspace{padding:22px 17px;min-height:360px}.cazana-support .sp-sidebar{padding:18px 12px}.cazana-support .sp-role-badge{font-size:9px}.cazana-support .sp-head h1{font-size:35px}}
+
+
+/* CAZANA-FASE-3-6 · Solo la bandeja de atención y CRM. */
+.cazana-support .cz-inbox-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:22px 0 16px}
+.cazana-support .cz-inbox-bar label{font-size:11px;color:#6e665b;display:flex;gap:9px;align-items:center}
+.cazana-support .cz-inbox-bar select,.cazana-support .cz-inbox-bar button{border:1px solid #e6dac6;background:white;border-radius:10px;padding:9px 12px;color:#5a4b37;font-size:11px}
+.cazana-support .cz-inbox-grid{display:grid;grid-template-columns:minmax(155px,33%) minmax(0,1fr);border:1px solid #e9dfd2;border-radius:16px;overflow:hidden;min-height:385px}
+.cazana-support .cz-thread-list{border-right:1px solid #e9dfd2;background:#fdfbf8;min-width:0;max-height:550px;overflow:auto}
+.cazana-support .cz-thread-row{display:flex;flex-direction:column;align-items:stretch;gap:7px;background:transparent;border:0;border-bottom:1px solid #ede4d8;padding:14px;width:100%;text-align:left;cursor:pointer}
+.cazana-support .cz-thread-row:hover,.cazana-support .cz-thread-row.is-active{background:#f6eddf}
+.cazana-support .cz-thread-row strong{display:flex;align-items:center;justify-content:space-between;color:#352f29;font-size:11px}
+.cazana-support .cz-thread-row small{color:#706558;font-size:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
+.cazana-support .cz-thread-row span{font-size:9px;color:#ae945c}
+.cazana-support .cz-unread{width:7px;height:7px;border-radius:50%;background:#1d8064}
+.cazana-support .cz-thread-detail{min-width:0;display:flex;flex-direction:column;gap:12px;padding:18px}
+.cazana-support .cz-detail-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid #eee4d8;padding-bottom:10px}
+.cazana-support .cz-detail-heading strong{font-size:13px;color:#352f29;display:block}.cazana-support .cz-detail-heading small{color:#857764;display:block;font-size:10px}
+.cazana-support .cz-detail-heading span{font-size:9px;color:#237452;background:#e9f4eb;padding:6px 10px;border-radius:40px}
+.cazana-support .cz-staff-messages{height:240px;overflow:auto;display:flex;flex-direction:column;gap:9px}
+.cazana-support .cz-staff-bubble{border:1px solid #e6dfd6;border-radius:13px;padding:10px 12px;max-width:90%;background:#faf8f4;align-self:flex-start;overflow-wrap:anywhere}
+.cazana-support .cz-staff-bubble.from-staff{background:#eaf6ef;border-color:#d8e8dd;align-self:flex-end}
+.cazana-support .cz-staff-bubble small{font-size:9px;color:#94783e}.cazana-support .cz-staff-bubble p{font-size:11px;color:#433c32;margin:5px 0;white-space:pre-wrap}
+.cazana-support .cz-staff-reply label{display:grid;gap:7px;font-size:10px;font-weight:600;color:#756a5b}
+.cazana-support .cz-staff-reply textarea{resize:vertical;min-width:0;border:1px solid #e4dacb;border-radius:12px;padding:11px;width:100%;font-size:12px}
+.cazana-support .cz-staff-actions{display:flex;gap:9px;margin-top:10px;flex-wrap:wrap}.cazana-support .cz-staff-actions button{border:0;border-radius:25px;padding:10px 14px;color:white;background:#217b60;font-size:11px;font-weight:600}.cazana-support .cz-staff-actions button.muted{background:#f7f0e7;color:#856b3d}
+.cazana-support .cz-placeholder{color:#8b8177;font-size:11px;line-height:1.6;padding:23px;text-align:center}
+.cazana-support .cz-staff-flash{color:#a13732;background:#fff1ef;border:1px solid #efd0cd;border-radius:10px;padding:10px 12px;margin:12px 0;font-size:11px}
+.cazana-support .cz-crm-wrap{margin-top:20px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.cazana-support .cz-crm-card{border:1px solid #e9dfd2;border-radius:14px;padding:18px;background:#fdfbf8;display:grid;gap:6px;overflow-wrap:anywhere}
+.cazana-support .cz-crm-card strong{font-size:12px}.cazana-support .cz-crm-card small{font-size:10px;color:#807366}
+@media(max-width:1000px){.cazana-support .cz-inbox-grid{grid-template-columns:1fr}.cazana-support .cz-thread-list{border-right:0;border-bottom:1px solid #e9dfd2;max-height:175px}.cazana-support .cz-crm-wrap{grid-template-columns:1fr}}
+
+/* CAZANA-FASE-3-6-1 · Selector coherente con la intranet. */
+.cazana-support .cz-filter-combo{display:flex;align-items:center;gap:10px;min-width:0}
+.cazana-support .cz-filter-caption{font-size:11px;color:#776e64;font-weight:500}
+.cazana-support .cz-filter-control{position:relative;min-width:152px}
+.cazana-support .cz-state-trigger{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;min-height:41px;padding:10px 13px;border:1px solid #e5d9c8;border-radius:12px;background:#fff;color:#4b4033;font:600 11px Poppins,Arial,sans-serif;cursor:pointer;transition:border-color .18s,box-shadow .18s,background .18s}
+.cazana-support .cz-state-trigger:hover{border-color:#cba764;background:#fcfaf6}
+.cazana-support .cz-state-trigger:focus-visible{outline:2px solid #bd9041;outline-offset:3px}
+.cazana-support .cz-state-trigger[aria-expanded="true"]{border-color:#b58e3e;box-shadow:0 0 0 3px #b58e3e19}
+.cazana-support .cz-state-trigger svg{color:#a57e39;flex:none;transition:transform .16s}
+.cazana-support .cz-state-trigger[aria-expanded="true"] svg{transform:rotate(180deg)}
+.cazana-support .cz-state-options:not([hidden]){display:grid}
+.cazana-support .cz-state-options{position:absolute;top:calc(100% + 6px);left:0;right:0;min-width:170px;z-index:15;background:#fff;border:1px solid #e9dfd1;border-radius:13px;box-shadow:0 12px 26px #30261b1c;padding:5px;gap:2px}
+.cazana-support .cz-state-options[hidden]{display:none!important}
+.cazana-support .cz-state-options [role="option"]{border:0;background:transparent;border-radius:8px;display:flex;align-items:center;gap:8px;width:100%;padding:10px 9px;text-align:left;font:500 11px Poppins,Arial,sans-serif;color:#4f483f;cursor:pointer}
+.cazana-support .cz-state-options [role="option"]:hover,.cazana-support .cz-state-options [role="option"]:focus-visible{background:#f8f2e8;outline:0}
+.cazana-support .cz-state-options [role="option"][aria-selected="true"]{background:#f6eddd;color:#947027;font-weight:700}
+.cazana-support .cz-state-options [role="option"] svg{margin-left:auto;visibility:hidden;color:#a57e39}
+.cazana-support .cz-state-options [role="option"][aria-selected="true"] svg{visibility:visible}
+.cazana-support .cz-state-dot{width:8px;height:8px;border-radius:50%;background:#217b60}
+.cazana-support .cz-state-dot.closed{background:#9e958a}
+.cazana-support #cz-reload{min-height:41px;padding:10px 14px;border:1px solid #e5d9c8;border-radius:12px;background:#fff;color:#775d37;font:600 11px Poppins,Arial,sans-serif;cursor:pointer}
+.cazana-support #cz-reload:hover{background:#faf2e5;border-color:#cba764}
+.cazana-support #cz-reload:focus-visible{outline:2px solid #bd9041;outline-offset:2px}
+@media(max-width:470px){.cazana-support .cz-filter-control{min-width:128px}.cazana-support .cz-inbox-bar{gap:8px}.cazana-support .cz-filter-combo{gap:5px}}

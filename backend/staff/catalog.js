@@ -12,7 +12,9 @@
   const orderStates={pending:'Por confirmar',confirmed:'Confirmado',preparing:'Preparando',shipped:'Enviado',delivered:'Entregado',cancelled:'Cancelado'};
   const orderNext={pending:['confirmed','cancelled'],confirmed:['preparing','cancelled'],preparing:['shipped','cancelled'],shipped:['delivered'],delivered:[],cancelled:[]};
   let flash='';let flashError=false;
+  // CAZANA-FASE-3-5:ACCESOS. Inventario no recibe pestañas de otras áreas.
   const canManage=()=>['owner','admin'].includes(user?.role);
+  const canOpenTab=name=>canManage()||(user?.role==='inventory'&&['overview','analytics','orders','inventory'].includes(name));
   async function api(url,{method='GET',body}={}){
     const res=await fetch(url,{method,credentials:'same-origin',headers:{Accept:'application/json','X-Cazana-Request':'1',...(body===undefined?{}:{'Content-Type':'application/json'})},...(body===undefined?{}:{body:JSON.stringify(body)})});
     let data={};if(res.status!==204){try{data=await res.json();}catch{throw new Error('El servidor no devolvió una respuesta válida.');}}
@@ -91,7 +93,7 @@
     $$('[data-admin-tab]').forEach(b=>{const yes=b.dataset.adminTab===tab;b.classList.toggle('selected',yes);b.setAttribute('aria-current',yes?'page':'false');});
     $('#admin-export').disabled=!['overview','analytics','inventory'].includes(tab);
   }
-  function selectTab(next){if(!views[next]||(next==='settings'&&!canManage()))return;tab=next;editId=stockId=null;flash='';render();history.replaceState(null,'',`#${next}`);}
+  function selectTab(next){if(!views[next]||!canOpenTab(next))return;tab=next;editId=stockId=null;flash='';render();history.replaceState(null,'',`#${next}`);}
   async function refresh(){const response=await api('/api/admin/products');products=response.items||[];render();}
   function editor(product=null){
     if(!canManage())return message('Tu rol no permite editar productos.',true);
@@ -170,9 +172,10 @@
   (async()=>{try{
     const r=await api('/api/staff/me');user=r.user;$('#staff-name').textContent=`${user.name} · ${user.role}`;
     if(!canManage())$$('[data-managers-only]').forEach(x=>x.hidden=true);
+    $$('[data-admin-tab]').forEach(x=>{if(!canOpenTab(x.dataset.adminTab))x.hidden=true;});
     const response=await api('/api/admin/products');products=response.items||[];
     try{const recent=await api('/api/admin/orders');orderRecords=recent.items||[];}catch{}
     if(canManage()){try{settings=await api('/api/admin/settings');}catch{settings=null;}}
-    const hash=location.hash.slice(1);tab=views[hash]&&(hash!=='settings'||canManage())?hash:'overview';render();
+    const hash=location.hash.slice(1);tab=views[hash]&&canOpenTab(hash)?hash:'overview';render();
   }catch(err){if(err.status===401||err.status===403)location.replace('/staff/login');else{root.innerHTML=`<div class="compact-notice"><strong>No pudimos cargar el panel.</strong><p>${escapeHTML(err.message)}</p><button type="button" id="retry-admin">Reintentar</button></div>`;}}})();
 })();

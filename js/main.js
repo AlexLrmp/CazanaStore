@@ -483,6 +483,10 @@
     updateWishButtons();
     if ($('#current-year')) $('#current-year').textContent = new Date().getFullYear();
     activateMenuAndSupport();
+    // CAZANA-FASE-3-6: cargar el chat solo cuando hay backend, sin alterar la demo de GitHub Pages.
+    if (document.getElementById('support-panel') && !location.hostname.endsWith('.github.io')) {
+      const script=document.createElement('script');script.src='/js/services/chat.js';script.async=true;document.head.append(script);
+    }
     bindGlobalForms();
     syncNavActive();
     homepage();

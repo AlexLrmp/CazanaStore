@@ -12,11 +12,13 @@
     "start": "node src/server.js",
     "seed": "node scripts/seed-catalog.js",
     "create-admin": "node scripts/create-admin.js",
+    "create-support": "node scripts/create-support.js",
     "test": "node --test test/*.test.js",
     "check": "node --check src/server.js && node --check src/app.js && node --check src/models.js && node --check src/order-service.js && node --check routes/orders.js && node --check routes/admin-orders.js && node --check staff/catalog.js && node --check staff/orders-phase2.js && node --check ../js/pages/account.js && node --check ../js/pages/checkout.js",
     "indexes": "node scripts/ensure-indexes.js",
     "fix-images": "node scripts/fix-image-paths.js",
-    "fix-images:apply": "node scripts/fix-image-paths.js --apply"
+    "fix-images:apply": "node scripts/fix-image-paths.js --apply",
+    "mail:test": "node scripts/check-mail.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

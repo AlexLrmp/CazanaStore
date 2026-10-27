@@ -1,0 +1,11 @@
+'use strict';
+const {test}=require('node:test');
+const assert=require('node:assert/strict');
+const crypto=require('node:crypto');
+const {message,identity,staffRole,cookieHash,isValidToken,visitorSafe,contactSafe}=require('../src/chat-policy');
+test('rechaza mensajes vacíos y demasiado extensos',()=>{assert.throws(()=>message(' '));assert.throws(()=>message('x'.repeat(1201)));assert.equal(message(' Hola '),'Hola');});
+test('valida contacto y normaliza correo',()=>{assert.deepEqual(identity({name:' Ana ',email:' TEST@EMAIL.COM '}),{name:'Ana',email:'test@email.com'});assert.throws(()=>identity({name:'A',email:'malo'}));});
+test('solo soporte y responsables acceden al CRM',()=>{for(const r of ['support','admin','owner'])assert.equal(staffRole(r),true);for(const r of ['customer','inventory','accounting',null])assert.equal(staffRole(r),false);});
+test('token de conversación aleatorio y solo hash en DB',()=>{const token=crypto.randomBytes(32).toString('hex');assert.ok(isValidToken(token));assert.equal(cookieHash(token).length,64);assert.notEqual(token,cookieHash(token));assert.equal(isValidToken('1234'),false);});
+test('API visitante no filtra correo ni actorId',()=>{const row={_id:'xyz',name:'Ana',email:'private@example.com',status:'open',messages:[{sender:'staff',text:'Bienvenida',at:new Date(),actorId:'42'}]};const safe=visitorSafe(row);assert.ok(!JSON.stringify(safe).includes('private@example.com'));assert.ok(!JSON.stringify(safe).includes('actorId'));});
+test('listado CRM no devuelve el token privado del cliente',()=>{const row={_id:'xyz',tokenHash:'SUPER-SECRET',name:'Ana',email:'ana@test.com',status:'open',messages:[{text:'Hola'}]};assert.ok(!JSON.stringify(contactSafe(row)).includes('SUPER-SECRET'));});

@@ -11,12 +11,16 @@ const {optionalUser,requireSameOrigin}=require('./security');
 const authRoutes=require('../routes/auth').router;
 const passwordRecoveryRoutes=require('../routes/password-recovery'); // CAZANA-FASE-3-3
 const staffRoutes=require('../routes/staff');
+// CAZANA-FASE-3-6 · Rutas públicas del chat y bandeja autorizada.
+const visitorChatRoutes=require('../routes/chat');
+const staffChatRoutes=require('../routes/staff-chat');
 const publicRoutes=require('../routes/catalog');
 const adminRoutes=require('../routes/admin');
 const customerOrdersRoutes=require('../routes/orders');
 const customerProfileRoutes=require('../routes/customer-profile');
 const customerShoppingRoutes=require('../routes/customer-shopping'); // CAZANA-FASE-3-2
 const adminOrdersRoutes=require('../routes/admin-orders');
+const {homeFor,canOpenAdmin,canOpenSupport}=require('./staff-access');
 const ROOT=path.resolve(__dirname,'../..');
 const HERE=path.resolve(__dirname,'..');
 const KNOWN_PAGES=new Set(['index','tienda','producto','carrito','checkout','cuenta','contacto','nosotros','personal','admin']);
@@ -37,6 +41,8 @@ app.use('/api',requireSameOrigin,optionalUser);
 app.get('/api/health',(req,res)=>res.json({status:mongoose.connection.readyState===1?'ok':'database_unavailable',database:mongoose.connection.readyState===1?'connected':'disconnected'}));
 app.use('/api/auth',authRoutes);
 app.use('/api/auth',passwordRecoveryRoutes);
+app.use('/api/staff/chat',staffChatRoutes);
+app.use('/api/chat',visitorChatRoutes);
 app.use('/api/staff',staffRoutes);
 app.use('/api/admin',adminRoutes);
 app.use('/api/admin/orders',adminOrdersRoutes);
@@ -58,19 +64,32 @@ app.get('/js/data.js',async(req,res,next)=>{
   }catch(err){next(err);}
 });
 app.use('/js',express.static(path.join(ROOT,'js'),{dotfiles:'deny',index:false,maxAge:0}));
-app.use('/staff-assets',express.static(path.join(HERE,'staff'),{dotfiles:'deny',index:false,maxAge:0}));
+// CAZANA-FASE-3-5:ACCESOS. El backend valida el rol ANTES de servir cada panel.
+app.use('/staff-assets',(req,res,next)=>/\.html?$/i.test(req.path)?res.status(404).end():next(),express.static(path.join(HERE,'staff'),{dotfiles:'deny',index:false,maxAge:0}));
+const privateFile=(req,res,filename)=>{res.set('Cache-Control','no-store');res.sendFile(path.join(HERE,'staff',filename));};
 app.get('/staff/login',optionalUser,(req,res)=>{
-  if(req.user && ['owner','admin','inventory'].includes(req.user.role)) return res.redirect('/staff');
-  res.sendFile(path.join(HERE,'staff','login.html'));
+  const next=req.user?homeFor(req.user.role):null;
+  if(next)return res.redirect(next);
+  privateFile(req,res,'login.html');
+});
+app.get('/staff/atencion',optionalUser,(req,res)=>{
+  if(!req.user)return res.redirect('/staff/login');
+  if(!canOpenSupport(req.user.role))return res.status(403).send('Acceso no autorizado a atención.');
+  privateFile(req,res,'support.html');
+});
+app.get('/staff/sin-modulo',optionalUser,(req,res)=>{
+  if(!req.user)return res.redirect('/staff/login');
+  if(req.user.role!=='accounting')return res.redirect(homeFor(req.user.role)||'/staff/login');
+  privateFile(req,res,'unavailable.html');
 });
 app.get('/staff',optionalUser,(req,res)=>{
-  if(!req.user || !['owner','admin','inventory'].includes(req.user.role))return res.redirect('/staff/login');
-  res.sendFile(path.join(HERE,'staff','catalog.html'));
+  if(!req.user)return res.redirect('/staff/login');
+  if(!canOpenAdmin(req.user.role))return res.redirect(homeFor(req.user.role)||'/staff/login');
+  privateFile(req,res,'catalog.html');
 });
-// Un único acceso: la tienda dirige a la intranet real. No exponer admin.html de muestra
-// cuando Express y MongoDB están activos. En GitHub Pages la demo sigue siendo estática.
-app.get('/personal.html',optionalUser,(req,res)=>res.redirect(req.user && ['owner','admin','inventory'].includes(req.user.role)?'/staff':'/staff/login'));
-app.get('/admin.html',optionalUser,(req,res)=>res.redirect(req.user && ['owner','admin','inventory'].includes(req.user.role)?'/staff':'/staff/login'));
+// En local, la tienda redirige siempre a la intranet apropiada para cada rol.
+app.get('/personal.html',optionalUser,(req,res)=>res.redirect(req.user?homeFor(req.user.role)||'/staff/login':'/staff/login'));
+app.get('/admin.html',optionalUser,(req,res)=>res.redirect(req.user?homeFor(req.user.role)||'/staff/login':'/staff/login'));
 app.get('/',(req,res)=>res.sendFile(path.join(ROOT,'index.html')));
 app.get(/^\/(index|tienda|producto|carrito|checkout|cuenta|contacto|nosotros|personal|admin)\.html$/,(req,res)=>{
   const name=req.path.slice(1,-5);

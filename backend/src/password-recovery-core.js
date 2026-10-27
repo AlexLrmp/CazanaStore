@@ -1,6 +1,7 @@
 'use strict';
 // Cazana Store · Fase 3.3. No almacenar enlaces ni contraseñas en documentos de usuario.
 const crypto=require('node:crypto');
+const {passwordResetEmailHtml}=require('./mail-template');
 const TOKEN_BYTES=32;
 const RESET_TTL_MINUTES=15;
 const RESET_TTL_MS=RESET_TTL_MINUTES*60*1000;
@@ -35,6 +36,8 @@ async function deliverReset(to,token){
         from:process.env.RESET_MAIL_FROM,
         to:[to],
         subject:'Restablecer tu contraseña de Cazana Store',
+        html:passwordResetEmailHtml({url,minutes:RESET_TTL_MINUTES}),
+        ...(process.env.RESET_MAIL_REPLY_TO?{reply_to:process.env.RESET_MAIL_REPLY_TO}:{}),
         text:`Recibimos una solicitud para cambiar la contraseña de tu cuenta en Cazana Store.\n\nAbre este enlace dentro de los próximos ${RESET_TTL_MINUTES} minutos:\n${url}\n\nSi no lo solicitaste, puedes ignorar este mensaje. Tu contraseña seguirá siendo la misma.\nNo compartas el enlace con otras personas.`
       }),signal:controller.signal
     });

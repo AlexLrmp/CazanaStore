@@ -1,0 +1,32 @@
+'use strict';
+// Cazana Store · Correos transaccionales. Compatible con clientes sin CSS externo.
+const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, c => ({
+  '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
+}[c]));
+
+function passwordResetEmailHtml({url, minutes=15}) {
+  const safeUrl=escapeHtml(url);
+  const safeMinutes=escapeHtml(minutes);
+  return `<!doctype html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#f6f4f0;color:#2c2b29;font-family:Arial,Helvetica,sans-serif;">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background:#f6f4f0;padding:34px 12px;">
+<tr><td align="center"><table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width:580px;background:#ffffff;border:1px solid #e8e1d5;border-radius:16px;">
+<tr><td style="padding:34px 36px 20px;border-bottom:1px solid #eee8de;">
+<div style="font-family:Georgia,serif;color:#b28a36;font-size:32px;line-height:1.1;letter-spacing:-1px;">CAZANA</div>
+<div style="color:#37332e;letter-spacing:3px;font-weight:700;font-size:11px;margin-top:5px;">STORE <span style="font-weight:400;letter-spacing:normal;color:#8a837a;">— Online, On Time</span></div>
+</td></tr>
+<tr><td style="padding:30px 36px 34px;">
+<p style="color:#a6781b;font-size:11px;font-weight:bold;letter-spacing:1.5px;margin:0 0 15px;">SEGURIDAD DE TU CUENTA</p>
+<h1 style="font-family:Georgia,serif;font-weight:400;font-size:32px;line-height:1.2;margin:0 0 18px;color:#242321;">Recupera tu acceso</h1>
+<p style="font-size:15px;color:#5f5a54;line-height:1.75;margin:0 0 18px;">Recibimos una solicitud para restablecer la contraseña de tu cuenta en Cazana Store. Puedes elegir una contraseña nueva desde el siguiente botón.</p>
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:24px 0;"><tr><td bgcolor="#197b63" style="border-radius:30px;"><a href="${safeUrl}" style="display:inline-block;color:#ffffff;font-size:14px;font-weight:700;text-decoration:none;padding:17px 27px;">Restablecer contraseña</a></td></tr></table>
+<p style="font-size:13px;color:#716a62;line-height:1.7;margin:0 0 16px;">Por tu seguridad, este enlace vence en <strong>${safeMinutes} minutos</strong> y solo puede utilizarse una vez. Si tú no solicitaste el cambio, ignora este mensaje.</p>
+<p style="font-size:12px;color:#8b8175;line-height:1.5;overflow-wrap:anywhere;word-break:break-word;">Si el botón no funciona, copia y pega esta dirección en tu navegador:<br><a href="${safeUrl}" style="color:#a6781b;">${safeUrl}</a></p>
+</td></tr><tr><td style="padding:22px 36px;background:#faf9f6;border-top:1px solid #eee8de;border-radius:0 0 16px 16px;">
+<p style="font-size:11px;line-height:1.6;color:#898177;margin:0;">Cazana Store · Comunicación de seguridad automática.<br>Este correo no solicita contraseñas, datos bancarios ni pagos.</p>
+</td></tr></table></td></tr></table>
+</body></html>`;
+}
+
+module.exports={passwordResetEmailHtml,escapeHtml};
