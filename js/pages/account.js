@@ -73,6 +73,11 @@
   }
   async function loadOrders(){if(!user)return;const r=await api('/api/orders');orders=r.items||[];}
   async function start(){root.closest('.account-layout')?.classList.add('account-guest-mode');if(authMode==='reset'){render();return;}try{const r=await api('/api/auth/me');if(r.user?.role!=='customer')throw Object.assign(Error('Acceso exclusivo para clientes.'),{status:401});user=r.user;await window.CazanaShopping?.initialize();await loadOrders();await extras.load(api,user).catch(()=>{});}catch(err){if(err.status&&err.status!==401){render();notice(err.message,true);return;}user=null;}render();}
+  // CAZANA-CHAT-POR-CUENTA-2026: limpiar el chat al cambiar de identidad, incluso entre pestanas.
+  function notifyChatIdentityChanged(){
+    window.dispatchEvent(new Event('cazana:auth-changed'));
+    try{localStorage.setItem('cazana_auth_revision',String(Date.now())+'-'+Math.random());}catch{}
+  }
   document.addEventListener('click',async e=>{
     const removeWish=e.target.closest('[data-account-remove-wish]');
     if(removeWish&&user){
@@ -84,7 +89,7 @@
     if(user && await extras.click(e.target,api,render,notice))return;
     const tabBtn=e.target.closest('[data-account-tab]');if(tabBtn&&user){tab=tabBtn.dataset.accountTab;history.replaceState(null,'','#'+(tab==='favorites'?'favoritos':tab));render();return;}
     const auth=e.target.closest('[data-switch-auth]');if(auth&&!user){authMode=['register','forgot'].includes(auth.dataset.switchAuth)?auth.dataset.switchAuth:'login';render();return;}
-    if(e.target.closest('#customer-logout')){try{await api('/api/auth/logout','POST');user=null;orders=[];extras.clear();window.CazanaShopping?.logout();authMode='login';render();}catch(err){notice(err.message,true);}return;}
+    if(e.target.closest('#customer-logout')){try{await api('/api/auth/logout','POST');user=null;orders=[];extras.clear();window.CazanaShopping?.logout();notifyChatIdentityChanged();authMode='login';render();}catch(err){notice(err.message,true);}return;}
     const cancel=e.target.closest('[data-cancel-order]');if(cancel){if(!confirm('¿Cancelar esta solicitud de pedido? Se liberarán las existencias reservadas.'))return;try{await api(`/api/orders/${cancel.dataset.cancelOrder}/cancel`,'POST');await loadOrders();render();notice('Solicitud cancelada.');}catch(err){notice(err.message,true);}return;}
   });
   document.addEventListener('submit',async e=>{
@@ -102,7 +107,7 @@
           const password=String(fd.get('password'));
           if(password!==String(fd.get('confirmPassword')))throw Error('Las contraseñas no coinciden.');
           await api('/api/auth/reset-password','POST',{token:resetToken,password});
-          window.CazanaShopping?.logout();user=null;orders=[];authMode='login';render();
+          window.CazanaShopping?.logout();user=null;orders=[];notifyChatIdentityChanged();authMode='login';render();
           notice('Contraseña actualizada. Ahora puedes iniciar sesión.');
         }
       }catch(err){notice(err.message,true);}
@@ -112,7 +117,7 @@
     if(!['customer-login','customer-register'].includes(form.id))return;
     e.preventDefault();if(busy)return;busy=true;const button=form.querySelector('button[type=submit]');if(button)button.disabled=true;
     try{const fd=new FormData(form);const isReg=form.id==='customer-register';const payload=isReg?{name:String(fd.get('name')),email:String(fd.get('email')),password:String(fd.get('password')),marketingConsent:fd.has('marketingConsent')}:{email:String(fd.get('email')),password:String(fd.get('password'))};
-      const r=await api(isReg?'/api/auth/register':'/api/auth/login','POST',payload);user=r.user;await window.CazanaShopping?.initialize(true);await loadOrders();await extras.load(api,user).catch(()=>{});render();notice(isReg?'Cuenta creada correctamente.':'Bienvenido de nuevo.');
+      const r=await api(isReg?'/api/auth/register':'/api/auth/login','POST',payload);user=r.user;notifyChatIdentityChanged();await window.CazanaShopping?.initialize(true);await loadOrders();await extras.load(api,user).catch(()=>{});render();notice(isReg?'Cuenta creada correctamente.':'Bienvenido de nuevo.');
     }catch(err){notice(err.message,true);}finally{busy=false;if(button)button.disabled=false;}
   });
   tab=location.hash==='#favoritos'?'favorites':location.hash==='#perfil'?'profile':location.hash==='#addresses'?'addresses':'orders';

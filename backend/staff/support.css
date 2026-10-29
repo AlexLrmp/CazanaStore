@@ -89,3 +89,35 @@
 .cazana-support #cz-reload:hover{background:#faf2e5;border-color:#cba764}
 .cazana-support #cz-reload:focus-visible{outline:2px solid #bd9041;outline-offset:2px}
 @media(max-width:470px){.cazana-support .cz-filter-control{min-width:128px}.cazana-support .cz-inbox-bar{gap:8px}.cazana-support .cz-filter-combo{gap:5px}}
+
+/* CAZANA-FASE-3-7 · Seguimiento visual discreto y coherente con la intranet. */
+.cazana-support .cz-wf-unread{margin-left:auto;display:inline-flex;align-items:center;justify-content:center;min-width:19px;height:19px;padding:0 5px;border-radius:99px;background:#247f63;color:#fff;font:700 10px Poppins,Arial,sans-serif}
+.cazana-support .cz-wf-unread[hidden]{display:none!important}
+.cazana-support .cz-workflow-toolbar{display:flex;gap:12px;justify-content:space-between;align-items:end;flex-wrap:wrap;margin:6px 0 14px}
+.cazana-support .cz-workflow-search{display:grid;gap:5px;font-size:10px;color:#786d5e;flex:1 1 220px}
+.cazana-support .cz-workflow-search input,.cazana-support .cz-wf-case textarea,.cazana-support .cz-wf-case select{border:1px solid #e5d9c8;background:#fff;border-radius:11px;padding:11px 12px;color:#403a32;font:500 11px Poppins,Arial,sans-serif;max-width:100%;width:100%;outline:none}
+.cazana-support .cz-workflow-search input:focus-visible,.cazana-support .cz-wf-case textarea:focus-visible,.cazana-support .cz-wf-case select:focus-visible{border-color:#c1964b;box-shadow:0 0 0 3px #c1964b1f}
+.cazana-support .cz-scope-options{display:flex;gap:3px;padding:4px;border:1px solid #e5d9c8;background:#f8f5ef;border-radius:14px;flex-wrap:wrap}
+.cazana-support .cz-scope-options button{padding:9px 12px;border:0;border-radius:10px;background:transparent;color:#786c5b;font:600 10px Poppins,Arial,sans-serif;cursor:pointer}
+.cazana-support .cz-scope-options button[aria-pressed="true"]{background:#292725;color:#f4d489}
+.cazana-support .cz-scope-options button:focus-visible,.cazana-support .cz-wf-case button:focus-visible{outline:2px solid #bf994c;outline-offset:2px}
+.cazana-support .cz-wf-tags{display:flex;gap:5px;flex-wrap:wrap;margin:1px 0 0}
+.cazana-support .cz-wf-tags span{display:inline-block;font-size:9px;border-radius:30px;padding:3px 8px;line-height:1.4}
+.cazana-support .cz-wf-high{background:#fff0dd;color:#9c591c;border:1px solid #f2dcbd}
+.cazana-support .cz-wf-normal,.cazana-support .cz-wf-assignee{background:#f2eee8;color:#7d7063;border:1px solid #eee6da}
+.cazana-support .cz-wf-case{border:1px solid #eadfce;background:#fcfaf6;border-radius:14px;padding:14px;margin:0 0 5px;display:grid;gap:11px}
+.cazana-support .cz-wf-case-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.cazana-support .cz-wf-case-head strong{display:block;color:#3b342c;font-size:12px}.cazana-support .cz-wf-case-head small{display:block;color:#9a8b78;margin-top:4px;font-size:10px}
+.cazana-support .cz-wf-case-head>span{font-size:9px;border-radius:30px;padding:5px 9px;white-space:nowrap}
+.cazana-support .cz-wf-actions{display:flex;align-items:end;flex-wrap:wrap;gap:8px}
+.cazana-support .cz-wf-case button{border:1px solid #dfcfb6;border-radius:10px;padding:10px 13px;cursor:pointer;font:600 10px Poppins,Arial,sans-serif}
+.cazana-support .cz-wf-main{background:#247c61;color:#fff;border-color:#247c61!important}
+.cazana-support .cz-wf-outline{background:#fff;color:#80642e}
+.cazana-support .cz-wf-case button:disabled{opacity:.55;cursor:wait}
+.cazana-support .cz-wf-assignment{font-size:10px;color:#655b50;display:grid;gap:6px;min-width:150px;flex:1}
+.cazana-support .cz-wf-note-row{display:grid;grid-template-columns:150px minmax(0,1fr) auto;align-items:end;gap:9px}
+.cazana-support .cz-wf-note-row label{display:grid;gap:6px;font-size:10px;color:#665a4e}
+.cazana-support .cz-wf-note-row textarea{resize:vertical;min-height:60px}
+.cazana-support .cz-wf-hint{font-size:10px!important;color:#8d7753!important}
+.cazana-support .sp-tab{position:relative}
+@media(max-width:900px){.cazana-support .cz-wf-note-row{grid-template-columns:1fr}.cazana-support .cz-workflow-toolbar{align-items:stretch}.cazana-support .cz-scope-options{width:100%;justify-content:space-between}.cazana-support .cz-scope-options button{flex:1}}

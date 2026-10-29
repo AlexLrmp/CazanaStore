@@ -7,6 +7,7 @@
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const date=s=>{try{return new Date(s).toLocaleString('es-PE',{dateStyle:'short',timeStyle:'short'});}catch{return ''}};
   const POLL_MS=8000;
+  const wf=window.CazanaWorkflow;let staffUser=null;
   let tab='inbox',status='open',rows=[],selected=null,working=false,loading=false,queued=false,listKey='';
   let selectToken=0;
   async function api(url,{method='GET',data}={}){
@@ -51,12 +52,13 @@
   function render(){
     if(tab==='inbox'){
       panel.innerHTML=head('Conversaciones','Consultas recibidas desde la tienda, guardadas en MongoDB.')+
-        `<div class="cz-inbox-bar"><div class="cz-filter-combo" id="cz-filter-combo"><span class="cz-filter-caption">Mostrar</span><div class="cz-filter-control"><button id="cz-state-trigger" class="cz-state-trigger" type="button" aria-label="Filtrar conversaciones" aria-haspopup="listbox" aria-expanded="false" aria-controls="cz-state-options"><span id="cz-state-label">${labelOf(status)}</span><svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button><div id="cz-state-options" class="cz-state-options" role="listbox" aria-label="Estado de conversación" hidden><button type="button" role="option" data-chat-status="open"><span class="cz-state-dot open"></span>Abiertas<svg aria-hidden="true" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 5 5 9-10"/></svg></button><button type="button" role="option" data-chat-status="closed"><span class="cz-state-dot closed"></span>Cerradas<svg aria-hidden="true" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 5 5 9-10"/></svg></button></div></div></div><button type="button" id="cz-reload">Actualizar</button></div><p class="cz-staff-flash" id="cz-staff-flash" hidden role="status"></p><div class="cz-inbox-grid"><nav class="cz-thread-list" id="cz-thread-list" aria-label="Conversaciones"><p>Cargando conversaciones…</p></nav><div class="cz-thread-detail" id="cz-thread-detail"><p class="cz-placeholder">Selecciona una conversación para comenzar.</p></div></div>`;
-      setupFilter();$('#cz-reload').addEventListener('click',()=>load());
+        `<div class="cz-inbox-bar"><div class="cz-filter-combo" id="cz-filter-combo"><span class="cz-filter-caption">Mostrar</span><div class="cz-filter-control"><button id="cz-state-trigger" class="cz-state-trigger" type="button" aria-label="Filtrar conversaciones" aria-haspopup="listbox" aria-expanded="false" aria-controls="cz-state-options"><span id="cz-state-label">${labelOf(status)}</span><svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button><div id="cz-state-options" class="cz-state-options" role="listbox" aria-label="Estado de conversación" hidden><button type="button" role="option" data-chat-status="open"><span class="cz-state-dot open"></span>Abiertas<svg aria-hidden="true" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 5 5 9-10"/></svg></button><button type="button" role="option" data-chat-status="closed"><span class="cz-state-dot closed"></span>Cerradas<svg aria-hidden="true" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 5 5 9-10"/></svg></button></div></div></div><button type="button" id="cz-reload">Actualizar</button></div><p class="cz-staff-flash" id="cz-staff-flash" hidden role="status"></p>${wf.toolbar()}<div class="cz-inbox-grid"><nav class="cz-thread-list" id="cz-thread-list" aria-label="Conversaciones"><p>Cargando conversaciones…</p></nav><div class="cz-thread-detail" id="cz-thread-detail"><p class="cz-placeholder">Selecciona una conversación para comenzar.</p></div></div>`;
+      setupFilter();wf.bindToolbar(()=>{selected=null;selectToken++;listKey='';const d=$('#cz-thread-detail');if(d){d.dataset.thread='';d.innerHTML='<p class="cz-placeholder">Selecciona una conversación para comenzar.</p>';}load();});$('#cz-reload').addEventListener('click',()=>load());
     }else{
       panel.innerHTML=head('CRM de clientes','Contactos que iniciaron una conversación. No se muestra la base completa de clientes.')+
-        `<div class="cz-crm-wrap" id="cz-crm-wrap"><p>Consultando conversaciones…</p></div><p class="cz-staff-flash" id="cz-staff-flash" hidden role="status"></p>`;
+        `${wf.toolbar(true)}<div class="cz-crm-wrap" id="cz-crm-wrap"><p>Consultando conversaciones…</p></div><p class="cz-staff-flash" id="cz-staff-flash" hidden role="status"></p>`;
     }
+    if(tab==='crm')wf.bindToolbar(()=>{selectToken++;load();});
     $$('[data-sp-tab]').forEach(b=>{const yes=b.dataset.spTab===tab;b.classList.toggle('is-current',yes);if(yes)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});
     panel.setAttribute('aria-busy','false');
   }
@@ -68,7 +70,7 @@
     if(signature===listKey)return;
     listKey=signature;
     if(!rows.length){host.innerHTML='<div class="cz-placeholder">No hay conversaciones en esta categoría.</div>';return;}
-    host.innerHTML=rows.map(r=>`<button class="cz-thread-row ${selected===r.id?'is-active':''}" type="button" data-thread="${esc(r.id)}"><strong>${esc(r.name)}${r.unreadForStaff?'<span class="cz-unread" aria-label="Sin leer"></span>':''}</strong><small>${esc(r.preview)}</small><span>${esc(date(r.lastMessageAt))}</span></button>`).join('');
+    host.innerHTML=rows.map(r=>`<button class="cz-thread-row ${selected===r.id?'is-active':''}" type="button" data-thread="${esc(r.id)}"><strong>${esc(r.name)}${r.unreadForStaff?'<span class="cz-unread" aria-label="Sin leer"></span>':''}</strong><small>${esc(r.preview)}</small>${wf.listTags(r)}<span>${esc(date(r.lastMessageAt))}</span></button>`).join('');
     host.querySelectorAll('[data-thread]').forEach(b=>b.addEventListener('click',()=>open(b.dataset.thread)));
   }
   function paintCrm(){
@@ -90,13 +92,13 @@
     loading=true;const initialTab=tab,initialStatus=status,initialToken=selectToken;
     try{
       if(initialTab==='crm'){
-        const [open,closed]=await Promise.all([api('/api/staff/chat/threads?status=open'),api('/api/staff/chat/threads?status=closed')]);
+        const [open,closed]=await Promise.all([api('/api/staff/chat/threads?status=open'+wf.query()),api('/api/staff/chat/threads?status=closed'+wf.query())]);
         if(tab!==initialTab||selectToken!==initialToken)return;
         rows=[...open.items,...closed.items];paintCrm();return;
       }
-      const data=await api('/api/staff/chat/threads?status='+initialStatus);
+      const data=await api('/api/staff/chat/threads?status='+initialStatus+wf.query());
       if(tab!==initialTab||status!==initialStatus||selectToken!==initialToken)return;
-      rows=data.items;paintList();
+      rows=data.items;wf.updateUnread(data.unreadCount);paintList();
       if(selected&&rows.some(x=>x.id===selected))await open(selected,{background:true});
       else if(selected){selected=null;listKey='';paintList();const detail=$('#cz-thread-detail');if(detail)detail.innerHTML='<p class="cz-placeholder">Selecciona una conversación para comenzar.</p>';}
     }catch(err){flash(err.message);}
@@ -123,8 +125,8 @@
       const reuse=detail.dataset.thread===id && detail.dataset.status===r.status && !!detail.querySelector('.cz-staff-messages');
       if(!reuse){
         detail.dataset.thread=id;detail.dataset.status=r.status;
-        detail.innerHTML=`<div class="cz-detail-heading"><div><strong>${esc(r.name)}</strong><small>${esc(r.email||'Sin correo')}</small></div><span>${r.status==='open'?'Abierta':'Cerrada'}</span></div><div class="cz-staff-messages" id="cz-staff-messages" role="log"></div>`+
-          (r.status==='open'?`<form class="cz-staff-reply" id="cz-staff-reply"><label>Respuesta al cliente<textarea name="message" maxlength="1200" required minlength="2" rows="3" placeholder="Escribe una respuesta profesional…"></textarea></label><div class="cz-staff-actions"><button type="submit">Responder</button><button type="button" id="cz-close-thread" class="muted">Cerrar conversación</button></div></form>`:'<p class="cz-placeholder">Esta conversación está cerrada. Si el cliente vuelve a escribir, se reabrirá.</p>');
+        detail.innerHTML=`<div class="cz-detail-heading"><div><strong>${esc(r.name)}</strong><small>${esc(r.email||'Sin correo')}</small></div><span>${r.status==='open'?'Abierta':'Cerrada'}</span></div>${wf.caseHtml(r)}<div class="cz-staff-messages" id="cz-staff-messages" role="log"></div>`+
+          (r.status==='open'&&wf.canEdit(r)?`<form class="cz-staff-reply" id="cz-staff-reply"><label>Respuesta al cliente<textarea name="message" maxlength="1200" required minlength="2" rows="3" placeholder="Escribe una respuesta profesional…"></textarea></label><div class="cz-staff-actions"><button type="submit">Responder</button><button type="button" id="cz-close-thread" class="muted">Cerrar conversación</button></div></form>`:r.status==='open'?'<p class="cz-placeholder">Toma esta conversación para poder responder.</p>':'<p class="cz-placeholder">Esta conversación está cerrada. Si el cliente vuelve a escribir, se reabrirá.</p>');
         $('#cz-staff-reply')?.addEventListener('submit',async e=>{
           e.preventDefault();if(working)return;working=true;
           const form=e.currentTarget,btn=form.querySelector('button[type=submit]');btn.disabled=true;
@@ -136,6 +138,7 @@
           try{await api('/api/staff/chat/threads/'+encodeURIComponent(id)+'/close',{method:'POST'});selected=null;listKey='';const detail=$('#cz-thread-detail');if(detail){detail.dataset.thread='';detail.innerHTML='<p class="cz-placeholder">Selecciona una conversación para comenzar.</p>';}await load();}
           catch(err){flash(err.message);}finally{working=false;}
         });
+        wf.bindCase({thread:r,request:api,onError:flash,refresh:async()=>{const d=$('#cz-thread-detail');if(d){d.dataset.thread='';d.dataset.status='';}await open(id);await load();}});
       }
       paintHistory($('#cz-staff-messages'),r.messages);
     }catch(err){flash(err.message);}
@@ -145,6 +148,8 @@
   (async()=>{
     try{
       const data=await api('/api/staff/me');
+      staffUser=data.user;wf.setUser(staffUser);
+      if(['owner','admin'].includes(staffUser?.role)){try{const agents=await api('/api/staff/chat/agents');wf.setAgents(agents.items);}catch{wf.setAgents([]);}}
       if(!['support','owner','admin'].includes(data.user?.role)){location.replace('/staff/login');return;}
       $('#sp-name').textContent=`${data.user.name} · ${data.user.role==='support'?'Atención':'Administración'}`;
       render();await load();

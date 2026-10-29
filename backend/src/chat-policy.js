@@ -14,6 +14,6 @@ function identity(data){
 function staffRole(role){return STAFF_ROLES.has(role);}
 function cookieHash(token){return crypto.createHash('sha256').update(token).digest('hex');}
 function isValidToken(token){return typeof token==='string'&&/^[0-9a-f]{64}$/.test(token);}
-function contactSafe(row){return {id:String(row._id),name:row.name,email:row.email||'',status:row.status,lastMessageAt:row.lastMessageAt,updatedAt:row.updatedAt,unreadForStaff:!!row.unreadForStaff,preview:row.messages?.at(-1)?.text?.slice(0,110)||''};}
+function contactSafe(row){return {id:String(row._id),name:row.name,email:row.email||'',status:row.status,lastMessageAt:row.lastMessageAt,updatedAt:row.updatedAt,unreadForStaff:!!row.unreadForStaff,preview:row.messages?.at(-1)?.text?.slice(0,110)||'',assignedTo:row.assignedTo?String(row.assignedTo):null,priority:row.priority||'normal'};}
 function visitorSafe(row){return {id:String(row._id),status:row.status,messages:(row.messages||[]).map(msg=>({sender:msg.sender,text:msg.text,at:msg.at}))};}
 module.exports={message,identity,staffRole,cookieHash,isValidToken,contactSafe,visitorSafe,MAX_TEXT};

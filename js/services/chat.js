@@ -7,7 +7,7 @@
   const subtitle=root.querySelector('.support-sub');
   if(!body||!cta)return;
   const INTERVAL_MS=7000;
-  let thread=null,busy=false,checking=false;
+  let thread=null,busy=false,checking=false,authRevision=0;
   const api=async (path,{method='GET',data}={})=>{
     const res=await fetch('/api/chat'+path,{method,credentials:'same-origin',cache:'no-store',headers:{Accept:'application/json','X-Cazana-Request':'1',...(data?{'Content-Type':'application/json'}:{})},...(data?{body:JSON.stringify(data)}:{})});
     if(!res.ok){const error=await res.json().catch(()=>({}));throw Error(error.error||'No se pudo contactar al equipo.');}
@@ -62,8 +62,8 @@
       form.addEventListener('submit',async e=>{
         e.preventDefault();if(busy)return;
         busy=true;submit.disabled=true;
-        const data=Object.fromEntries(new FormData(form));
-        try{thread=(await api('/start',{method:'POST',data})).thread;render();}
+        const data=Object.fromEntries(new FormData(form)),revision=authRevision;
+        try{const result=(await api('/start',{method:'POST',data})).thread;if(revision!==authRevision)return;thread=result;render();}
         catch(err){feedback(form,err.message);submit.disabled=false;}finally{busy=false;}
       });body.append(form);
     }else{
@@ -74,31 +74,39 @@
       const btn=document.createElement('button');btn.type='submit';btn.className='cz-chat-primary';btn.textContent='Enviar mensaje';form.append(btn);
       form.addEventListener('submit',async e=>{
         e.preventDefault();if(busy)return;busy=true;btn.disabled=true;
-        try{const next=(await api('/message',{method:'POST',data:Object.fromEntries(new FormData(form))})).thread;
-          updateHistory(next);thread=next;form.querySelector('textarea').value='';
+        try{const revision=authRevision;const next=(await api('/message',{method:'POST',data:Object.fromEntries(new FormData(form))})).thread;
+          if(revision!==authRevision)return;updateHistory(next);thread=next;form.querySelector('textarea').value='';
         }catch(err){feedback(form,err.message);}finally{btn.disabled=false;busy=false;}
       });body.append(status,log,form,note);log.scrollTop=log.scrollHeight;
     }
     const contact=document.createElement('a');contact.href='contacto.html';contact.textContent='Otros canales de contacto ↗';cta.append(contact);
   }
+  // CAZANA-CHAT-POR-CUENTA-2026: revisar cambios de cuenta sin conservar mensajes de la sesion anterior.
   async function refresh(){
     if(busy||checking)return;
-    checking=true;
+    checking=true;const revision=authRevision;
     try{
       const data=await api('/session');
+      if(revision!==authRevision)return; // descartar respuesta anterior a un cambio de cuenta
       if(!data || !Object.prototype.hasOwnProperty.call(data,'thread'))return;
       const next=data.thread;
-      if(!thread || !next || thread.id!==next.id || !body.querySelector('.cz-chat-log')){
-        if(JSON.stringify(thread)!==JSON.stringify(next)){thread=next;render();}
-        return;
-      }
-      // Solo se actualiza el historial y el estado. Nunca reemplazamos el formulario:
-      // así se conserva lo que el cliente esté escribiendo.
+      const needsForm=!next&&!body.querySelector('#cz-chat-start');
+      const needsLog=!!next&&(!thread||thread.id!==next.id||!body.querySelector('.cz-chat-log'));
+      if(needsForm||needsLog){thread=next;render();return;}
+      if(!next){thread=null;return;}
       if(thread.status!==next.status || JSON.stringify(thread.messages)!==JSON.stringify(next.messages))updateHistory(next);
       thread=next;
-    }catch{/* Conservamos la interfaz actual ante una interrupción de red. */}
-    finally{checking=false;}
+    }catch{/* Si hay un fallo de red, no mezclamos nuevos mensajes. */}
+    finally{
+      checking=false;
+      if(revision!==authRevision)queueMicrotask(()=>refresh());
+    }
   }
+  function accountChanged(){
+    authRevision++;thread=null;render();if(!checking)refresh();
+  }
+  window.addEventListener('cazana:auth-changed',accountChanged);
+  window.addEventListener('storage',e=>{if(e.key==='cazana_auth_revision')accountChanged();});
   // En GitHub Pages continúa disponible la demostración estática.
   const css=document.createElement('link');css.rel='stylesheet';css.href='/css/chat.css';document.head.append(css);
   refresh();
